@@ -1,0 +1,8 @@
+[package]
+name = "bcc-sys"
+version = "0.1.0"
+authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>"]
+
+[build-dependencies]
+bindgen = "0.30.0"
+lazy_static = "0.2.9"
