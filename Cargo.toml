@@ -5,6 +5,8 @@ authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>"]
 description = "Rust binding to BPF Compiler Collection (BCC)"
 keywords = ["bpf", "bindings"]
 license = "Apache-2.0"
+repository = "https://github.com/photoszzt/bcc-sys"
+build = "build.rs"
 
 [build-dependencies]
 bindgen = "0.30.0"
