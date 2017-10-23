@@ -246,8 +246,9 @@ fn build_bcc_bindings() {
         bindings = bindings.whitelisted_var(var);
     }
 
-    let codegen_options = bindgen::CodegenConfig::all();
-    bindings = bindings.with_codegen_config(codegen_options);
+    bindings = bindings.derive_debug(true)
+        .impl_debug(true)
+        .derive_default(true);
 
     let builder = bindings.generate()
         .expect("Should generate BCC API bindings OK");
