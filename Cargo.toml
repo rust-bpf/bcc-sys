@@ -1,6 +1,6 @@
 [package]
 name = "bcc-sys"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>"]
 description = "Rust binding to BPF Compiler Collection (BCC)"
 keywords = ["bpf", "bindings"]
@@ -9,5 +9,5 @@ repository = "https://github.com/photoszzt/bcc-sys"
 build = "build.rs"
 
 [build-dependencies]
-bindgen = "0.30.0"
-lazy_static = "0.2.9"
+bindgen = "0.30"
+lazy_static = "0.2"
