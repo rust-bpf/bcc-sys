@@ -6,7 +6,7 @@ fn main() {
 
 const WHITELIST_FUNCTION: &'static [&'static str] = &[
     "bpf_create_map",
-    "bcc_update_elem",
+    "bpf_update_elem",
     "bpf_lookup_elem",
     "bpf_delete_elem",
     "bpf_get_first_key",

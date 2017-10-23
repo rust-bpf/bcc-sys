@@ -1809,6 +1809,13 @@ extern "C" {
      -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn bpf_update_elem(fd: ::std::os::raw::c_int,
+                           key: *mut ::std::os::raw::c_void,
+                           value: *mut ::std::os::raw::c_void,
+                           flags: ::std::os::raw::c_ulonglong)
+     -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn bpf_lookup_elem(fd: ::std::os::raw::c_int,
                            key: *mut ::std::os::raw::c_void,
                            value: *mut ::std::os::raw::c_void)
