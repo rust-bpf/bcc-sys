@@ -9,5 +9,5 @@ repository = "https://github.com/photoszzt/bcc-sys"
 build = "build.rs"
 
 [build-dependencies]
-bindgen = "0.30"
+bindgen = "0.31"
 lazy_static = "0.2"

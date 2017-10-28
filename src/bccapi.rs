@@ -3,13 +3,15 @@
 #[repr(C)]
 #[derive(Default)]
 pub struct __IncompleteArrayField<T>(::std::marker::PhantomData<T>);
-impl <T> __IncompleteArrayField<T> {
+impl<T> __IncompleteArrayField<T> {
     #[inline]
     pub fn new() -> Self {
         __IncompleteArrayField(::std::marker::PhantomData)
     }
     #[inline]
-    pub unsafe fn as_ptr(&self) -> *const T { ::std::mem::transmute(self) }
+    pub unsafe fn as_ptr(&self) -> *const T {
+        ::std::mem::transmute(self)
+    }
     #[inline]
     pub unsafe fn as_mut_ptr(&mut self) -> *mut T {
         ::std::mem::transmute(self)
@@ -23,16 +25,18 @@ impl <T> __IncompleteArrayField<T> {
         ::std::slice::from_raw_parts_mut(self.as_mut_ptr(), len)
     }
 }
-impl <T> ::std::fmt::Debug for __IncompleteArrayField<T> {
+impl<T> ::std::fmt::Debug for __IncompleteArrayField<T> {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         fmt.write_str("__IncompleteArrayField")
     }
 }
-impl <T> ::std::clone::Clone for __IncompleteArrayField<T> {
+impl<T> ::std::clone::Clone for __IncompleteArrayField<T> {
     #[inline]
-    fn clone(&self) -> Self { Self::new() }
+    fn clone(&self) -> Self {
+        Self::new()
+    }
 }
-impl <T> ::std::marker::Copy for __IncompleteArrayField<T> { }
+impl<T> ::std::marker::Copy for __IncompleteArrayField<T> {}
 pub const BPF_LD: ::std::os::raw::c_uint = 0;
 pub const BPF_LDX: ::std::os::raw::c_uint = 1;
 pub const BPF_ST: ::std::os::raw::c_uint = 2;
@@ -122,177 +126,124 @@ pub const BPF_TAG_SIZE: ::std::os::raw::c_uint = 8;
 pub const TCP_BPF_IW: ::std::os::raw::c_uint = 1001;
 pub const TCP_BPF_SNDCWND_CLAMP: ::std::os::raw::c_uint = 1002;
 pub const LOG_BUF_SIZE: ::std::os::raw::c_uint = 65536;
-pub const BPF_FN_PREFIX: &'static [u8; 9usize] = b".bpf.fn.\x00";
+pub const BPF_FN_PREFIX: &'static [u8; 9usize] = b".bpf.fn.\0";
 pub const STT_GNU_IFUNC: ::std::os::raw::c_uint = 10;
 pub type __pid_t = ::std::os::raw::c_int;
 pub type pid_t = __pid_t;
 extern "C" {
-    pub fn bpf_module_create_b(filename: *const ::std::os::raw::c_char,
-                               proto_filename: *const ::std::os::raw::c_char,
-                               flags: ::std::os::raw::c_uint)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_module_create_b(filename: *const ::std::os::raw::c_char, proto_filename: *const ::std::os::raw::c_char, flags: ::std::os::raw::c_uint) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_module_create_c(filename: *const ::std::os::raw::c_char,
-                               flags: ::std::os::raw::c_uint,
-                               cflags: *mut *const ::std::os::raw::c_char,
-                               ncflags: ::std::os::raw::c_int)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_module_create_c(
+        filename: *const ::std::os::raw::c_char,
+        flags: ::std::os::raw::c_uint,
+        cflags: *mut *const ::std::os::raw::c_char,
+        ncflags: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_module_create_c_from_string(text:
-                                               *const ::std::os::raw::c_char,
-                                           flags: ::std::os::raw::c_uint,
-                                           cflags:
-                                               *mut *const ::std::os::raw::c_char,
-                                           ncflags: ::std::os::raw::c_int)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_module_create_c_from_string(
+        text: *const ::std::os::raw::c_char,
+        flags: ::std::os::raw::c_uint,
+        cflags: *mut *const ::std::os::raw::c_char,
+        ncflags: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn bpf_module_destroy(program: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn bpf_module_license(program: *mut ::std::os::raw::c_void)
-     -> *mut ::std::os::raw::c_char;
+    pub fn bpf_module_license(program: *mut ::std::os::raw::c_void) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_module_kern_version(program: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_uint;
+    pub fn bpf_module_kern_version(program: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn bpf_num_functions(program: *mut ::std::os::raw::c_void) -> usize;
 }
 extern "C" {
-    pub fn bpf_function_name(program: *mut ::std::os::raw::c_void, id: usize)
-     -> *const ::std::os::raw::c_char;
+    pub fn bpf_function_name(program: *mut ::std::os::raw::c_void, id: usize) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_function_start_id(program: *mut ::std::os::raw::c_void,
-                                 id: usize) -> *mut ::std::os::raw::c_void;
+    pub fn bpf_function_start_id(program: *mut ::std::os::raw::c_void, id: usize) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_function_start(program: *mut ::std::os::raw::c_void,
-                              name: *const ::std::os::raw::c_char)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_function_start(program: *mut ::std::os::raw::c_void, name: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_function_size_id(program: *mut ::std::os::raw::c_void,
-                                id: usize) -> usize;
+    pub fn bpf_function_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
-    pub fn bpf_function_size(program: *mut ::std::os::raw::c_void,
-                             name: *const ::std::os::raw::c_char) -> usize;
+    pub fn bpf_function_size(program: *mut ::std::os::raw::c_void, name: *const ::std::os::raw::c_char) -> usize;
 }
 extern "C" {
     pub fn bpf_num_tables(program: *mut ::std::os::raw::c_void) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_id(program: *mut ::std::os::raw::c_void,
-                        table_name: *const ::std::os::raw::c_char) -> usize;
+    pub fn bpf_table_id(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_fd(program: *mut ::std::os::raw::c_void,
-                        table_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_fd(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_fd_id(program: *mut ::std::os::raw::c_void, id: usize)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_fd_id(program: *mut ::std::os::raw::c_void, id: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_type(program: *mut ::std::os::raw::c_void,
-                          table_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_type(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_type_id(program: *mut ::std::os::raw::c_void, id: usize)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_type_id(program: *mut ::std::os::raw::c_void, id: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_max_entries(program: *mut ::std::os::raw::c_void,
-                                 table_name: *const ::std::os::raw::c_char)
-     -> usize;
+    pub fn bpf_table_max_entries(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_max_entries_id(program: *mut ::std::os::raw::c_void,
-                                    id: usize) -> usize;
+    pub fn bpf_table_max_entries_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_flags(program: *mut ::std::os::raw::c_void,
-                           table_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_flags(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_flags_id(program: *mut ::std::os::raw::c_void, id: usize)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_flags_id(program: *mut ::std::os::raw::c_void, id: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_name(program: *mut ::std::os::raw::c_void, id: usize)
-     -> *const ::std::os::raw::c_char;
+    pub fn bpf_table_name(program: *mut ::std::os::raw::c_void, id: usize) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_table_key_desc(program: *mut ::std::os::raw::c_void,
-                              table_name: *const ::std::os::raw::c_char)
-     -> *const ::std::os::raw::c_char;
+    pub fn bpf_table_key_desc(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_table_key_desc_id(program: *mut ::std::os::raw::c_void,
-                                 id: usize) -> *const ::std::os::raw::c_char;
+    pub fn bpf_table_key_desc_id(program: *mut ::std::os::raw::c_void, id: usize) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_table_leaf_desc(program: *mut ::std::os::raw::c_void,
-                               table_name: *const ::std::os::raw::c_char)
-     -> *const ::std::os::raw::c_char;
+    pub fn bpf_table_leaf_desc(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_table_leaf_desc_id(program: *mut ::std::os::raw::c_void,
-                                  id: usize) -> *const ::std::os::raw::c_char;
+    pub fn bpf_table_leaf_desc_id(program: *mut ::std::os::raw::c_void, id: usize) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn bpf_table_key_size(program: *mut ::std::os::raw::c_void,
-                              table_name: *const ::std::os::raw::c_char)
-     -> usize;
+    pub fn bpf_table_key_size(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_key_size_id(program: *mut ::std::os::raw::c_void,
-                                 id: usize) -> usize;
+    pub fn bpf_table_key_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_leaf_size(program: *mut ::std::os::raw::c_void,
-                               table_name: *const ::std::os::raw::c_char)
-     -> usize;
+    pub fn bpf_table_leaf_size(program: *mut ::std::os::raw::c_void, table_name: *const ::std::os::raw::c_char) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_leaf_size_id(program: *mut ::std::os::raw::c_void,
-                                  id: usize) -> usize;
+    pub fn bpf_table_leaf_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_key_snprintf(program: *mut ::std::os::raw::c_void,
-                                  id: usize, buf: *mut ::std::os::raw::c_char,
-                                  buflen: usize,
-                                  key: *const ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_key_snprintf(program: *mut ::std::os::raw::c_void, id: usize, buf: *mut ::std::os::raw::c_char, buflen: usize, key: *const ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_leaf_snprintf(program: *mut ::std::os::raw::c_void,
-                                   id: usize,
-                                   buf: *mut ::std::os::raw::c_char,
-                                   buflen: usize,
-                                   leaf: *const ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_leaf_snprintf(program: *mut ::std::os::raw::c_void, id: usize, buf: *mut ::std::os::raw::c_char, buflen: usize, leaf: *const ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_key_sscanf(program: *mut ::std::os::raw::c_void,
-                                id: usize, buf: *const ::std::os::raw::c_char,
-                                key: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_key_sscanf(program: *mut ::std::os::raw::c_void, id: usize, buf: *const ::std::os::raw::c_char, key: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_table_leaf_sscanf(program: *mut ::std::os::raw::c_void,
-                                 id: usize,
-                                 buf: *const ::std::os::raw::c_char,
-                                 leaf: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_table_leaf_sscanf(program: *mut ::std::os::raw::c_void, id: usize, buf: *const ::std::os::raw::c_char, leaf: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 pub type __u8 = ::std::os::raw::c_uchar;
 pub type __s16 = ::std::os::raw::c_short;
@@ -300,36 +251,21 @@ pub type __u16 = ::std::os::raw::c_ushort;
 pub type __s32 = ::std::os::raw::c_int;
 pub type __u32 = ::std::os::raw::c_uint;
 pub type __u64 = ::std::os::raw::c_ulonglong;
-pub const BPF_REG_0: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_0;
-pub const BPF_REG_1: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_1;
-pub const BPF_REG_2: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_2;
-pub const BPF_REG_3: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_3;
-pub const BPF_REG_4: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_4;
-pub const BPF_REG_5: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_5;
-pub const BPF_REG_6: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_6;
-pub const BPF_REG_7: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_7;
-pub const BPF_REG_8: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_8;
-pub const BPF_REG_9: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_9;
-pub const BPF_REG_10: _bindgen_ty_1 = _bindgen_ty_1::BPF_REG_10;
-pub const __MAX_BPF_REG: _bindgen_ty_1 = _bindgen_ty_1::__MAX_BPF_REG;
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum _bindgen_ty_1 {
-    BPF_REG_0 = 0,
-    BPF_REG_1 = 1,
-    BPF_REG_2 = 2,
-    BPF_REG_3 = 3,
-    BPF_REG_4 = 4,
-    BPF_REG_5 = 5,
-    BPF_REG_6 = 6,
-    BPF_REG_7 = 7,
-    BPF_REG_8 = 8,
-    BPF_REG_9 = 9,
-    BPF_REG_10 = 10,
-    __MAX_BPF_REG = 11,
-}
+pub const BPF_REG_0: _bindgen_ty_1 = 0;
+pub const BPF_REG_1: _bindgen_ty_1 = 1;
+pub const BPF_REG_2: _bindgen_ty_1 = 2;
+pub const BPF_REG_3: _bindgen_ty_1 = 3;
+pub const BPF_REG_4: _bindgen_ty_1 = 4;
+pub const BPF_REG_5: _bindgen_ty_1 = 5;
+pub const BPF_REG_6: _bindgen_ty_1 = 6;
+pub const BPF_REG_7: _bindgen_ty_1 = 7;
+pub const BPF_REG_8: _bindgen_ty_1 = 8;
+pub const BPF_REG_9: _bindgen_ty_1 = 9;
+pub const BPF_REG_10: _bindgen_ty_1 = 10;
+pub const __MAX_BPF_REG: _bindgen_ty_1 = 11;
+pub type _bindgen_ty_1 = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_insn {
     pub code: __u8,
     pub _bitfield_1: u8,
@@ -338,106 +274,123 @@ pub struct bpf_insn {
 }
 #[test]
 fn bindgen_test_layout_bpf_insn() {
-    assert_eq!(::std::mem::size_of::<bpf_insn>() , 8usize , concat ! (
-               "Size of: " , stringify ! ( bpf_insn ) ));
-    assert_eq! (::std::mem::align_of::<bpf_insn>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_insn ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_insn ) ) . code as * const _ as usize
-                } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_insn ) , "::" ,
-                stringify ! ( code ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_insn ) ) . off as * const _ as usize
-                } , 2usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_insn ) , "::" ,
-                stringify ! ( off ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_insn ) ) . imm as * const _ as usize
-                } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_insn ) , "::" ,
-                stringify ! ( imm ) ));
-}
-impl Clone for bpf_insn {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_insn>(),
+        8usize,
+        concat!("Size of: ", stringify!(bpf_insn))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_insn>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_insn))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_insn)).code as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_insn),
+            "::",
+            stringify!(code)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_insn)).off as *const _ as usize },
+        2usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_insn),
+            "::",
+            stringify!(off)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_insn)).imm as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_insn),
+            "::",
+            stringify!(imm)
+        )
+    );
 }
 impl bpf_insn {
     #[inline]
     pub fn dst_reg(&self) -> __u8 {
         let mut unit_field_val: u8 = unsafe { ::std::mem::uninitialized() };
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&self._bitfield_1 as *const _ as
-                                                *const u8,
-                                            &mut unit_field_val as *mut u8 as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>())
+            ::std::ptr::copy_nonoverlapping(
+                &self._bitfield_1 as *const _ as *const u8,
+                &mut unit_field_val as *mut u8 as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            )
         };
-        let mask = 15u64 as u8;
+        let mask = 0xf as u8;
         let val = (unit_field_val & mask) >> 0usize;
         unsafe { ::std::mem::transmute(val as u8) }
     }
     #[inline]
     pub fn set_dst_reg(&mut self, val: __u8) {
-        let mask = 15u64 as u8;
+        let mask = 0xf as u8;
         let val = val as u8 as u8;
         let mut unit_field_val: u8 = unsafe { ::std::mem::uninitialized() };
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&self._bitfield_1 as *const _ as
-                                                *const u8,
-                                            &mut unit_field_val as *mut u8 as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>())
+            ::std::ptr::copy_nonoverlapping(
+                &self._bitfield_1 as *const _ as *const u8,
+                &mut unit_field_val as *mut u8 as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            )
         };
         unit_field_val &= !mask;
         unit_field_val |= (val << 0usize) & mask;
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&unit_field_val as *const _ as
-                                                *const u8,
-                                            &mut self._bitfield_1 as *mut _ as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>());
+            ::std::ptr::copy_nonoverlapping(
+                &unit_field_val as *const _ as *const u8,
+                &mut self._bitfield_1 as *mut _ as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            );
         }
     }
     #[inline]
     pub fn src_reg(&self) -> __u8 {
         let mut unit_field_val: u8 = unsafe { ::std::mem::uninitialized() };
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&self._bitfield_1 as *const _ as
-                                                *const u8,
-                                            &mut unit_field_val as *mut u8 as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>())
+            ::std::ptr::copy_nonoverlapping(
+                &self._bitfield_1 as *const _ as *const u8,
+                &mut unit_field_val as *mut u8 as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            )
         };
-        let mask = 240u64 as u8;
+        let mask = 0xf0 as u8;
         let val = (unit_field_val & mask) >> 4usize;
         unsafe { ::std::mem::transmute(val as u8) }
     }
     #[inline]
     pub fn set_src_reg(&mut self, val: __u8) {
-        let mask = 240u64 as u8;
+        let mask = 0xf0 as u8;
         let val = val as u8 as u8;
         let mut unit_field_val: u8 = unsafe { ::std::mem::uninitialized() };
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&self._bitfield_1 as *const _ as
-                                                *const u8,
-                                            &mut unit_field_val as *mut u8 as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>())
+            ::std::ptr::copy_nonoverlapping(
+                &self._bitfield_1 as *const _ as *const u8,
+                &mut unit_field_val as *mut u8 as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            )
         };
         unit_field_val &= !mask;
         unit_field_val |= (val << 4usize) & mask;
         unsafe {
-            ::std::ptr::copy_nonoverlapping(&unit_field_val as *const _ as
-                                                *const u8,
-                                            &mut self._bitfield_1 as *mut _ as
-                                                *mut u8,
-                                            ::std::mem::size_of::<u8>());
+            ::std::ptr::copy_nonoverlapping(
+                &unit_field_val as *const _ as *const u8,
+                &mut self._bitfield_1 as *mut _ as *mut u8,
+                ::std::mem::size_of::<u8>(),
+            );
         }
     }
     #[inline]
     pub fn new_bitfield_1(dst_reg: __u8, src_reg: __u8) -> u8 {
-        ({ ({ 0 } | ((dst_reg as u8 as u8) << 0usize) & (15u64 as u8)) } |
-             ((src_reg as u8 as u8) << 4usize) & (240u64 as u8))
+        ((0 | ((dst_reg as u8 as u8) << 0usize) & (0xf as u8)) | ((src_reg as u8 as u8) << 4usize) & (0xf0 as u8))
     }
 }
 #[repr(C)]
@@ -448,108 +401,99 @@ pub struct bpf_lpm_trie_key {
 }
 #[test]
 fn bindgen_test_layout_bpf_lpm_trie_key() {
-    assert_eq!(::std::mem::size_of::<bpf_lpm_trie_key>() , 4usize , concat ! (
-               "Size of: " , stringify ! ( bpf_lpm_trie_key ) ));
-    assert_eq! (::std::mem::align_of::<bpf_lpm_trie_key>() , 4usize , concat !
-                ( "Alignment of " , stringify ! ( bpf_lpm_trie_key ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_lpm_trie_key ) ) . prefixlen as *
-                const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_lpm_trie_key ) ,
-                "::" , stringify ! ( prefixlen ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_lpm_trie_key ) ) . data as * const _
-                as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_lpm_trie_key ) ,
-                "::" , stringify ! ( data ) ));
+    assert_eq!(
+        ::std::mem::size_of::<bpf_lpm_trie_key>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_lpm_trie_key))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_lpm_trie_key>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_lpm_trie_key))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_lpm_trie_key)).prefixlen as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_lpm_trie_key),
+            "::",
+            stringify!(prefixlen)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_lpm_trie_key)).data as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_lpm_trie_key),
+            "::",
+            stringify!(data)
+        )
+    );
 }
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_cmd {
-    BPF_MAP_CREATE = 0,
-    BPF_MAP_LOOKUP_ELEM = 1,
-    BPF_MAP_UPDATE_ELEM = 2,
-    BPF_MAP_DELETE_ELEM = 3,
-    BPF_MAP_GET_NEXT_KEY = 4,
-    BPF_PROG_LOAD = 5,
-    BPF_OBJ_PIN = 6,
-    BPF_OBJ_GET = 7,
-    BPF_PROG_ATTACH = 8,
-    BPF_PROG_DETACH = 9,
-    BPF_PROG_TEST_RUN = 10,
-    BPF_PROG_GET_NEXT_ID = 11,
-    BPF_MAP_GET_NEXT_ID = 12,
-    BPF_PROG_GET_FD_BY_ID = 13,
-    BPF_MAP_GET_FD_BY_ID = 14,
-    BPF_OBJ_GET_INFO_BY_FD = 15,
-    BPF_PROG_QUERY = 16,
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_map_type {
-    BPF_MAP_TYPE_UNSPEC = 0,
-    BPF_MAP_TYPE_HASH = 1,
-    BPF_MAP_TYPE_ARRAY = 2,
-    BPF_MAP_TYPE_PROG_ARRAY = 3,
-    BPF_MAP_TYPE_PERF_EVENT_ARRAY = 4,
-    BPF_MAP_TYPE_PERCPU_HASH = 5,
-    BPF_MAP_TYPE_PERCPU_ARRAY = 6,
-    BPF_MAP_TYPE_STACK_TRACE = 7,
-    BPF_MAP_TYPE_CGROUP_ARRAY = 8,
-    BPF_MAP_TYPE_LRU_HASH = 9,
-    BPF_MAP_TYPE_LRU_PERCPU_HASH = 10,
-    BPF_MAP_TYPE_LPM_TRIE = 11,
-    BPF_MAP_TYPE_ARRAY_OF_MAPS = 12,
-    BPF_MAP_TYPE_HASH_OF_MAPS = 13,
-    BPF_MAP_TYPE_DEVMAP = 14,
-    BPF_MAP_TYPE_SOCKMAP = 15,
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_prog_type {
-    BPF_PROG_TYPE_UNSPEC = 0,
-    BPF_PROG_TYPE_SOCKET_FILTER = 1,
-    BPF_PROG_TYPE_KPROBE = 2,
-    BPF_PROG_TYPE_SCHED_CLS = 3,
-    BPF_PROG_TYPE_SCHED_ACT = 4,
-    BPF_PROG_TYPE_TRACEPOINT = 5,
-    BPF_PROG_TYPE_XDP = 6,
-    BPF_PROG_TYPE_PERF_EVENT = 7,
-    BPF_PROG_TYPE_CGROUP_SKB = 8,
-    BPF_PROG_TYPE_CGROUP_SOCK = 9,
-    BPF_PROG_TYPE_LWT_IN = 10,
-    BPF_PROG_TYPE_LWT_OUT = 11,
-    BPF_PROG_TYPE_LWT_XMIT = 12,
-    BPF_PROG_TYPE_SOCK_OPS = 13,
-    BPF_PROG_TYPE_SK_SKB = 14,
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_attach_type {
-    BPF_CGROUP_INET_INGRESS = 0,
-    BPF_CGROUP_INET_EGRESS = 1,
-    BPF_CGROUP_INET_SOCK_CREATE = 2,
-    BPF_CGROUP_SOCK_OPS = 3,
-    BPF_SK_SKB_STREAM_PARSER = 4,
-    BPF_SK_SKB_STREAM_VERDICT = 5,
-    __MAX_BPF_ATTACH_TYPE = 6,
-}
+pub const bpf_cmd_BPF_MAP_CREATE: bpf_cmd = 0;
+pub const bpf_cmd_BPF_MAP_LOOKUP_ELEM: bpf_cmd = 1;
+pub const bpf_cmd_BPF_MAP_UPDATE_ELEM: bpf_cmd = 2;
+pub const bpf_cmd_BPF_MAP_DELETE_ELEM: bpf_cmd = 3;
+pub const bpf_cmd_BPF_MAP_GET_NEXT_KEY: bpf_cmd = 4;
+pub const bpf_cmd_BPF_PROG_LOAD: bpf_cmd = 5;
+pub const bpf_cmd_BPF_OBJ_PIN: bpf_cmd = 6;
+pub const bpf_cmd_BPF_OBJ_GET: bpf_cmd = 7;
+pub const bpf_cmd_BPF_PROG_ATTACH: bpf_cmd = 8;
+pub const bpf_cmd_BPF_PROG_DETACH: bpf_cmd = 9;
+pub const bpf_cmd_BPF_PROG_TEST_RUN: bpf_cmd = 10;
+pub const bpf_cmd_BPF_PROG_GET_NEXT_ID: bpf_cmd = 11;
+pub const bpf_cmd_BPF_MAP_GET_NEXT_ID: bpf_cmd = 12;
+pub const bpf_cmd_BPF_PROG_GET_FD_BY_ID: bpf_cmd = 13;
+pub const bpf_cmd_BPF_MAP_GET_FD_BY_ID: bpf_cmd = 14;
+pub const bpf_cmd_BPF_OBJ_GET_INFO_BY_FD: bpf_cmd = 15;
+pub const bpf_cmd_BPF_PROG_QUERY: bpf_cmd = 16;
+pub type bpf_cmd = ::std::os::raw::c_uint;
+pub const bpf_map_type_BPF_MAP_TYPE_UNSPEC: bpf_map_type = 0;
+pub const bpf_map_type_BPF_MAP_TYPE_HASH: bpf_map_type = 1;
+pub const bpf_map_type_BPF_MAP_TYPE_ARRAY: bpf_map_type = 2;
+pub const bpf_map_type_BPF_MAP_TYPE_PROG_ARRAY: bpf_map_type = 3;
+pub const bpf_map_type_BPF_MAP_TYPE_PERF_EVENT_ARRAY: bpf_map_type = 4;
+pub const bpf_map_type_BPF_MAP_TYPE_PERCPU_HASH: bpf_map_type = 5;
+pub const bpf_map_type_BPF_MAP_TYPE_PERCPU_ARRAY: bpf_map_type = 6;
+pub const bpf_map_type_BPF_MAP_TYPE_STACK_TRACE: bpf_map_type = 7;
+pub const bpf_map_type_BPF_MAP_TYPE_CGROUP_ARRAY: bpf_map_type = 8;
+pub const bpf_map_type_BPF_MAP_TYPE_LRU_HASH: bpf_map_type = 9;
+pub const bpf_map_type_BPF_MAP_TYPE_LRU_PERCPU_HASH: bpf_map_type = 10;
+pub const bpf_map_type_BPF_MAP_TYPE_LPM_TRIE: bpf_map_type = 11;
+pub const bpf_map_type_BPF_MAP_TYPE_ARRAY_OF_MAPS: bpf_map_type = 12;
+pub const bpf_map_type_BPF_MAP_TYPE_HASH_OF_MAPS: bpf_map_type = 13;
+pub const bpf_map_type_BPF_MAP_TYPE_DEVMAP: bpf_map_type = 14;
+pub const bpf_map_type_BPF_MAP_TYPE_SOCKMAP: bpf_map_type = 15;
+pub type bpf_map_type = ::std::os::raw::c_uint;
+pub const bpf_prog_type_BPF_PROG_TYPE_UNSPEC: bpf_prog_type = 0;
+pub const bpf_prog_type_BPF_PROG_TYPE_SOCKET_FILTER: bpf_prog_type = 1;
+pub const bpf_prog_type_BPF_PROG_TYPE_KPROBE: bpf_prog_type = 2;
+pub const bpf_prog_type_BPF_PROG_TYPE_SCHED_CLS: bpf_prog_type = 3;
+pub const bpf_prog_type_BPF_PROG_TYPE_SCHED_ACT: bpf_prog_type = 4;
+pub const bpf_prog_type_BPF_PROG_TYPE_TRACEPOINT: bpf_prog_type = 5;
+pub const bpf_prog_type_BPF_PROG_TYPE_XDP: bpf_prog_type = 6;
+pub const bpf_prog_type_BPF_PROG_TYPE_PERF_EVENT: bpf_prog_type = 7;
+pub const bpf_prog_type_BPF_PROG_TYPE_CGROUP_SKB: bpf_prog_type = 8;
+pub const bpf_prog_type_BPF_PROG_TYPE_CGROUP_SOCK: bpf_prog_type = 9;
+pub const bpf_prog_type_BPF_PROG_TYPE_LWT_IN: bpf_prog_type = 10;
+pub const bpf_prog_type_BPF_PROG_TYPE_LWT_OUT: bpf_prog_type = 11;
+pub const bpf_prog_type_BPF_PROG_TYPE_LWT_XMIT: bpf_prog_type = 12;
+pub const bpf_prog_type_BPF_PROG_TYPE_SOCK_OPS: bpf_prog_type = 13;
+pub const bpf_prog_type_BPF_PROG_TYPE_SK_SKB: bpf_prog_type = 14;
+pub type bpf_prog_type = ::std::os::raw::c_uint;
+pub const bpf_attach_type_BPF_CGROUP_INET_INGRESS: bpf_attach_type = 0;
+pub const bpf_attach_type_BPF_CGROUP_INET_EGRESS: bpf_attach_type = 1;
+pub const bpf_attach_type_BPF_CGROUP_INET_SOCK_CREATE: bpf_attach_type = 2;
+pub const bpf_attach_type_BPF_CGROUP_SOCK_OPS: bpf_attach_type = 3;
+pub const bpf_attach_type_BPF_SK_SKB_STREAM_PARSER: bpf_attach_type = 4;
+pub const bpf_attach_type_BPF_SK_SKB_STREAM_VERDICT: bpf_attach_type = 5;
+pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 6;
+pub type bpf_attach_type = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Copy)]
-pub union bpf_attr {
-    pub __bindgen_anon_1: bpf_attr__bindgen_ty_1,
-    pub __bindgen_anon_2: bpf_attr__bindgen_ty_2,
-    pub __bindgen_anon_3: bpf_attr__bindgen_ty_3,
-    pub __bindgen_anon_4: bpf_attr__bindgen_ty_4,
-    pub __bindgen_anon_5: bpf_attr__bindgen_ty_5,
-    pub test: bpf_attr__bindgen_ty_6,
-    pub __bindgen_anon_6: bpf_attr__bindgen_ty_7,
-    pub info: bpf_attr__bindgen_ty_8,
-    pub query: bpf_attr__bindgen_ty_9,
-    _bindgen_union_align: [u64; 8usize],
-}
-#[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Copy, Clone)]; 8usize ] , }#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_1 {
     pub map_type: __u32,
     pub key_size: __u32,
@@ -562,58 +506,99 @@ pub struct bpf_attr__bindgen_ty_1 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_1>() , 44usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_1 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_1>() , 4usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_1 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . map_type as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( map_type ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . key_size as
-                * const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( key_size ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . value_size
-                as * const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( value_size ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . max_entries
-                as * const _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( max_entries ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . map_flags as
-                * const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( map_flags ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . inner_map_fd
-                as * const _ as usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( inner_map_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . numa_node as
-                * const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( numa_node ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_1 ) ) . map_name as
-                * const _ as usize } , 28usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_1
-                ) , "::" , stringify ! ( map_name ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_1 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_1>(),
+        44usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_1>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).map_type as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(map_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).key_size as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(key_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).value_size as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(value_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).max_entries as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(max_entries)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).map_flags as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(map_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).inner_map_fd as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(inner_map_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).numa_node as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(numa_node)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_1)).map_name as *const _ as usize },
+        28usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(map_name)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_2 {
     pub map_fd: __u32,
     pub key: __u64,
@@ -621,85 +606,117 @@ pub struct bpf_attr__bindgen_ty_2 {
     pub flags: __u64,
 }
 #[repr(C)]
-#[derive(Copy)]
-pub union bpf_attr__bindgen_ty_2__bindgen_ty_1 {
-    pub value: __u64,
-    pub next_key: __u64,
-    _bindgen_union_align: u64,
-}
-#[test]
+#[derive(Copy, Clone)]pub union bpf_attr__bindgen_ty_2__bindgen_ty_1 { pub value : __u64 , pub next_key : __u64 , _bindgen_union_align : u64 , }#[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_2__bindgen_ty_1() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_2__bindgen_ty_1>() ,
-               8usize , concat ! (
-               "Size of: " , stringify ! (
-               bpf_attr__bindgen_ty_2__bindgen_ty_1 ) ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_2__bindgen_ty_1>()
-                , 8usize , concat ! (
-                "Alignment of " , stringify ! (
-                bpf_attr__bindgen_ty_2__bindgen_ty_1 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_2__bindgen_ty_1 ) )
-                . value as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_attr__bindgen_ty_2__bindgen_ty_1 ) , "::" , stringify ! (
-                value ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_2__bindgen_ty_1 ) )
-                . next_key as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_attr__bindgen_ty_2__bindgen_ty_1 ) , "::" , stringify ! (
-                next_key ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_2__bindgen_ty_1 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_2__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_2__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_2__bindgen_ty_1)).value as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(value)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_2__bindgen_ty_1)).next_key as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(next_key)
+        )
+    );
 }
 impl Default for bpf_attr__bindgen_ty_2__bindgen_ty_1 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_attr__bindgen_ty_2__bindgen_ty_1 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_attr__bindgen_ty_2__bindgen_ty_1 {{ union }}")
+        write!(f, "bpf_attr__bindgen_ty_2__bindgen_ty_1 {{ union }}")
     }
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_2() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_2>() , 32usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_2 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_2>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_2 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_2 ) ) . map_fd as *
-                const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_2
-                ) , "::" , stringify ! ( map_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_2 ) ) . key as *
-                const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_2
-                ) , "::" , stringify ! ( key ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_2 ) ) . flags as *
-                const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_2
-                ) , "::" , stringify ! ( flags ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_2 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_2>(),
+        32usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_2))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_2>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_2))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_2)).map_fd as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_2),
+            "::",
+            stringify!(map_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_2)).key as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_2),
+            "::",
+            stringify!(key)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_2)).flags as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_2),
+            "::",
+            stringify!(flags)
+        )
+    );
 }
 impl Default for bpf_attr__bindgen_ty_2 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_attr__bindgen_ty_2 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f ,
-               "bpf_attr__bindgen_ty_2 {{ map_fd: {:?}, key: {:?}, flags: {:?} }}"
-               , self . map_fd , self . key , self . flags)
+        write!(
+            f,
+            "bpf_attr__bindgen_ty_2 {{ map_fd: {:?}, key: {:?}, __bindgen_anon_1: {:?}, flags: {:?} }}",
+            self.map_fd,
+            self.key,
+            self.__bindgen_anon_1,
+            self.flags
+        )
     }
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_3 {
     pub prog_type: __u32,
     pub insn_cnt: __u32,
@@ -714,96 +731,158 @@ pub struct bpf_attr__bindgen_ty_3 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_3() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_3>() , 64usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_3 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_3>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_3 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . prog_type as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( prog_type ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . insn_cnt as
-                * const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( insn_cnt ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . insns as *
-                const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( insns ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . license as *
-                const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( license ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . log_level as
-                * const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( log_level ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . log_size as
-                * const _ as usize } , 28usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( log_size ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . log_buf as *
-                const _ as usize } , 32usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( log_buf ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . kern_version
-                as * const _ as usize } , 40usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( kern_version ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . prog_flags
-                as * const _ as usize } , 44usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( prog_flags ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_3 ) ) . prog_name as
-                * const _ as usize } , 48usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_3
-                ) , "::" , stringify ! ( prog_name ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_3 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_3>(),
+        64usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_3))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_3>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_3))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).prog_type as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(prog_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).insn_cnt as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(insn_cnt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).insns as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(insns)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).license as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(license)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).log_level as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(log_level)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).log_size as *const _ as usize },
+        28usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(log_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).log_buf as *const _ as usize },
+        32usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(log_buf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).kern_version as *const _ as usize },
+        40usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(kern_version)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).prog_flags as *const _ as usize },
+        44usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(prog_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_3)).prog_name as *const _ as usize },
+        48usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(prog_name)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_4 {
     pub pathname: __u64,
     pub bpf_fd: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_4() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_4>() , 16usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_4 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_4>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_4 ) ) . pathname as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_4
-                ) , "::" , stringify ! ( pathname ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_4 ) ) . bpf_fd as *
-                const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_4
-                ) , "::" , stringify ! ( bpf_fd ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_4 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_4>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_4))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_4>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_4))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_4)).pathname as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(pathname)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_4)).bpf_fd as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(bpf_fd)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_5 {
     pub target_fd: __u32,
     pub attach_bpf_fd: __u32,
@@ -812,38 +891,59 @@ pub struct bpf_attr__bindgen_ty_5 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_5() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_5>() , 16usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_5 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_5>() , 4usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_5 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_5 ) ) . target_fd as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_5
-                ) , "::" , stringify ! ( target_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_5 ) ) .
-                attach_bpf_fd as * const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_5
-                ) , "::" , stringify ! ( attach_bpf_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_5 ) ) . attach_type
-                as * const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_5
-                ) , "::" , stringify ! ( attach_type ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_5 ) ) . attach_flags
-                as * const _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_5
-                ) , "::" , stringify ! ( attach_flags ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_5 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_5>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_5))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_5>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_5))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_5)).target_fd as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_5),
+            "::",
+            stringify!(target_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_5)).attach_bpf_fd as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_5),
+            "::",
+            stringify!(attach_bpf_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_5)).attach_type as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_5),
+            "::",
+            stringify!(attach_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_5)).attach_flags as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_5),
+            "::",
+            stringify!(attach_flags)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_6 {
     pub prog_fd: __u32,
     pub retval: __u32,
@@ -856,138 +956,203 @@ pub struct bpf_attr__bindgen_ty_6 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_6() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_6>() , 40usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_6 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_6>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_6 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . prog_fd as *
-                const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( prog_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . retval as *
-                const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( retval ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . data_size_in
-                as * const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( data_size_in ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) .
-                data_size_out as * const _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( data_size_out ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . data_in as *
-                const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( data_in ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . data_out as
-                * const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( data_out ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . repeat as *
-                const _ as usize } , 32usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( repeat ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_6 ) ) . duration as
-                * const _ as usize } , 36usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_6
-                ) , "::" , stringify ! ( duration ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_6 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_6>(),
+        40usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_6))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_6>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_6))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).prog_fd as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(prog_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).retval as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(retval)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).data_size_in as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(data_size_in)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).data_size_out as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(data_size_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).data_in as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(data_in)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).data_out as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(data_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).repeat as *const _ as usize },
+        32usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(repeat)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_6)).duration as *const _ as usize },
+        36usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(duration)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_7 {
     pub __bindgen_anon_1: bpf_attr__bindgen_ty_7__bindgen_ty_1,
     pub next_id: __u32,
 }
 #[repr(C)]
-#[derive(Copy)]
-pub union bpf_attr__bindgen_ty_7__bindgen_ty_1 {
-    pub start_id: __u32,
-    pub prog_id: __u32,
-    pub map_id: __u32,
-    _bindgen_union_align: u32,
-}
-#[test]
+#[derive(Copy, Clone)]pub union bpf_attr__bindgen_ty_7__bindgen_ty_1 { pub start_id : __u32 , pub prog_id : __u32 , pub map_id : __u32 , _bindgen_union_align : u32 , }#[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_7__bindgen_ty_1() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_7__bindgen_ty_1>() ,
-               4usize , concat ! (
-               "Size of: " , stringify ! (
-               bpf_attr__bindgen_ty_7__bindgen_ty_1 ) ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_7__bindgen_ty_1>()
-                , 4usize , concat ! (
-                "Alignment of " , stringify ! (
-                bpf_attr__bindgen_ty_7__bindgen_ty_1 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_7__bindgen_ty_1 ) )
-                . start_id as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_attr__bindgen_ty_7__bindgen_ty_1 ) , "::" , stringify ! (
-                start_id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_7__bindgen_ty_1 ) )
-                . prog_id as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_attr__bindgen_ty_7__bindgen_ty_1 ) , "::" , stringify ! (
-                prog_id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_7__bindgen_ty_1 ) )
-                . map_id as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_attr__bindgen_ty_7__bindgen_ty_1 ) , "::" , stringify ! (
-                map_id ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_7__bindgen_ty_1 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_7__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_7__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_7__bindgen_ty_1)).start_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1),
+            "::",
+            stringify!(start_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_7__bindgen_ty_1)).prog_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1),
+            "::",
+            stringify!(prog_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_7__bindgen_ty_1)).map_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1),
+            "::",
+            stringify!(map_id)
+        )
+    );
 }
 impl Default for bpf_attr__bindgen_ty_7__bindgen_ty_1 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_attr__bindgen_ty_7__bindgen_ty_1 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_attr__bindgen_ty_7__bindgen_ty_1 {{ union }}")
+        write!(f, "bpf_attr__bindgen_ty_7__bindgen_ty_1 {{ union }}")
     }
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_7() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_7>() , 8usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_7 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_7>() , 4usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_7 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_7 ) ) . next_id as *
-                const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_7
-                ) , "::" , stringify ! ( next_id ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_7 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_7>(),
+        8usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_7))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_7>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_7))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_7)).next_id as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_7),
+            "::",
+            stringify!(next_id)
+        )
+    );
 }
 impl Default for bpf_attr__bindgen_ty_7 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_attr__bindgen_ty_7 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_attr__bindgen_ty_7 {{ next_id: {:?} }}" , self .
-               next_id)
+        write!(
+            f,
+            "bpf_attr__bindgen_ty_7 {{ __bindgen_anon_1: {:?}, next_id: {:?} }}",
+            self.__bindgen_anon_1,
+            self.next_id
+        )
     }
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_8 {
     pub bpf_fd: __u32,
     pub info_len: __u32,
@@ -995,33 +1160,49 @@ pub struct bpf_attr__bindgen_ty_8 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_8() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_8>() , 16usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_8 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_8>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_8 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_8 ) ) . bpf_fd as *
-                const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_8
-                ) , "::" , stringify ! ( bpf_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_8 ) ) . info_len as
-                * const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_8
-                ) , "::" , stringify ! ( info_len ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_8 ) ) . info as *
-                const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_8
-                ) , "::" , stringify ! ( info ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_8 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_8>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_8))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_8>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_8))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_8)).bpf_fd as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_8),
+            "::",
+            stringify!(bpf_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_8)).info_len as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_8),
+            "::",
+            stringify!(info_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_8)).info as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_8),
+            "::",
+            stringify!(info)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_9 {
     pub target_fd: __u32,
     pub attach_type: __u32,
@@ -1032,146 +1213,193 @@ pub struct bpf_attr__bindgen_ty_9 {
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_9() {
-    assert_eq!(::std::mem::size_of::<bpf_attr__bindgen_ty_9>() , 32usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_attr__bindgen_ty_9 )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_attr__bindgen_ty_9>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_attr__bindgen_ty_9 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . target_fd as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( target_fd ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . attach_type
-                as * const _ as usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( attach_type ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . query_flags
-                as * const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( query_flags ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . attach_flags
-                as * const _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( attach_flags ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . prog_ids as
-                * const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( prog_ids ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr__bindgen_ty_9 ) ) . prog_cnt as
-                * const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr__bindgen_ty_9
-                ) , "::" , stringify ! ( prog_cnt ) ));
-}
-impl Clone for bpf_attr__bindgen_ty_9 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_9>(),
+        32usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_9))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_9>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_9))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).target_fd as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(target_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).attach_type as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(attach_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).query_flags as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(query_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).attach_flags as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(attach_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).prog_ids as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(prog_ids)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr__bindgen_ty_9)).prog_cnt as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr__bindgen_ty_9),
+            "::",
+            stringify!(prog_cnt)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_bpf_attr() {
-    assert_eq!(::std::mem::size_of::<bpf_attr>() , 64usize , concat ! (
-               "Size of: " , stringify ! ( bpf_attr ) ));
-    assert_eq! (::std::mem::align_of::<bpf_attr>() , 8usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_attr ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr ) ) . test as * const _ as usize
-                } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr ) , "::" ,
-                stringify ! ( test ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr ) ) . info as * const _ as usize
-                } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr ) , "::" ,
-                stringify ! ( info ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_attr ) ) . query as * const _ as
-                usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_attr ) , "::" ,
-                stringify ! ( query ) ));
-}
-impl Clone for bpf_attr {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr>(),
+        64usize,
+        concat!("Size of: ", stringify!(bpf_attr))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr)).test as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(test)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr)).info as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(info)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_attr)).query as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(query)
+        )
+    );
 }
 impl Default for bpf_attr {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_attr {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_attr {{ union }}")
+        write!(f, "bpf_attr {{ union }}")
     }
 }
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_func_id {
-    BPF_FUNC_unspec = 0,
-    BPF_FUNC_map_lookup_elem = 1,
-    BPF_FUNC_map_update_elem = 2,
-    BPF_FUNC_map_delete_elem = 3,
-    BPF_FUNC_probe_read = 4,
-    BPF_FUNC_ktime_get_ns = 5,
-    BPF_FUNC_trace_printk = 6,
-    BPF_FUNC_get_prandom_u32 = 7,
-    BPF_FUNC_get_smp_processor_id = 8,
-    BPF_FUNC_skb_store_bytes = 9,
-    BPF_FUNC_l3_csum_replace = 10,
-    BPF_FUNC_l4_csum_replace = 11,
-    BPF_FUNC_tail_call = 12,
-    BPF_FUNC_clone_redirect = 13,
-    BPF_FUNC_get_current_pid_tgid = 14,
-    BPF_FUNC_get_current_uid_gid = 15,
-    BPF_FUNC_get_current_comm = 16,
-    BPF_FUNC_get_cgroup_classid = 17,
-    BPF_FUNC_skb_vlan_push = 18,
-    BPF_FUNC_skb_vlan_pop = 19,
-    BPF_FUNC_skb_get_tunnel_key = 20,
-    BPF_FUNC_skb_set_tunnel_key = 21,
-    BPF_FUNC_perf_event_read = 22,
-    BPF_FUNC_redirect = 23,
-    BPF_FUNC_get_route_realm = 24,
-    BPF_FUNC_perf_event_output = 25,
-    BPF_FUNC_skb_load_bytes = 26,
-    BPF_FUNC_get_stackid = 27,
-    BPF_FUNC_csum_diff = 28,
-    BPF_FUNC_skb_get_tunnel_opt = 29,
-    BPF_FUNC_skb_set_tunnel_opt = 30,
-    BPF_FUNC_skb_change_proto = 31,
-    BPF_FUNC_skb_change_type = 32,
-    BPF_FUNC_skb_under_cgroup = 33,
-    BPF_FUNC_get_hash_recalc = 34,
-    BPF_FUNC_get_current_task = 35,
-    BPF_FUNC_probe_write_user = 36,
-    BPF_FUNC_current_task_under_cgroup = 37,
-    BPF_FUNC_skb_change_tail = 38,
-    BPF_FUNC_skb_pull_data = 39,
-    BPF_FUNC_csum_update = 40,
-    BPF_FUNC_set_hash_invalid = 41,
-    BPF_FUNC_get_numa_node_id = 42,
-    BPF_FUNC_skb_change_head = 43,
-    BPF_FUNC_xdp_adjust_head = 44,
-    BPF_FUNC_probe_read_str = 45,
-    BPF_FUNC_get_socket_cookie = 46,
-    BPF_FUNC_get_socket_uid = 47,
-    BPF_FUNC_set_hash = 48,
-    BPF_FUNC_setsockopt = 49,
-    BPF_FUNC_skb_adjust_room = 50,
-    BPF_FUNC_redirect_map = 51,
-    BPF_FUNC_sk_redirect_map = 52,
-    BPF_FUNC_sock_map_update = 53,
-    BPF_FUNC_xdp_adjust_meta = 54,
-    BPF_FUNC_perf_event_read_value = 55,
-    BPF_FUNC_perf_prog_read_value = 56,
-    __BPF_FUNC_MAX_ID = 57,
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_adj_room_mode { BPF_ADJ_ROOM_NET = 0, }
+pub const bpf_func_id_BPF_FUNC_unspec: bpf_func_id = 0;
+pub const bpf_func_id_BPF_FUNC_map_lookup_elem: bpf_func_id = 1;
+pub const bpf_func_id_BPF_FUNC_map_update_elem: bpf_func_id = 2;
+pub const bpf_func_id_BPF_FUNC_map_delete_elem: bpf_func_id = 3;
+pub const bpf_func_id_BPF_FUNC_probe_read: bpf_func_id = 4;
+pub const bpf_func_id_BPF_FUNC_ktime_get_ns: bpf_func_id = 5;
+pub const bpf_func_id_BPF_FUNC_trace_printk: bpf_func_id = 6;
+pub const bpf_func_id_BPF_FUNC_get_prandom_u32: bpf_func_id = 7;
+pub const bpf_func_id_BPF_FUNC_get_smp_processor_id: bpf_func_id = 8;
+pub const bpf_func_id_BPF_FUNC_skb_store_bytes: bpf_func_id = 9;
+pub const bpf_func_id_BPF_FUNC_l3_csum_replace: bpf_func_id = 10;
+pub const bpf_func_id_BPF_FUNC_l4_csum_replace: bpf_func_id = 11;
+pub const bpf_func_id_BPF_FUNC_tail_call: bpf_func_id = 12;
+pub const bpf_func_id_BPF_FUNC_clone_redirect: bpf_func_id = 13;
+pub const bpf_func_id_BPF_FUNC_get_current_pid_tgid: bpf_func_id = 14;
+pub const bpf_func_id_BPF_FUNC_get_current_uid_gid: bpf_func_id = 15;
+pub const bpf_func_id_BPF_FUNC_get_current_comm: bpf_func_id = 16;
+pub const bpf_func_id_BPF_FUNC_get_cgroup_classid: bpf_func_id = 17;
+pub const bpf_func_id_BPF_FUNC_skb_vlan_push: bpf_func_id = 18;
+pub const bpf_func_id_BPF_FUNC_skb_vlan_pop: bpf_func_id = 19;
+pub const bpf_func_id_BPF_FUNC_skb_get_tunnel_key: bpf_func_id = 20;
+pub const bpf_func_id_BPF_FUNC_skb_set_tunnel_key: bpf_func_id = 21;
+pub const bpf_func_id_BPF_FUNC_perf_event_read: bpf_func_id = 22;
+pub const bpf_func_id_BPF_FUNC_redirect: bpf_func_id = 23;
+pub const bpf_func_id_BPF_FUNC_get_route_realm: bpf_func_id = 24;
+pub const bpf_func_id_BPF_FUNC_perf_event_output: bpf_func_id = 25;
+pub const bpf_func_id_BPF_FUNC_skb_load_bytes: bpf_func_id = 26;
+pub const bpf_func_id_BPF_FUNC_get_stackid: bpf_func_id = 27;
+pub const bpf_func_id_BPF_FUNC_csum_diff: bpf_func_id = 28;
+pub const bpf_func_id_BPF_FUNC_skb_get_tunnel_opt: bpf_func_id = 29;
+pub const bpf_func_id_BPF_FUNC_skb_set_tunnel_opt: bpf_func_id = 30;
+pub const bpf_func_id_BPF_FUNC_skb_change_proto: bpf_func_id = 31;
+pub const bpf_func_id_BPF_FUNC_skb_change_type: bpf_func_id = 32;
+pub const bpf_func_id_BPF_FUNC_skb_under_cgroup: bpf_func_id = 33;
+pub const bpf_func_id_BPF_FUNC_get_hash_recalc: bpf_func_id = 34;
+pub const bpf_func_id_BPF_FUNC_get_current_task: bpf_func_id = 35;
+pub const bpf_func_id_BPF_FUNC_probe_write_user: bpf_func_id = 36;
+pub const bpf_func_id_BPF_FUNC_current_task_under_cgroup: bpf_func_id = 37;
+pub const bpf_func_id_BPF_FUNC_skb_change_tail: bpf_func_id = 38;
+pub const bpf_func_id_BPF_FUNC_skb_pull_data: bpf_func_id = 39;
+pub const bpf_func_id_BPF_FUNC_csum_update: bpf_func_id = 40;
+pub const bpf_func_id_BPF_FUNC_set_hash_invalid: bpf_func_id = 41;
+pub const bpf_func_id_BPF_FUNC_get_numa_node_id: bpf_func_id = 42;
+pub const bpf_func_id_BPF_FUNC_skb_change_head: bpf_func_id = 43;
+pub const bpf_func_id_BPF_FUNC_xdp_adjust_head: bpf_func_id = 44;
+pub const bpf_func_id_BPF_FUNC_probe_read_str: bpf_func_id = 45;
+pub const bpf_func_id_BPF_FUNC_get_socket_cookie: bpf_func_id = 46;
+pub const bpf_func_id_BPF_FUNC_get_socket_uid: bpf_func_id = 47;
+pub const bpf_func_id_BPF_FUNC_set_hash: bpf_func_id = 48;
+pub const bpf_func_id_BPF_FUNC_setsockopt: bpf_func_id = 49;
+pub const bpf_func_id_BPF_FUNC_skb_adjust_room: bpf_func_id = 50;
+pub const bpf_func_id_BPF_FUNC_redirect_map: bpf_func_id = 51;
+pub const bpf_func_id_BPF_FUNC_sk_redirect_map: bpf_func_id = 52;
+pub const bpf_func_id_BPF_FUNC_sock_map_update: bpf_func_id = 53;
+pub const bpf_func_id_BPF_FUNC_xdp_adjust_meta: bpf_func_id = 54;
+pub const bpf_func_id_BPF_FUNC_perf_event_read_value: bpf_func_id = 55;
+pub const bpf_func_id_BPF_FUNC_perf_prog_read_value: bpf_func_id = 56;
+pub const bpf_func_id___BPF_FUNC_MAX_ID: bpf_func_id = 57;
+pub type bpf_func_id = ::std::os::raw::c_uint;
+pub const bpf_adj_room_mode_BPF_ADJ_ROOM_NET: bpf_adj_room_mode = 0;
+pub type bpf_adj_room_mode = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct __sk_buff {
     pub len: __u32,
     pub pkt_type: __u32,
@@ -1202,146 +1430,279 @@ pub struct __sk_buff {
 }
 #[test]
 fn bindgen_test_layout___sk_buff() {
-    assert_eq!(::std::mem::size_of::<__sk_buff>() , 144usize , concat ! (
-               "Size of: " , stringify ! ( __sk_buff ) ));
-    assert_eq! (::std::mem::align_of::<__sk_buff>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( __sk_buff ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . len as * const _ as usize
-                } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( len ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . pkt_type as * const _ as
-                usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( pkt_type ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . mark as * const _ as
-                usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( mark ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . queue_mapping as * const
-                _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( queue_mapping ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . protocol as * const _ as
-                usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( protocol ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . vlan_present as * const _
-                as usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( vlan_present ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . vlan_tci as * const _ as
-                usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( vlan_tci ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . vlan_proto as * const _
-                as usize } , 28usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( vlan_proto ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . priority as * const _ as
-                usize } , 32usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( priority ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . ingress_ifindex as *
-                const _ as usize } , 36usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( ingress_ifindex ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . ifindex as * const _ as
-                usize } , 40usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( ifindex ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . tc_index as * const _ as
-                usize } , 44usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( tc_index ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . cb as * const _ as usize
-                } , 48usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( cb ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . hash as * const _ as
-                usize } , 68usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( hash ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . tc_classid as * const _
-                as usize } , 72usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( tc_classid ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . data as * const _ as
-                usize } , 76usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( data ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . data_end as * const _ as
-                usize } , 80usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( data_end ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . napi_id as * const _ as
-                usize } , 84usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( napi_id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . family as * const _ as
-                usize } , 88usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( family ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . remote_ip4 as * const _
-                as usize } , 92usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( remote_ip4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . local_ip4 as * const _ as
-                usize } , 96usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( local_ip4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . remote_ip6 as * const _
-                as usize } , 100usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( remote_ip6 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . local_ip6 as * const _ as
-                usize } , 116usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( local_ip6 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . remote_port as * const _
-                as usize } , 132usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( remote_port ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . local_port as * const _
-                as usize } , 136usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( local_port ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const __sk_buff ) ) . data_meta as * const _ as
-                usize } , 140usize , concat ! (
-                "Alignment of field: " , stringify ! ( __sk_buff ) , "::" ,
-                stringify ! ( data_meta ) ));
-}
-impl Clone for __sk_buff {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<__sk_buff>(),
+        144usize,
+        concat!("Size of: ", stringify!(__sk_buff))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<__sk_buff>(),
+        4usize,
+        concat!("Alignment of ", stringify!(__sk_buff))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).len as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).pkt_type as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(pkt_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).mark as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(mark)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).queue_mapping as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(queue_mapping)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).protocol as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(protocol)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).vlan_present as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(vlan_present)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).vlan_tci as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(vlan_tci)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).vlan_proto as *const _ as usize },
+        28usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(vlan_proto)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).priority as *const _ as usize },
+        32usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(priority)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).ingress_ifindex as *const _ as usize },
+        36usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(ingress_ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).ifindex as *const _ as usize },
+        40usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).tc_index as *const _ as usize },
+        44usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(tc_index)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).cb as *const _ as usize },
+        48usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(cb)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).hash as *const _ as usize },
+        68usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(hash)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).tc_classid as *const _ as usize },
+        72usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(tc_classid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).data as *const _ as usize },
+        76usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(data)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).data_end as *const _ as usize },
+        80usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(data_end)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).napi_id as *const _ as usize },
+        84usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(napi_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).family as *const _ as usize },
+        88usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).remote_ip4 as *const _ as usize },
+        92usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(remote_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).local_ip4 as *const _ as usize },
+        96usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(local_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).remote_ip6 as *const _ as usize },
+        100usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(remote_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).local_ip6 as *const _ as usize },
+        116usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(local_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).remote_port as *const _ as usize },
+        132usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(remote_port)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).local_port as *const _ as usize },
+        136usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(local_port)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const __sk_buff)).data_meta as *const _ as usize },
+        140usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(data_meta)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub struct bpf_tunnel_key {
     pub tunnel_id: __u32,
     pub __bindgen_anon_1: bpf_tunnel_key__bindgen_ty_1,
@@ -1351,96 +1712,137 @@ pub struct bpf_tunnel_key {
     pub tunnel_label: __u32,
 }
 #[repr(C)]
-#[derive(Copy)]
-pub union bpf_tunnel_key__bindgen_ty_1 {
-    pub remote_ipv4: __u32,
-    pub remote_ipv6: [__u32; 4usize],
-    _bindgen_union_align: [u32; 4usize],
-}
-#[test]
+#[derive(Copy, Clone)]; 4usize ] , }#[test]
 fn bindgen_test_layout_bpf_tunnel_key__bindgen_ty_1() {
-    assert_eq!(::std::mem::size_of::<bpf_tunnel_key__bindgen_ty_1>() , 16usize
-               , concat ! (
-               "Size of: " , stringify ! ( bpf_tunnel_key__bindgen_ty_1 ) ));
-    assert_eq! (::std::mem::align_of::<bpf_tunnel_key__bindgen_ty_1>() ,
-                4usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_tunnel_key__bindgen_ty_1 )
-                ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key__bindgen_ty_1 ) ) .
-                remote_ipv4 as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_tunnel_key__bindgen_ty_1 ) , "::" , stringify ! (
-                remote_ipv4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key__bindgen_ty_1 ) ) .
-                remote_ipv6 as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_tunnel_key__bindgen_ty_1 ) , "::" , stringify ! (
-                remote_ipv6 ) ));
-}
-impl Clone for bpf_tunnel_key__bindgen_ty_1 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_tunnel_key__bindgen_ty_1>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_tunnel_key__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_tunnel_key__bindgen_ty_1>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_tunnel_key__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key__bindgen_ty_1)).remote_ipv4 as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_1),
+            "::",
+            stringify!(remote_ipv4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key__bindgen_ty_1)).remote_ipv6 as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_1),
+            "::",
+            stringify!(remote_ipv6)
+        )
+    );
 }
 impl Default for bpf_tunnel_key__bindgen_ty_1 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_tunnel_key__bindgen_ty_1 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_tunnel_key__bindgen_ty_1 {{ union }}")
+        write!(f, "bpf_tunnel_key__bindgen_ty_1 {{ union }}")
     }
 }
 #[test]
 fn bindgen_test_layout_bpf_tunnel_key() {
-    assert_eq!(::std::mem::size_of::<bpf_tunnel_key>() , 28usize , concat ! (
-               "Size of: " , stringify ! ( bpf_tunnel_key ) ));
-    assert_eq! (::std::mem::align_of::<bpf_tunnel_key>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_tunnel_key ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key ) ) . tunnel_id as * const
-                _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_tunnel_key ) , "::"
-                , stringify ! ( tunnel_id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key ) ) . tunnel_tos as *
-                const _ as usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_tunnel_key ) , "::"
-                , stringify ! ( tunnel_tos ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key ) ) . tunnel_ttl as *
-                const _ as usize } , 21usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_tunnel_key ) , "::"
-                , stringify ! ( tunnel_ttl ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key ) ) . tunnel_ext as *
-                const _ as usize } , 22usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_tunnel_key ) , "::"
-                , stringify ! ( tunnel_ext ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_tunnel_key ) ) . tunnel_label as *
-                const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_tunnel_key ) , "::"
-                , stringify ! ( tunnel_label ) ));
-}
-impl Clone for bpf_tunnel_key {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_tunnel_key>(),
+        28usize,
+        concat!("Size of: ", stringify!(bpf_tunnel_key))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_tunnel_key>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_tunnel_key))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key)).tunnel_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key),
+            "::",
+            stringify!(tunnel_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key)).tunnel_tos as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key),
+            "::",
+            stringify!(tunnel_tos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key)).tunnel_ttl as *const _ as usize },
+        21usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key),
+            "::",
+            stringify!(tunnel_ttl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key)).tunnel_ext as *const _ as usize },
+        22usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key),
+            "::",
+            stringify!(tunnel_ext)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_tunnel_key)).tunnel_label as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_tunnel_key),
+            "::",
+            stringify!(tunnel_label)
+        )
+    );
 }
 impl Default for bpf_tunnel_key {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_tunnel_key {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f ,
-               "bpf_tunnel_key {{ tunnel_id: {:?}, tunnel_tos: {:?}, tunnel_ttl: {:?}, tunnel_ext: {:?}, tunnel_label: {:?} }}"
-               , self . tunnel_id , self . tunnel_tos , self . tunnel_ttl ,
-               self . tunnel_ext , self . tunnel_label)
+        write!(
+            f,
+            "bpf_tunnel_key {{ tunnel_id: {:?}, __bindgen_anon_1: {:?}, tunnel_tos: {:?}, tunnel_ttl: {:?}, tunnel_ext: {:?}, tunnel_label: {:?} }}",
+            self.tunnel_id,
+            self.__bindgen_anon_1,
+            self.tunnel_tos,
+            self.tunnel_ttl,
+            self.tunnel_ext,
+            self.tunnel_label
+        )
     }
 }
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_ret_code { BPF_OK = 0, BPF_DROP = 2, BPF_REDIRECT = 7, }
+pub const bpf_ret_code_BPF_OK: bpf_ret_code = 0;
+pub const bpf_ret_code_BPF_DROP: bpf_ret_code = 2;
+pub const bpf_ret_code_BPF_REDIRECT: bpf_ret_code = 7;
+pub type bpf_ret_code = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_sock {
     pub bound_dev_if: __u32,
     pub family: __u32,
@@ -1451,55 +1853,85 @@ pub struct bpf_sock {
 }
 #[test]
 fn bindgen_test_layout_bpf_sock() {
-    assert_eq!(::std::mem::size_of::<bpf_sock>() , 24usize , concat ! (
-               "Size of: " , stringify ! ( bpf_sock ) ));
-    assert_eq! (::std::mem::align_of::<bpf_sock>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_sock ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . bound_dev_if as * const _
-                as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( bound_dev_if ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . family as * const _ as
-                usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( family ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . type_ as * const _ as
-                usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( type_ ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . protocol as * const _ as
-                usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( protocol ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . mark as * const _ as usize
-                } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( mark ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock ) ) . priority as * const _ as
-                usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock ) , "::" ,
-                stringify ! ( priority ) ));
+    assert_eq!(
+        ::std::mem::size_of::<bpf_sock>(),
+        24usize,
+        concat!("Size of: ", stringify!(bpf_sock))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_sock>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_sock))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).bound_dev_if as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(bound_dev_if)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).family as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).type_ as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).protocol as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(protocol)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).mark as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(mark)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock)).priority as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(priority)
+        )
+    );
 }
-impl Clone for bpf_sock {
-    fn clone(&self) -> Self { *self }
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum xdp_action {
-    XDP_ABORTED = 0,
-    XDP_DROP = 1,
-    XDP_PASS = 2,
-    XDP_TX = 3,
-    XDP_REDIRECT = 4,
-}
+pub const xdp_action_XDP_ABORTED: xdp_action = 0;
+pub const xdp_action_XDP_DROP: xdp_action = 1;
+pub const xdp_action_XDP_PASS: xdp_action = 2;
+pub const xdp_action_XDP_TX: xdp_action = 3;
+pub const xdp_action_XDP_REDIRECT: xdp_action = 4;
+pub type xdp_action = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct xdp_md {
     pub data: __u32,
     pub data_end: __u32,
@@ -1507,34 +1939,53 @@ pub struct xdp_md {
 }
 #[test]
 fn bindgen_test_layout_xdp_md() {
-    assert_eq!(::std::mem::size_of::<xdp_md>() , 12usize , concat ! (
-               "Size of: " , stringify ! ( xdp_md ) ));
-    assert_eq! (::std::mem::align_of::<xdp_md>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( xdp_md ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const xdp_md ) ) . data as * const _ as usize }
-                , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( xdp_md ) , "::" ,
-                stringify ! ( data ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const xdp_md ) ) . data_end as * const _ as
-                usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( xdp_md ) , "::" ,
-                stringify ! ( data_end ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const xdp_md ) ) . data_meta as * const _ as
-                usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( xdp_md ) , "::" ,
-                stringify ! ( data_meta ) ));
+    assert_eq!(
+        ::std::mem::size_of::<xdp_md>(),
+        12usize,
+        concat!("Size of: ", stringify!(xdp_md))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<xdp_md>(),
+        4usize,
+        concat!("Alignment of ", stringify!(xdp_md))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const xdp_md)).data as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(xdp_md),
+            "::",
+            stringify!(data)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const xdp_md)).data_end as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(xdp_md),
+            "::",
+            stringify!(data_end)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const xdp_md)).data_meta as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(xdp_md),
+            "::",
+            stringify!(data_meta)
+        )
+    );
 }
-impl Clone for xdp_md {
-    fn clone(&self) -> Self { *self }
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum sk_action { SK_ABORTED = 0, SK_DROP = 1, SK_REDIRECT = 2, }
+pub const sk_action_SK_ABORTED: sk_action = 0;
+pub const sk_action_SK_DROP: sk_action = 1;
+pub const sk_action_SK_REDIRECT: sk_action = 2;
+pub type sk_action = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_prog_info {
     pub type_: __u32,
     pub id: __u32,
@@ -1551,76 +2002,139 @@ pub struct bpf_prog_info {
 }
 #[test]
 fn bindgen_test_layout_bpf_prog_info() {
-    assert_eq!(::std::mem::size_of::<bpf_prog_info>() , 80usize , concat ! (
-               "Size of: " , stringify ! ( bpf_prog_info ) ));
-    assert_eq! (::std::mem::align_of::<bpf_prog_info>() , 8usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_prog_info ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . type_ as * const _ as
-                usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( type_ ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . id as * const _ as
-                usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . tag as * const _ as
-                usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( tag ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . jited_prog_len as *
-                const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( jited_prog_len ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . xlated_prog_len as *
-                const _ as usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( xlated_prog_len ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . jited_prog_insns as *
-                const _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( jited_prog_insns ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . xlated_prog_insns as
-                * const _ as usize } , 32usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( xlated_prog_insns ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . load_time as * const
-                _ as usize } , 40usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( load_time ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . created_by_uid as *
-                const _ as usize } , 48usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( created_by_uid ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . nr_map_ids as * const
-                _ as usize } , 52usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( nr_map_ids ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . map_ids as * const _
-                as usize } , 56usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( map_ids ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_prog_info ) ) . name as * const _ as
-                usize } , 64usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_prog_info ) , "::"
-                , stringify ! ( name ) ));
-}
-impl Clone for bpf_prog_info {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_prog_info>(),
+        80usize,
+        concat!("Size of: ", stringify!(bpf_prog_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_prog_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_prog_info))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).type_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).id as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).tag as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(tag)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).jited_prog_len as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(jited_prog_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).xlated_prog_len as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(xlated_prog_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).jited_prog_insns as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(jited_prog_insns)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).xlated_prog_insns as *const _ as usize },
+        32usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(xlated_prog_insns)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).load_time as *const _ as usize },
+        40usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(load_time)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).created_by_uid as *const _ as usize },
+        48usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(created_by_uid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).nr_map_ids as *const _ as usize },
+        52usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(nr_map_ids)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).map_ids as *const _ as usize },
+        56usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(map_ids)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_prog_info)).name as *const _ as usize },
+        64usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(name)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_map_info {
     pub type_: __u32,
     pub id: __u32,
@@ -1633,51 +2147,89 @@ pub struct bpf_map_info {
 }
 #[test]
 fn bindgen_test_layout_bpf_map_info() {
-    assert_eq!(::std::mem::size_of::<bpf_map_info>() , 40usize , concat ! (
-               "Size of: " , stringify ! ( bpf_map_info ) ));
-    assert_eq! (::std::mem::align_of::<bpf_map_info>() , 8usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_map_info ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . type_ as * const _ as
-                usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( type_ ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . id as * const _ as
-                usize } , 4usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( id ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . key_size as * const _
-                as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( key_size ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . value_size as * const
-                _ as usize } , 12usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( value_size ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . max_entries as * const
-                _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( max_entries ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . map_flags as * const _
-                as usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( map_flags ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_map_info ) ) . name as * const _ as
-                usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_map_info ) , "::" ,
-                stringify ! ( name ) ));
-}
-impl Clone for bpf_map_info {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_map_info>(),
+        40usize,
+        concat!("Size of: ", stringify!(bpf_map_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_map_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_map_info))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).type_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).id as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).key_size as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(key_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).value_size as *const _ as usize },
+        12usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(value_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).max_entries as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(max_entries)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).map_flags as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(map_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_map_info)).name as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(name)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub struct bpf_sock_ops {
     pub op: __u32,
     pub __bindgen_anon_1: bpf_sock_ops__bindgen_ty_1,
@@ -1690,133 +2242,174 @@ pub struct bpf_sock_ops {
     pub local_port: __u32,
 }
 #[repr(C)]
-#[derive(Copy)]
-pub union bpf_sock_ops__bindgen_ty_1 {
-    pub reply: __u32,
-    pub replylong: [__u32; 4usize],
-    _bindgen_union_align: [u32; 4usize],
-}
-#[test]
+#[derive(Copy, Clone)]; 4usize ] , }#[test]
 fn bindgen_test_layout_bpf_sock_ops__bindgen_ty_1() {
-    assert_eq!(::std::mem::size_of::<bpf_sock_ops__bindgen_ty_1>() , 16usize ,
-               concat ! (
-               "Size of: " , stringify ! ( bpf_sock_ops__bindgen_ty_1 ) ));
-    assert_eq! (::std::mem::align_of::<bpf_sock_ops__bindgen_ty_1>() , 4usize
-                , concat ! (
-                "Alignment of " , stringify ! ( bpf_sock_ops__bindgen_ty_1 )
-                ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops__bindgen_ty_1 ) ) . reply as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_sock_ops__bindgen_ty_1 ) , "::" , stringify ! ( reply )
-                ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops__bindgen_ty_1 ) ) .
-                replylong as * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! (
-                bpf_sock_ops__bindgen_ty_1 ) , "::" , stringify ! ( replylong
-                ) ));
-}
-impl Clone for bpf_sock_ops__bindgen_ty_1 {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_sock_ops__bindgen_ty_1>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_sock_ops__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_sock_ops__bindgen_ty_1>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_sock_ops__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops__bindgen_ty_1)).reply as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops__bindgen_ty_1),
+            "::",
+            stringify!(reply)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops__bindgen_ty_1)).replylong as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops__bindgen_ty_1),
+            "::",
+            stringify!(replylong)
+        )
+    );
 }
 impl Default for bpf_sock_ops__bindgen_ty_1 {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_sock_ops__bindgen_ty_1 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f , "bpf_sock_ops__bindgen_ty_1 {{ union }}")
+        write!(f, "bpf_sock_ops__bindgen_ty_1 {{ union }}")
     }
 }
 #[test]
 fn bindgen_test_layout_bpf_sock_ops() {
-    assert_eq!(::std::mem::size_of::<bpf_sock_ops>() , 72usize , concat ! (
-               "Size of: " , stringify ! ( bpf_sock_ops ) ));
-    assert_eq! (::std::mem::align_of::<bpf_sock_ops>() , 4usize , concat ! (
-                "Alignment of " , stringify ! ( bpf_sock_ops ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . op as * const _ as
-                usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( op ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . family as * const _ as
-                usize } , 20usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( family ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . remote_ip4 as * const
-                _ as usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( remote_ip4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . local_ip4 as * const _
-                as usize } , 28usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( local_ip4 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . remote_ip6 as * const
-                _ as usize } , 32usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( remote_ip6 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . local_ip6 as * const _
-                as usize } , 48usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( local_ip6 ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . remote_port as * const
-                _ as usize } , 64usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( remote_port ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_sock_ops ) ) . local_port as * const
-                _ as usize } , 68usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_sock_ops ) , "::" ,
-                stringify ! ( local_port ) ));
-}
-impl Clone for bpf_sock_ops {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bpf_sock_ops>(),
+        72usize,
+        concat!("Size of: ", stringify!(bpf_sock_ops))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_sock_ops>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_sock_ops))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).op as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(op)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).family as *const _ as usize },
+        20usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).remote_ip4 as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(remote_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).local_ip4 as *const _ as usize },
+        28usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(local_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).remote_ip6 as *const _ as usize },
+        32usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(remote_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).local_ip6 as *const _ as usize },
+        48usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(local_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).remote_port as *const _ as usize },
+        64usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(remote_port)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_sock_ops)).local_port as *const _ as usize },
+        68usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(local_port)
+        )
+    );
 }
 impl Default for bpf_sock_ops {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl ::std::fmt::Debug for bpf_sock_ops {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f ,
-               "bpf_sock_ops {{ op: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?} }}"
-               , self . op , self . family , self . remote_ip4 , self .
-               local_ip4 , self . remote_ip6 , self . local_ip6 , self .
-               remote_port , self . local_port)
+        write!(
+            f,
+            "bpf_sock_ops {{ op: {:?}, __bindgen_anon_1: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?} }}",
+            self.op,
+            self.__bindgen_anon_1,
+            self.family,
+            self.remote_ip4,
+            self.local_ip4,
+            self.remote_ip6,
+            self.local_ip6,
+            self.remote_port,
+            self.local_port
+        )
     }
 }
-pub const BPF_SOCK_OPS_VOID: _bindgen_ty_2 = _bindgen_ty_2::BPF_SOCK_OPS_VOID;
-pub const BPF_SOCK_OPS_TIMEOUT_INIT: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_TIMEOUT_INIT;
-pub const BPF_SOCK_OPS_RWND_INIT: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_RWND_INIT;
-pub const BPF_SOCK_OPS_TCP_CONNECT_CB: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_TCP_CONNECT_CB;
-pub const BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB;
-pub const BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB;
-pub const BPF_SOCK_OPS_NEEDS_ECN: _bindgen_ty_2 =
-    _bindgen_ty_2::BPF_SOCK_OPS_NEEDS_ECN;
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum _bindgen_ty_2 {
-    BPF_SOCK_OPS_VOID = 0,
-    BPF_SOCK_OPS_TIMEOUT_INIT = 1,
-    BPF_SOCK_OPS_RWND_INIT = 2,
-    BPF_SOCK_OPS_TCP_CONNECT_CB = 3,
-    BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB = 4,
-    BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB = 5,
-    BPF_SOCK_OPS_NEEDS_ECN = 6,
-}
+pub const BPF_SOCK_OPS_VOID: _bindgen_ty_2 = 0;
+pub const BPF_SOCK_OPS_TIMEOUT_INIT: _bindgen_ty_2 = 1;
+pub const BPF_SOCK_OPS_RWND_INIT: _bindgen_ty_2 = 2;
+pub const BPF_SOCK_OPS_TCP_CONNECT_CB: _bindgen_ty_2 = 3;
+pub const BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB: _bindgen_ty_2 = 4;
+pub const BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB: _bindgen_ty_2 = 5;
+pub const BPF_SOCK_OPS_NEEDS_ECN: _bindgen_ty_2 = 6;
+pub type _bindgen_ty_2 = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_perf_event_value {
     pub counter: __u64,
     pub enabled: __u64,
@@ -1824,212 +2417,210 @@ pub struct bpf_perf_event_value {
 }
 #[test]
 fn bindgen_test_layout_bpf_perf_event_value() {
-    assert_eq!(::std::mem::size_of::<bpf_perf_event_value>() , 24usize ,
-               concat ! ( "Size of: " , stringify ! ( bpf_perf_event_value )
-               ));
-    assert_eq! (::std::mem::align_of::<bpf_perf_event_value>() , 8usize ,
-                concat ! (
-                "Alignment of " , stringify ! ( bpf_perf_event_value ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_perf_event_value ) ) . counter as *
-                const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_perf_event_value )
-                , "::" , stringify ! ( counter ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_perf_event_value ) ) . enabled as *
-                const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_perf_event_value )
-                , "::" , stringify ! ( enabled ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bpf_perf_event_value ) ) . running as *
-                const _ as usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bpf_perf_event_value )
-                , "::" , stringify ! ( running ) ));
+    assert_eq!(
+        ::std::mem::size_of::<bpf_perf_event_value>(),
+        24usize,
+        concat!("Size of: ", stringify!(bpf_perf_event_value))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_perf_event_value>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_perf_event_value))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_perf_event_value)).counter as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_perf_event_value),
+            "::",
+            stringify!(counter)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_perf_event_value)).enabled as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_perf_event_value),
+            "::",
+            stringify!(enabled)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bpf_perf_event_value)).running as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bpf_perf_event_value),
+            "::",
+            stringify!(running)
+        )
+    );
 }
-impl Clone for bpf_perf_event_value {
-    fn clone(&self) -> Self { *self }
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum bpf_probe_attach_type { BPF_PROBE_ENTRY = 0, BPF_PROBE_RETURN = 1, }
+pub const bpf_probe_attach_type_BPF_PROBE_ENTRY: bpf_probe_attach_type = 0;
+pub const bpf_probe_attach_type_BPF_PROBE_RETURN: bpf_probe_attach_type = 1;
+pub type bpf_probe_attach_type = ::std::os::raw::c_uint;
 extern "C" {
-    pub fn bpf_create_map(map_type: bpf_map_type,
-                          key_size: ::std::os::raw::c_int,
-                          value_size: ::std::os::raw::c_int,
-                          max_entries: ::std::os::raw::c_int,
-                          map_flags: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn bpf_update_elem(fd: ::std::os::raw::c_int,
-                           key: *mut ::std::os::raw::c_void,
-                           value: *mut ::std::os::raw::c_void,
-                           flags: ::std::os::raw::c_ulonglong)
-     -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn bpf_lookup_elem(fd: ::std::os::raw::c_int,
-                           key: *mut ::std::os::raw::c_void,
-                           value: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn bpf_delete_elem(fd: ::std::os::raw::c_int,
-                           key: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn bpf_get_first_key(fd: ::std::os::raw::c_int,
-                             key: *mut ::std::os::raw::c_void,
-                             key_size: usize) -> ::std::os::raw::c_int;
+    pub fn bpf_create_map(
+        map_type: bpf_map_type,
+        name: *const ::std::os::raw::c_char,
+        key_size: ::std::os::raw::c_int,
+        value_size: ::std::os::raw::c_int,
+        max_entries: ::std::os::raw::c_int,
+        map_flags: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_get_next_key(fd: ::std::os::raw::c_int,
-                            key: *mut ::std::os::raw::c_void,
-                            next_key: *mut ::std::os::raw::c_void)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_update_elem(fd: ::std::os::raw::c_int, key: *mut ::std::os::raw::c_void, value: *mut ::std::os::raw::c_void, flags: ::std::os::raw::c_ulonglong) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_prog_load(prog_type: bpf_prog_type, insns: *const bpf_insn,
-                         insn_len: ::std::os::raw::c_int,
-                         license: *const ::std::os::raw::c_char,
-                         kern_version: ::std::os::raw::c_uint,
-                         log_buf: *mut ::std::os::raw::c_char,
-                         log_buf_size: ::std::os::raw::c_uint)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_lookup_elem(fd: ::std::os::raw::c_int, key: *mut ::std::os::raw::c_void, value: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_attach_socket(sockfd: ::std::os::raw::c_int,
-                             progfd: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_delete_elem(fd: ::std::os::raw::c_int, key: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_open_raw_sock(name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
-}
-pub type perf_reader_cb =
-    ::std::option::Option<unsafe extern "C" fn(cb_cookie:
-                                                   *mut ::std::os::raw::c_void,
-                                               pid: ::std::os::raw::c_int,
-                                               callchain_num: u64,
-                                               callchain:
-                                                   *mut ::std::os::raw::c_void)>;
-pub type perf_reader_raw_cb =
-    ::std::option::Option<unsafe extern "C" fn(cb_cookie:
-                                                   *mut ::std::os::raw::c_void,
-                                               raw:
-                                                   *mut ::std::os::raw::c_void,
-                                               raw_size:
-                                                   ::std::os::raw::c_int)>;
-pub type perf_reader_lost_cb =
-    ::std::option::Option<unsafe extern "C" fn(lost: u64)>;
-extern "C" {
-    pub fn bpf_attach_kprobe(progfd: ::std::os::raw::c_int,
-                             attach_type: bpf_probe_attach_type,
-                             ev_name: *const ::std::os::raw::c_char,
-                             fn_name: *const ::std::os::raw::c_char,
-                             pid: pid_t, cpu: ::std::os::raw::c_int,
-                             group_fd: ::std::os::raw::c_int,
-                             cb: perf_reader_cb,
-                             cb_cookie: *mut ::std::os::raw::c_void)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_get_first_key(fd: ::std::os::raw::c_int, key: *mut ::std::os::raw::c_void, key_size: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_detach_kprobe(ev_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_get_next_key(fd: ::std::os::raw::c_int, key: *mut ::std::os::raw::c_void, next_key: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_attach_uprobe(progfd: ::std::os::raw::c_int,
-                             attach_type: bpf_probe_attach_type,
-                             ev_name: *const ::std::os::raw::c_char,
-                             binary_path: *const ::std::os::raw::c_char,
-                             offset: u64, pid: pid_t,
-                             cpu: ::std::os::raw::c_int,
-                             group_fd: ::std::os::raw::c_int,
-                             cb: perf_reader_cb,
-                             cb_cookie: *mut ::std::os::raw::c_void)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_prog_load(
+        prog_type: bpf_prog_type,
+        name: *const ::std::os::raw::c_char,
+        insns: *const bpf_insn,
+        insn_len: ::std::os::raw::c_int,
+        license: *const ::std::os::raw::c_char,
+        kern_version: ::std::os::raw::c_uint,
+        log_buf: *mut ::std::os::raw::c_char,
+        log_buf_size: ::std::os::raw::c_uint,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_detach_uprobe(ev_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_attach_socket(sockfd: ::std::os::raw::c_int, progfd: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_attach_tracepoint(progfd: ::std::os::raw::c_int,
-                                 tp_category: *const ::std::os::raw::c_char,
-                                 tp_name: *const ::std::os::raw::c_char,
-                                 pid: ::std::os::raw::c_int,
-                                 cpu: ::std::os::raw::c_int,
-                                 group_fd: ::std::os::raw::c_int,
-                                 cb: perf_reader_cb,
-                                 cb_cookie: *mut ::std::os::raw::c_void)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_open_raw_sock(name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+pub type perf_reader_cb = ::std::option::Option<
+    unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void,
+                         pid: ::std::os::raw::c_int,
+                         callchain_num: u64,
+                         callchain: *mut ::std::os::raw::c_void),
+>;
+pub type perf_reader_raw_cb = ::std::option::Option<
+    unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void,
+                         raw: *mut ::std::os::raw::c_void,
+                         raw_size: ::std::os::raw::c_int),
+>;
+pub type perf_reader_lost_cb = ::std::option::Option<unsafe extern "C" fn(lost: u64)>;
+extern "C" {
+    pub fn bpf_attach_kprobe(
+        progfd: ::std::os::raw::c_int,
+        attach_type: bpf_probe_attach_type,
+        ev_name: *const ::std::os::raw::c_char,
+        fn_name: *const ::std::os::raw::c_char,
+        pid: pid_t,
+        cpu: ::std::os::raw::c_int,
+        group_fd: ::std::os::raw::c_int,
+        cb: perf_reader_cb,
+        cb_cookie: *mut ::std::os::raw::c_void,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_detach_tracepoint(tp_category: *const ::std::os::raw::c_char,
-                                 tp_name: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_detach_kprobe(ev_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_open_perf_buffer(raw_cb: perf_reader_raw_cb,
-                                lost_cb: perf_reader_lost_cb,
-                                cb_cookie: *mut ::std::os::raw::c_void,
-                                pid: ::std::os::raw::c_int,
-                                cpu: ::std::os::raw::c_int,
-                                page_cnt: ::std::os::raw::c_int)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bpf_attach_uprobe(
+        progfd: ::std::os::raw::c_int,
+        attach_type: bpf_probe_attach_type,
+        ev_name: *const ::std::os::raw::c_char,
+        binary_path: *const ::std::os::raw::c_char,
+        offset: u64,
+        pid: pid_t,
+        cpu: ::std::os::raw::c_int,
+        group_fd: ::std::os::raw::c_int,
+        cb: perf_reader_cb,
+        cb_cookie: *mut ::std::os::raw::c_void,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_attach_xdp(dev_name: *const ::std::os::raw::c_char,
-                          progfd: ::std::os::raw::c_int, flags: u32)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_detach_uprobe(ev_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_attach_perf_event(progfd: ::std::os::raw::c_int, ev_type: u32,
-                                 ev_config: u32, sample_period: u64,
-                                 sample_freq: u64, pid: pid_t,
-                                 cpu: ::std::os::raw::c_int,
-                                 group_fd: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_attach_tracepoint(
+        progfd: ::std::os::raw::c_int,
+        tp_category: *const ::std::os::raw::c_char,
+        tp_name: *const ::std::os::raw::c_char,
+        pid: ::std::os::raw::c_int,
+        cpu: ::std::os::raw::c_int,
+        group_fd: ::std::os::raw::c_int,
+        cb: perf_reader_cb,
+        cb_cookie: *mut ::std::os::raw::c_void,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_open_perf_event(type_: u32, config: u64,
-                               pid: ::std::os::raw::c_int,
-                               cpu: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_detach_tracepoint(tp_category: *const ::std::os::raw::c_char, tp_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_close_perf_event_fd(fd: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_open_perf_buffer(
+        raw_cb: perf_reader_raw_cb,
+        lost_cb: perf_reader_lost_cb,
+        cb_cookie: *mut ::std::os::raw::c_void,
+        pid: ::std::os::raw::c_int,
+        cpu: ::std::os::raw::c_int,
+        page_cnt: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_obj_pin(fd: ::std::os::raw::c_int,
-                       pathname: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_attach_xdp(dev_name: *const ::std::os::raw::c_char, progfd: ::std::os::raw::c_int, flags: u32) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_obj_get(pathname: *const ::std::os::raw::c_char)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_attach_perf_event(
+        progfd: ::std::os::raw::c_int,
+        ev_type: u32,
+        ev_config: u32,
+        sample_period: u64,
+        sample_freq: u64,
+        pid: pid_t,
+        cpu: ::std::os::raw::c_int,
+        group_fd: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_obj_get_info(prog_map_fd: ::std::os::raw::c_int,
-                            info: *mut ::std::os::raw::c_void,
-                            info_len: *mut ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_open_perf_event(type_: u32, config: u64, pid: ::std::os::raw::c_int, cpu: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_prog_compute_tag(insns: *const bpf_insn,
-                                prog_len: ::std::os::raw::c_int,
-                                tag: *mut ::std::os::raw::c_ulonglong)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_close_perf_event_fd(fd: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bpf_prog_get_tag(fd: ::std::os::raw::c_int,
-                            tag: *mut ::std::os::raw::c_ulonglong)
-     -> ::std::os::raw::c_int;
+    pub fn bpf_obj_pin(fd: ::std::os::raw::c_int, pathname: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_obj_get(pathname: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_obj_get_info(prog_map_fd: ::std::os::raw::c_int, info: *mut ::std::os::raw::c_void, info_len: *mut u32) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_prog_compute_tag(insns: *const bpf_insn, prog_len: ::std::os::raw::c_int, tag: *mut ::std::os::raw::c_ulonglong) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_prog_get_tag(fd: ::std::os::raw::c_int, tag: *mut ::std::os::raw::c_ulonglong) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_prog_get_next_id(start_id: u32, next_id: *mut u32) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_prog_get_fd_by_id(id: u32) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_map_get_fd_by_id(id: u32) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
-#[derive(Debug, Copy)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bcc_symbol {
     pub name: *const ::std::os::raw::c_char,
     pub demangle_name: *const ::std::os::raw::c_char,
@@ -2038,44 +2629,65 @@ pub struct bcc_symbol {
 }
 #[test]
 fn bindgen_test_layout_bcc_symbol() {
-    assert_eq!(::std::mem::size_of::<bcc_symbol>() , 32usize , concat ! (
-               "Size of: " , stringify ! ( bcc_symbol ) ));
-    assert_eq! (::std::mem::align_of::<bcc_symbol>() , 8usize , concat ! (
-                "Alignment of " , stringify ! ( bcc_symbol ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol ) ) . name as * const _ as
-                usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol ) , "::" ,
-                stringify ! ( name ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol ) ) . demangle_name as * const
-                _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol ) , "::" ,
-                stringify ! ( demangle_name ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol ) ) . module as * const _ as
-                usize } , 16usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol ) , "::" ,
-                stringify ! ( module ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol ) ) . offset as * const _ as
-                usize } , 24usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol ) , "::" ,
-                stringify ! ( offset ) ));
-}
-impl Clone for bcc_symbol {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bcc_symbol>(),
+        32usize,
+        concat!("Size of: ", stringify!(bcc_symbol))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bcc_symbol>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bcc_symbol))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol)).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol)).demangle_name as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol),
+            "::",
+            stringify!(demangle_name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol)).module as *const _ as usize },
+        16usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol),
+            "::",
+            stringify!(module)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol)).offset as *const _ as usize },
+        24usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol),
+            "::",
+            stringify!(offset)
+        )
+    );
 }
 impl Default for bcc_symbol {
-    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
-pub type SYM_CB =
-    ::std::option::Option<unsafe extern "C" fn(symname:
-                                                   *const ::std::os::raw::c_char,
-                                               addr: u64)
-                              -> ::std::os::raw::c_int>;
+pub type SYM_CB = ::std::option::Option<unsafe extern "C" fn(symname: *const ::std::os::raw::c_char, addr: u64) -> ::std::os::raw::c_int>;
 #[repr(C)]
-#[derive(Debug, Default, Copy)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bcc_symbol_option {
     pub use_debug_file: ::std::os::raw::c_int,
     pub check_debug_file_crc: ::std::os::raw::c_int,
@@ -2083,78 +2695,83 @@ pub struct bcc_symbol_option {
 }
 #[test]
 fn bindgen_test_layout_bcc_symbol_option() {
-    assert_eq!(::std::mem::size_of::<bcc_symbol_option>() , 12usize , concat !
-               ( "Size of: " , stringify ! ( bcc_symbol_option ) ));
-    assert_eq! (::std::mem::align_of::<bcc_symbol_option>() , 4usize , concat
-                ! ( "Alignment of " , stringify ! ( bcc_symbol_option ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol_option ) ) . use_debug_file as
-                * const _ as usize } , 0usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol_option ) ,
-                "::" , stringify ! ( use_debug_file ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol_option ) ) .
-                check_debug_file_crc as * const _ as usize } , 4usize , concat
-                ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol_option ) ,
-                "::" , stringify ! ( check_debug_file_crc ) ));
-    assert_eq! (unsafe {
-                & ( * ( 0 as * const bcc_symbol_option ) ) . use_symbol_type
-                as * const _ as usize } , 8usize , concat ! (
-                "Alignment of field: " , stringify ! ( bcc_symbol_option ) ,
-                "::" , stringify ! ( use_symbol_type ) ));
-}
-impl Clone for bcc_symbol_option {
-    fn clone(&self) -> Self { *self }
+    assert_eq!(
+        ::std::mem::size_of::<bcc_symbol_option>(),
+        12usize,
+        concat!("Size of: ", stringify!(bcc_symbol_option))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bcc_symbol_option>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bcc_symbol_option))
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol_option)).use_debug_file as *const _ as usize },
+        0usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol_option),
+            "::",
+            stringify!(use_debug_file)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol_option)).check_debug_file_crc as *const _ as usize },
+        4usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol_option),
+            "::",
+            stringify!(check_debug_file_crc)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(0 as *const bcc_symbol_option)).use_symbol_type as *const _ as usize },
+        8usize,
+        concat!(
+            "Alignment of field: ",
+            stringify!(bcc_symbol_option),
+            "::",
+            stringify!(use_symbol_type)
+        )
+    );
 }
 extern "C" {
-    pub fn bcc_symcache_new(pid: ::std::os::raw::c_int,
-                            option: *mut bcc_symbol_option)
-     -> *mut ::std::os::raw::c_void;
+    pub fn bcc_symcache_new(pid: ::std::os::raw::c_int, option: *mut bcc_symbol_option) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bcc_free_symcache(symcache: *mut ::std::os::raw::c_void,
-                             pid: ::std::os::raw::c_int);
+    pub fn bcc_free_symcache(symcache: *mut ::std::os::raw::c_void, pid: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn bcc_symbol_free_demangle_name(sym: *mut bcc_symbol);
 }
 extern "C" {
-    pub fn bcc_symcache_resolve(symcache: *mut ::std::os::raw::c_void,
-                                addr: u64, sym: *mut bcc_symbol)
-     -> ::std::os::raw::c_int;
+    pub fn bcc_symcache_resolve(symcache: *mut ::std::os::raw::c_void, addr: u64, sym: *mut bcc_symbol) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bcc_symcache_resolve_no_demangle(symcache:
-                                                *mut ::std::os::raw::c_void,
-                                            addr: u64, sym: *mut bcc_symbol)
-     -> ::std::os::raw::c_int;
+    pub fn bcc_symcache_resolve_no_demangle(symcache: *mut ::std::os::raw::c_void, addr: u64, sym: *mut bcc_symbol) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bcc_symcache_resolve_name(resolver: *mut ::std::os::raw::c_void,
-                                     module: *const ::std::os::raw::c_char,
-                                     name: *const ::std::os::raw::c_char,
-                                     addr: *mut u64) -> ::std::os::raw::c_int;
+    pub fn bcc_symcache_resolve_name(resolver: *mut ::std::os::raw::c_void, module: *const ::std::os::raw::c_char, name: *const ::std::os::raw::c_char, addr: *mut u64) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bcc_symcache_refresh(resolver: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn bcc_resolve_global_addr(pid: ::std::os::raw::c_int,
-                                   module: *const ::std::os::raw::c_char,
-                                   address: u64, global: *mut u64)
-     -> ::std::os::raw::c_int;
+    pub fn bcc_resolve_global_addr(pid: ::std::os::raw::c_int, module: *const ::std::os::raw::c_char, address: u64, global: *mut u64) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bcc_foreach_function_symbol(module: *const ::std::os::raw::c_char,
-                                       cb: SYM_CB) -> ::std::os::raw::c_int;
+    pub fn bcc_foreach_function_symbol(module: *const ::std::os::raw::c_char, cb: SYM_CB) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn bcc_resolve_symname(module: *const ::std::os::raw::c_char,
-                               symname: *const ::std::os::raw::c_char,
-                               addr: u64, pid: ::std::os::raw::c_int,
-                               option: *mut bcc_symbol_option,
-                               sym: *mut bcc_symbol) -> ::std::os::raw::c_int;
+    pub fn bcc_resolve_symname(
+        module: *const ::std::os::raw::c_char,
+        symname: *const ::std::os::raw::c_char,
+        addr: u64,
+        pid: ::std::os::raw::c_int,
+        option: *mut bcc_symbol_option,
+        sym: *mut bcc_symbol,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2162,34 +2779,23 @@ pub struct perf_reader {
     _unused: [u8; 0],
 }
 extern "C" {
-    pub fn perf_reader_new(cb: perf_reader_cb, raw_cb: perf_reader_raw_cb,
-                           lost_cb: perf_reader_lost_cb,
-                           cb_cookie: *mut ::std::os::raw::c_void,
-                           page_cnt: ::std::os::raw::c_int)
-     -> *mut perf_reader;
+    pub fn perf_reader_new(cb: perf_reader_cb, raw_cb: perf_reader_raw_cb, lost_cb: perf_reader_lost_cb, cb_cookie: *mut ::std::os::raw::c_void, page_cnt: ::std::os::raw::c_int) -> *mut perf_reader;
 }
 extern "C" {
     pub fn perf_reader_free(ptr: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn perf_reader_mmap(reader: *mut perf_reader,
-                            type_: ::std::os::raw::c_uint,
-                            sample_type: ::std::os::raw::c_ulong)
-     -> ::std::os::raw::c_int;
+    pub fn perf_reader_mmap(reader: *mut perf_reader, type_: ::std::os::raw::c_uint, sample_type: ::std::os::raw::c_ulong) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn perf_reader_event_read(reader: *mut perf_reader);
 }
 extern "C" {
-    pub fn perf_reader_poll(num_readers: ::std::os::raw::c_int,
-                            readers: *mut *mut perf_reader,
-                            timeout: ::std::os::raw::c_int)
-     -> ::std::os::raw::c_int;
+    pub fn perf_reader_poll(num_readers: ::std::os::raw::c_int, readers: *mut *mut perf_reader, timeout: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn perf_reader_fd(reader: *mut perf_reader) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn perf_reader_set_fd(reader: *mut perf_reader,
-                              fd: ::std::os::raw::c_int);
+    pub fn perf_reader_set_fd(reader: *mut perf_reader, fd: ::std::os::raw::c_int);
 }
