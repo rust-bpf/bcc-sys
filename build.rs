@@ -1,6 +1,5 @@
 extern crate bindgen;
 
-use std::path::Path;
 use std::process;
 
 fn main() {
