@@ -492,7 +492,20 @@ pub const bpf_attach_type_BPF_SK_SKB_STREAM_VERDICT: bpf_attach_type = 5;
 pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 6;
 pub type bpf_attach_type = ::std::os::raw::c_uint;
 #[repr(C)]
-#[derive(Copy, Clone)]; 8usize ] , }#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr {
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_1,
+    pub __bindgen_anon_2: bpf_attr__bindgen_ty_2,
+    pub __bindgen_anon_3: bpf_attr__bindgen_ty_3,
+    pub __bindgen_anon_4: bpf_attr__bindgen_ty_4,
+    pub __bindgen_anon_5: bpf_attr__bindgen_ty_5,
+    pub test: bpf_attr__bindgen_ty_6,
+    pub __bindgen_anon_6: bpf_attr__bindgen_ty_7,
+    pub info: bpf_attr__bindgen_ty_8,
+    pub query: bpf_attr__bindgen_ty_9,
+    _bindgen_union_align: [u64; 8usize],
+}
+#[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_attr__bindgen_ty_1 {
     pub map_type: __u32,
@@ -606,7 +619,13 @@ pub struct bpf_attr__bindgen_ty_2 {
     pub flags: __u64,
 }
 #[repr(C)]
-#[derive(Copy, Clone)]pub union bpf_attr__bindgen_ty_2__bindgen_ty_1 { pub value : __u64 , pub next_key : __u64 , _bindgen_union_align : u64 , }#[test]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_2__bindgen_ty_1 {
+    pub value: __u64,
+    pub next_key: __u64,
+    _bindgen_union_align: u64,
+}
+#[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_2__bindgen_ty_1() {
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_2__bindgen_ty_1>(),
@@ -1054,7 +1073,14 @@ pub struct bpf_attr__bindgen_ty_7 {
     pub next_id: __u32,
 }
 #[repr(C)]
-#[derive(Copy, Clone)]pub union bpf_attr__bindgen_ty_7__bindgen_ty_1 { pub start_id : __u32 , pub prog_id : __u32 , pub map_id : __u32 , _bindgen_union_align : u32 , }#[test]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_7__bindgen_ty_1 {
+    pub start_id: __u32,
+    pub prog_id: __u32,
+    pub map_id: __u32,
+    _bindgen_union_align: u32,
+}
+#[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_7__bindgen_ty_1() {
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_7__bindgen_ty_1>(),
@@ -1712,7 +1738,13 @@ pub struct bpf_tunnel_key {
     pub tunnel_label: __u32,
 }
 #[repr(C)]
-#[derive(Copy, Clone)]; 4usize ] , }#[test]
+#[derive(Copy, Clone)]
+pub union bpf_tunnel_key__bindgen_ty_1 {
+    pub remote_ipv4: __u32,
+    pub remote_ipv6: [__u32; 4usize],
+    _bindgen_union_align: [u32; 4usize],
+}
+#[test]
 fn bindgen_test_layout_bpf_tunnel_key__bindgen_ty_1() {
     assert_eq!(
         ::std::mem::size_of::<bpf_tunnel_key__bindgen_ty_1>(),
@@ -2242,7 +2274,13 @@ pub struct bpf_sock_ops {
     pub local_port: __u32,
 }
 #[repr(C)]
-#[derive(Copy, Clone)]; 4usize ] , }#[test]
+#[derive(Copy, Clone)]
+pub union bpf_sock_ops__bindgen_ty_1 {
+    pub reply: __u32,
+    pub replylong: [__u32; 4usize],
+    _bindgen_union_align: [u32; 4usize],
+}
+#[test]
 fn bindgen_test_layout_bpf_sock_ops__bindgen_ty_1() {
     assert_eq!(
         ::std::mem::size_of::<bpf_sock_ops__bindgen_ty_1>(),
@@ -2504,17 +2542,8 @@ extern "C" {
 extern "C" {
     pub fn bpf_open_raw_sock(name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
-pub type perf_reader_cb = ::std::option::Option<
-    unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void,
-                         pid: ::std::os::raw::c_int,
-                         callchain_num: u64,
-                         callchain: *mut ::std::os::raw::c_void),
->;
-pub type perf_reader_raw_cb = ::std::option::Option<
-    unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void,
-                         raw: *mut ::std::os::raw::c_void,
-                         raw_size: ::std::os::raw::c_int),
->;
+pub type perf_reader_cb = ::std::option::Option<unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void, pid: ::std::os::raw::c_int, callchain_num: u64, callchain: *mut ::std::os::raw::c_void)>;
+pub type perf_reader_raw_cb = ::std::option::Option<unsafe extern "C" fn(cb_cookie: *mut ::std::os::raw::c_void, raw: *mut ::std::os::raw::c_void, raw_size: ::std::os::raw::c_int)>;
 pub type perf_reader_lost_cb = ::std::option::Option<unsafe extern "C" fn(lost: u64)>;
 extern "C" {
     pub fn bpf_attach_kprobe(
