@@ -8,7 +8,11 @@ license = "Apache-2.0"
 repository = "https://github.com/photoszzt/bcc-sys"
 build = "build.rs"
 readme = "README.md"
+links = "bcc"
 
 [build-dependencies]
 bindgen = "0.31.2"
 lazy_static = "0.2"
+
+[lib]
+name = "bcc_sys"

@@ -32,6 +32,8 @@ const WHITELIST_VARS: &'static [&'static str] = &[
 ];
 
 fn build_bcc_bindings() {
+    println!("cargo:rustc-link-lib=bcc");
+
     let mut bindings = bindgen::Builder::default().header("wrapper.h");
 
     for func in WHITELIST_FUNCTION {
