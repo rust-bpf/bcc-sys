@@ -10,5 +10,5 @@ build = "build.rs"
 readme = "README.md"
 
 [build-dependencies]
-bindgen = "0.31"
+bindgen = "0.31.2"
 lazy_static = "0.2"
