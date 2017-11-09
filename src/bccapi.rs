@@ -2532,6 +2532,7 @@ extern "C" {
         insn_len: ::std::os::raw::c_int,
         license: *const ::std::os::raw::c_char,
         kern_version: ::std::os::raw::c_uint,
+        log_level: ::std::os::raw::c_int,
         log_buf: *mut ::std::os::raw::c_char,
         log_buf_size: ::std::os::raw::c_uint,
     ) -> ::std::os::raw::c_int;

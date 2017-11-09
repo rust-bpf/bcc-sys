@@ -3,7 +3,9 @@ extern crate bindgen;
 use std::process;
 
 fn main() {
-    build_bcc_bindings();
+    println!("cargo:rustc-link-lib=bcc");
+    // Uncomment below to update binding
+    // build_bcc_bindings();
 }
 
 const WHITELIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
@@ -32,9 +34,11 @@ const WHITELIST_VARS: &'static [&'static str] = &[
 ];
 
 fn build_bcc_bindings() {
-    println!("cargo:rustc-link-lib=bcc");
 
-    let mut bindings = bindgen::Builder::default().header("wrapper.h");
+    let mut bindings = bindgen::Builder::default()
+        .header("wrapper.h")
+        .clang_arg("-I")
+        .clang_arg(concat!(env!("CARGO_MANIFEST_DIR"), "/include"));
 
     for func in WHITELIST_FUNCTION {
         bindings = bindings.whitelist_function(func);
