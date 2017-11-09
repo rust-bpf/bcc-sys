@@ -9,3 +9,4 @@ Install `rustfmt` with:
 $ rustup update nightly
 $ rustup run nightly cargo install -f rustfmt-nightly
 ```
+The generated binding reflects the nightly bcc build.
