@@ -9,6 +9,7 @@ repository = "https://github.com/photoszzt/bcc-sys"
 build = "build.rs"
 readme = "README.md"
 links = "bcc"
+documentation = "https://docs.rs/bcc-sys/0.4.0/bcc_sys/"
 
 [build-dependencies]
 bindgen = "0.31.2"
