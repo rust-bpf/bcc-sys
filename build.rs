@@ -64,7 +64,7 @@ fn build_bcc_bindings() {
         .derive_partialord(true)
         .derive_ord(true)
         .derive_hash(true)
-        .rustfmt_bindings(false);
+        .rustfmt_bindings(true);
 
     let builder = bindings
         .generate()
