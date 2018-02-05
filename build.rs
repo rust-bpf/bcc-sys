@@ -5,7 +5,7 @@ use std::process;
 fn main() {
     println!("cargo:rustc-link-lib=bcc");
     // Uncomment below to update binding
-    // build_bcc_bindings();
+    build_bcc_bindings();
 }
 
 const WHITELIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
