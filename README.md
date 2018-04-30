@@ -2,11 +2,11 @@ Rust binding for [bcc](https://github.com/iovisor/bcc).
 
 You need to install bcc first before using this binding.
 
-To format the generated bindings, you need to have rustfmt installed. 
+To format the generated bindings, you need to have rustfmt installed.
 
 Install `rustfmt` with:
 ```
-$ rustup update nightly
-$ rustup run nightly cargo install -f rustfmt-nightly
+$ rustup component add rustfmt-preview
+$ rustup update
 ```
-The generated binding reflects the nightly bcc build.
+Version 0.6.0 reflects the 0.5.0 version of bcc.
