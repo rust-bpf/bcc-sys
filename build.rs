@@ -34,7 +34,6 @@ const WHITELIST_VARS: &'static [&'static str] = &[
 ];
 
 fn build_bcc_bindings() {
-
     let mut bindings = bindgen::Builder::default()
         .header("wrapper.h")
         .clang_arg("-I")
@@ -52,7 +51,7 @@ fn build_bcc_bindings() {
         bindings = bindings.whitelist_var(var);
     }
 
-    // TODO: there's problem on formatting the generated patch by 
+    // TODO: there's problem on formatting the generated patch by
     // passing the configure file. Passing rustfmt.toml doesn't work.
     bindings = bindings
         .derive_debug(true)
@@ -81,28 +80,14 @@ fn build_bcc_bindings() {
         .ok()
         .map_or(false, |status| status.success());
 
-    if have_working_rustfmt {
-        let output = process::Command::new("rustup")
-            .args(&[
-                  "run",
-                  "nightly",
-                  "rustfmt",
-                  "--config-path",
-                  concat!(env!("CARGO_MANIFEST_DIR"), "/rustfmt.toml"),
-                  concat!(env!("CARGO_MANIFEST_DIR"), "/src/bccapi.rs"),
-            ])
-            .output()
-            .expect("fail to execute `rustup run nightly rustfmt`");;
-        println!("status: {}", output.status);
-        println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
-        println!("stderr: {}", String::from_utf8_lossy(&output.stderr));
-        assert!(output.status.success());
-    } else {
-        println!("
+    if !have_working_rustfmt {
+        println!(
+            "
         The latest `rustfmt` is required to format the generated bindings. Install
             `rustfmt` with:
-            $ rustup update nightly
-            $ rustup run nightly cargo install -f rustfmt-nightly
-            ");
+            $ rustup component add rustfmt-preview
+            $ rustup update
+            "
+        );
     }
 }
