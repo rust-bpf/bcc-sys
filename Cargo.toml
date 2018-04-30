@@ -14,7 +14,6 @@ homepage = "https://github.com/photoszzt/bcc-sys"
 
 [build-dependencies]
 bindgen = "0.36"
-lazy_static = "0.2"
 
 [lib]
 name = "bcc_sys"
