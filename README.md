@@ -10,3 +10,4 @@ $ rustup component add rustfmt-preview
 $ rustup update
 ```
 Version 0.6.0 reflects the 0.5.0 version of bcc.
+Version 0.7.0 reflects the 0.6.1 version of bcc.
