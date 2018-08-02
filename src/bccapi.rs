@@ -186,6 +186,8 @@ pub const BPF_F_QUERY_EFFECTIVE: u32 = 1;
 pub const BPF_OBJ_NAME_LEN: u32 = 16;
 pub const BPF_F_RDONLY: u32 = 8;
 pub const BPF_F_WRONLY: u32 = 16;
+pub const BPF_F_STACK_BUILD_ID: u32 = 32;
+pub const BPF_BUILD_ID_SIZE: u32 = 20;
 pub const BPF_F_RECOMPUTE_CSUM: u32 = 1;
 pub const BPF_F_INVALIDATE_HASH: u32 = 2;
 pub const BPF_F_HDR_FIELD_MASK: u32 = 15;
@@ -198,13 +200,19 @@ pub const BPF_F_SKIP_FIELD_MASK: u32 = 255;
 pub const BPF_F_USER_STACK: u32 = 256;
 pub const BPF_F_FAST_STACK_CMP: u32 = 512;
 pub const BPF_F_REUSE_STACKID: u32 = 1024;
+pub const BPF_F_USER_BUILD_ID: u32 = 2048;
 pub const BPF_F_ZERO_CSUM_TX: u32 = 2;
 pub const BPF_F_DONT_FRAGMENT: u32 = 4;
+pub const BPF_F_SEQ_NUMBER: u32 = 8;
 pub const BPF_F_INDEX_MASK: u32 = 4294967295;
 pub const BPF_F_CURRENT_CPU: u32 = 4294967295;
 pub const BPF_F_CTXLEN_MASK: u64 = 4503595332403200;
 pub const XDP_PACKET_HEADROOM: u32 = 256;
 pub const BPF_TAG_SIZE: u32 = 8;
+pub const BPF_SOCK_OPS_RTO_CB_FLAG: u32 = 1;
+pub const BPF_SOCK_OPS_RETRANS_CB_FLAG: u32 = 2;
+pub const BPF_SOCK_OPS_STATE_CB_FLAG: u32 = 4;
+pub const BPF_SOCK_OPS_ALL_CB_FLAGS: u32 = 7;
 pub const TCP_BPF_IW: u32 = 1001;
 pub const TCP_BPF_SNDCWND_CLAMP: u32 = 1002;
 pub const BPF_DEVCG_ACC_MKNOD: u32 = 1;
@@ -421,6 +429,8 @@ pub type __u16 = ::std::os::raw::c_ushort;
 pub type __s32 = ::std::os::raw::c_int;
 pub type __u32 = ::std::os::raw::c_uint;
 pub type __u64 = ::std::os::raw::c_ulonglong;
+pub type __be16 = __u16;
+pub type __be32 = __u32;
 pub const BPF_REG_0: _bindgen_ty_1 = 0;
 pub const BPF_REG_1: _bindgen_ty_1 = 1;
 pub const BPF_REG_2: _bindgen_ty_1 = 2;
@@ -579,6 +589,10 @@ pub const bpf_cmd_BPF_PROG_GET_FD_BY_ID: bpf_cmd = 13;
 pub const bpf_cmd_BPF_MAP_GET_FD_BY_ID: bpf_cmd = 14;
 pub const bpf_cmd_BPF_OBJ_GET_INFO_BY_FD: bpf_cmd = 15;
 pub const bpf_cmd_BPF_PROG_QUERY: bpf_cmd = 16;
+pub const bpf_cmd_BPF_RAW_TRACEPOINT_OPEN: bpf_cmd = 17;
+pub const bpf_cmd_BPF_BTF_LOAD: bpf_cmd = 18;
+pub const bpf_cmd_BPF_BTF_GET_FD_BY_ID: bpf_cmd = 19;
+pub const bpf_cmd_BPF_TASK_FD_QUERY: bpf_cmd = 20;
 pub type bpf_cmd = u32;
 pub const bpf_map_type_BPF_MAP_TYPE_UNSPEC: bpf_map_type = 0;
 pub const bpf_map_type_BPF_MAP_TYPE_HASH: bpf_map_type = 1;
@@ -597,6 +611,8 @@ pub const bpf_map_type_BPF_MAP_TYPE_HASH_OF_MAPS: bpf_map_type = 13;
 pub const bpf_map_type_BPF_MAP_TYPE_DEVMAP: bpf_map_type = 14;
 pub const bpf_map_type_BPF_MAP_TYPE_SOCKMAP: bpf_map_type = 15;
 pub const bpf_map_type_BPF_MAP_TYPE_CPUMAP: bpf_map_type = 16;
+pub const bpf_map_type_BPF_MAP_TYPE_XSKMAP: bpf_map_type = 17;
+pub const bpf_map_type_BPF_MAP_TYPE_SOCKHASH: bpf_map_type = 18;
 pub type bpf_map_type = u32;
 pub const bpf_prog_type_BPF_PROG_TYPE_UNSPEC: bpf_prog_type = 0;
 pub const bpf_prog_type_BPF_PROG_TYPE_SOCKET_FILTER: bpf_prog_type = 1;
@@ -614,6 +630,11 @@ pub const bpf_prog_type_BPF_PROG_TYPE_LWT_XMIT: bpf_prog_type = 12;
 pub const bpf_prog_type_BPF_PROG_TYPE_SOCK_OPS: bpf_prog_type = 13;
 pub const bpf_prog_type_BPF_PROG_TYPE_SK_SKB: bpf_prog_type = 14;
 pub const bpf_prog_type_BPF_PROG_TYPE_CGROUP_DEVICE: bpf_prog_type = 15;
+pub const bpf_prog_type_BPF_PROG_TYPE_SK_MSG: bpf_prog_type = 16;
+pub const bpf_prog_type_BPF_PROG_TYPE_RAW_TRACEPOINT: bpf_prog_type = 17;
+pub const bpf_prog_type_BPF_PROG_TYPE_CGROUP_SOCK_ADDR: bpf_prog_type = 18;
+pub const bpf_prog_type_BPF_PROG_TYPE_LWT_SEG6LOCAL: bpf_prog_type = 19;
+pub const bpf_prog_type_BPF_PROG_TYPE_LIRC_MODE2: bpf_prog_type = 20;
 pub type bpf_prog_type = u32;
 pub const bpf_attach_type_BPF_CGROUP_INET_INGRESS: bpf_attach_type = 0;
 pub const bpf_attach_type_BPF_CGROUP_INET_EGRESS: bpf_attach_type = 1;
@@ -622,8 +643,133 @@ pub const bpf_attach_type_BPF_CGROUP_SOCK_OPS: bpf_attach_type = 3;
 pub const bpf_attach_type_BPF_SK_SKB_STREAM_PARSER: bpf_attach_type = 4;
 pub const bpf_attach_type_BPF_SK_SKB_STREAM_VERDICT: bpf_attach_type = 5;
 pub const bpf_attach_type_BPF_CGROUP_DEVICE: bpf_attach_type = 6;
-pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 7;
+pub const bpf_attach_type_BPF_SK_MSG_VERDICT: bpf_attach_type = 7;
+pub const bpf_attach_type_BPF_CGROUP_INET4_BIND: bpf_attach_type = 8;
+pub const bpf_attach_type_BPF_CGROUP_INET6_BIND: bpf_attach_type = 9;
+pub const bpf_attach_type_BPF_CGROUP_INET4_CONNECT: bpf_attach_type = 10;
+pub const bpf_attach_type_BPF_CGROUP_INET6_CONNECT: bpf_attach_type = 11;
+pub const bpf_attach_type_BPF_CGROUP_INET4_POST_BIND: bpf_attach_type = 12;
+pub const bpf_attach_type_BPF_CGROUP_INET6_POST_BIND: bpf_attach_type = 13;
+pub const bpf_attach_type_BPF_CGROUP_UDP4_SENDMSG: bpf_attach_type = 14;
+pub const bpf_attach_type_BPF_CGROUP_UDP6_SENDMSG: bpf_attach_type = 15;
+pub const bpf_attach_type_BPF_LIRC_MODE2: bpf_attach_type = 16;
+pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 17;
 pub type bpf_attach_type = u32;
+pub const bpf_stack_build_id_status_BPF_STACK_BUILD_ID_EMPTY: bpf_stack_build_id_status = 0;
+pub const bpf_stack_build_id_status_BPF_STACK_BUILD_ID_VALID: bpf_stack_build_id_status = 1;
+pub const bpf_stack_build_id_status_BPF_STACK_BUILD_ID_IP: bpf_stack_build_id_status = 2;
+pub type bpf_stack_build_id_status = u32;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_stack_build_id {
+    pub status: __s32,
+    pub build_id: [::std::os::raw::c_uchar; 20usize],
+    pub __bindgen_anon_1: bpf_stack_build_id__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_stack_build_id__bindgen_ty_1 {
+    pub offset: __u64,
+    pub ip: __u64,
+    _bindgen_union_align: u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_stack_build_id__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_stack_build_id__bindgen_ty_1>(),
+        8usize,
+        concat!("Size of: ", stringify!(bpf_stack_build_id__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_stack_build_id__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_stack_build_id__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_stack_build_id__bindgen_ty_1>())).offset as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_stack_build_id__bindgen_ty_1),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_stack_build_id__bindgen_ty_1>())).ip as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_stack_build_id__bindgen_ty_1),
+            "::",
+            stringify!(ip)
+        )
+    );
+}
+impl Default for bpf_stack_build_id__bindgen_ty_1 {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_stack_build_id__bindgen_ty_1 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "bpf_stack_build_id__bindgen_ty_1 {{ union }}")
+    }
+}
+#[test]
+fn bindgen_test_layout_bpf_stack_build_id() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_stack_build_id>(),
+        32usize,
+        concat!("Size of: ", stringify!(bpf_stack_build_id))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_stack_build_id>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_stack_build_id))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_stack_build_id>())).status as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_stack_build_id),
+            "::",
+            stringify!(status)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_stack_build_id>())).build_id as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_stack_build_id),
+            "::",
+            stringify!(build_id)
+        )
+    );
+}
+impl Default for bpf_stack_build_id {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_stack_build_id {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(
+            f,
+            "bpf_stack_build_id {{ status: {:?}, build_id: {:?}, __bindgen_anon_1: {:?} }}",
+            self.status, self.build_id, self.__bindgen_anon_1
+        )
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union bpf_attr {
@@ -636,6 +782,9 @@ pub union bpf_attr {
     pub __bindgen_anon_6: bpf_attr__bindgen_ty_7,
     pub info: bpf_attr__bindgen_ty_8,
     pub query: bpf_attr__bindgen_ty_9,
+    pub raw_tracepoint: bpf_attr__bindgen_ty_10,
+    pub __bindgen_anon_7: bpf_attr__bindgen_ty_11,
+    pub task_fd_query: bpf_attr__bindgen_ty_12,
     _bindgen_union_align: [u64; 9usize],
 }
 #[repr(C)]
@@ -650,12 +799,15 @@ pub struct bpf_attr__bindgen_ty_1 {
     pub numa_node: __u32,
     pub map_name: [::std::os::raw::c_char; 16usize],
     pub map_ifindex: __u32,
+    pub btf_fd: __u32,
+    pub btf_key_type_id: __u32,
+    pub btf_value_type_id: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_1>(),
-        48usize,
+        60usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_1))
     );
     assert_eq!(
@@ -763,6 +915,41 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
             stringify!(bpf_attr__bindgen_ty_1),
             "::",
             stringify!(map_ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_1>())).btf_fd as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(btf_fd)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_1>())).btf_key_type_id as *const _ as usize
+        },
+        52usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(btf_key_type_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_1>())).btf_value_type_id as *const _
+                as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(btf_value_type_id)
         )
     );
 }
@@ -903,6 +1090,7 @@ pub struct bpf_attr__bindgen_ty_3 {
     pub prog_flags: __u32,
     pub prog_name: [::std::os::raw::c_char; 16usize],
     pub prog_ifindex: __u32,
+    pub expected_attach_type: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_3() {
@@ -1036,6 +1224,19 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_3() {
             stringify!(bpf_attr__bindgen_ty_3),
             "::",
             stringify!(prog_ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_3>())).expected_attach_type as *const _
+                as usize
+        },
+        68usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_3),
+            "::",
+            stringify!(expected_attach_type)
         )
     );
 }
@@ -1282,6 +1483,7 @@ pub union bpf_attr__bindgen_ty_7__bindgen_ty_1 {
     pub start_id: __u32,
     pub prog_id: __u32,
     pub map_id: __u32,
+    pub btf_id: __u32,
     _bindgen_union_align: u32,
 }
 #[test]
@@ -1339,6 +1541,19 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_7__bindgen_ty_1() {
             stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1),
             "::",
             stringify!(map_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_7__bindgen_ty_1>())).btf_id as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_7__bindgen_ty_1),
+            "::",
+            stringify!(btf_id)
         )
     );
 }
@@ -1542,6 +1757,245 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_9() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct bpf_attr__bindgen_ty_10 {
+    pub name: __u64,
+    pub prog_fd: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_10() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_10>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_10))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_10>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_10))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_10>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_10>())).prog_fd as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10),
+            "::",
+            stringify!(prog_fd)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct bpf_attr__bindgen_ty_11 {
+    pub btf: __u64,
+    pub btf_log_buf: __u64,
+    pub btf_size: __u32,
+    pub btf_log_size: __u32,
+    pub btf_log_level: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_11() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_11>(),
+        32usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_11))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_11>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_11))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_11>())).btf as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_11),
+            "::",
+            stringify!(btf)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_11>())).btf_log_buf as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_11),
+            "::",
+            stringify!(btf_log_buf)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_11>())).btf_size as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_11),
+            "::",
+            stringify!(btf_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_11>())).btf_log_size as *const _ as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_11),
+            "::",
+            stringify!(btf_log_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_11>())).btf_log_level as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_11),
+            "::",
+            stringify!(btf_log_level)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct bpf_attr__bindgen_ty_12 {
+    pub pid: __u32,
+    pub fd: __u32,
+    pub flags: __u32,
+    pub buf_len: __u32,
+    pub buf: __u64,
+    pub prog_id: __u32,
+    pub fd_type: __u32,
+    pub probe_offset: __u64,
+    pub probe_addr: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_12() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_12>(),
+        48usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_12))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_12>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_12))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).pid as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(pid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).fd as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(fd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).flags as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).buf_len as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(buf_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).buf as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(buf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).prog_id as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(prog_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).fd_type as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(fd_type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).probe_offset as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(probe_offset)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_attr__bindgen_ty_12>())).probe_addr as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(probe_addr)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_attr() {
     assert_eq!(
@@ -1582,6 +2036,26 @@ fn bindgen_test_layout_bpf_attr() {
             stringify!(bpf_attr),
             "::",
             stringify!(query)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr>())).raw_tracepoint as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(raw_tracepoint)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_attr>())).task_fd_query as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(task_fd_query)
         )
     );
 }
@@ -1654,10 +2128,36 @@ pub const bpf_func_id_BPF_FUNC_perf_event_read_value: bpf_func_id = 55;
 pub const bpf_func_id_BPF_FUNC_perf_prog_read_value: bpf_func_id = 56;
 pub const bpf_func_id_BPF_FUNC_getsockopt: bpf_func_id = 57;
 pub const bpf_func_id_BPF_FUNC_override_return: bpf_func_id = 58;
-pub const bpf_func_id___BPF_FUNC_MAX_ID: bpf_func_id = 59;
+pub const bpf_func_id_BPF_FUNC_sock_ops_cb_flags_set: bpf_func_id = 59;
+pub const bpf_func_id_BPF_FUNC_msg_redirect_map: bpf_func_id = 60;
+pub const bpf_func_id_BPF_FUNC_msg_apply_bytes: bpf_func_id = 61;
+pub const bpf_func_id_BPF_FUNC_msg_cork_bytes: bpf_func_id = 62;
+pub const bpf_func_id_BPF_FUNC_msg_pull_data: bpf_func_id = 63;
+pub const bpf_func_id_BPF_FUNC_bind: bpf_func_id = 64;
+pub const bpf_func_id_BPF_FUNC_xdp_adjust_tail: bpf_func_id = 65;
+pub const bpf_func_id_BPF_FUNC_skb_get_xfrm_state: bpf_func_id = 66;
+pub const bpf_func_id_BPF_FUNC_get_stack: bpf_func_id = 67;
+pub const bpf_func_id_BPF_FUNC_skb_load_bytes_relative: bpf_func_id = 68;
+pub const bpf_func_id_BPF_FUNC_fib_lookup: bpf_func_id = 69;
+pub const bpf_func_id_BPF_FUNC_sock_hash_update: bpf_func_id = 70;
+pub const bpf_func_id_BPF_FUNC_msg_redirect_hash: bpf_func_id = 71;
+pub const bpf_func_id_BPF_FUNC_sk_redirect_hash: bpf_func_id = 72;
+pub const bpf_func_id_BPF_FUNC_lwt_push_encap: bpf_func_id = 73;
+pub const bpf_func_id_BPF_FUNC_lwt_seg6_store_bytes: bpf_func_id = 74;
+pub const bpf_func_id_BPF_FUNC_lwt_seg6_adjust_srh: bpf_func_id = 75;
+pub const bpf_func_id_BPF_FUNC_lwt_seg6_action: bpf_func_id = 76;
+pub const bpf_func_id_BPF_FUNC_rc_repeat: bpf_func_id = 77;
+pub const bpf_func_id_BPF_FUNC_rc_keydown: bpf_func_id = 78;
+pub const bpf_func_id___BPF_FUNC_MAX_ID: bpf_func_id = 79;
 pub type bpf_func_id = u32;
 pub const bpf_adj_room_mode_BPF_ADJ_ROOM_NET: bpf_adj_room_mode = 0;
 pub type bpf_adj_room_mode = u32;
+pub const bpf_hdr_start_off_BPF_HDR_START_MAC: bpf_hdr_start_off = 0;
+pub const bpf_hdr_start_off_BPF_HDR_START_NET: bpf_hdr_start_off = 1;
+pub type bpf_hdr_start_off = u32;
+pub const bpf_lwt_encap_mode_BPF_LWT_ENCAP_SEG6: bpf_lwt_encap_mode = 0;
+pub const bpf_lwt_encap_mode_BPF_LWT_ENCAP_SEG6_INLINE: bpf_lwt_encap_mode = 1;
+pub type bpf_lwt_encap_mode = u32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct __sk_buff {
@@ -2100,6 +2600,127 @@ impl ::std::fmt::Debug for bpf_tunnel_key {
         write ! ( f , "bpf_tunnel_key {{ tunnel_id: {:?}, __bindgen_anon_1: {:?}, tunnel_tos: {:?}, tunnel_ttl: {:?}, tunnel_ext: {:?}, tunnel_label: {:?} }}" , self . tunnel_id , self . __bindgen_anon_1 , self . tunnel_tos , self . tunnel_ttl , self . tunnel_ext , self . tunnel_label )
     }
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_xfrm_state {
+    pub reqid: __u32,
+    pub spi: __u32,
+    pub family: __u16,
+    pub __bindgen_anon_1: bpf_xfrm_state__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_xfrm_state__bindgen_ty_1 {
+    pub remote_ipv4: __u32,
+    pub remote_ipv6: [__u32; 4usize],
+    _bindgen_union_align: [u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_xfrm_state__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_xfrm_state__bindgen_ty_1>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_xfrm_state__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_xfrm_state__bindgen_ty_1>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_xfrm_state__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_xfrm_state__bindgen_ty_1>())).remote_ipv4 as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_xfrm_state__bindgen_ty_1),
+            "::",
+            stringify!(remote_ipv4)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_xfrm_state__bindgen_ty_1>())).remote_ipv6 as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_xfrm_state__bindgen_ty_1),
+            "::",
+            stringify!(remote_ipv6)
+        )
+    );
+}
+impl Default for bpf_xfrm_state__bindgen_ty_1 {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_xfrm_state__bindgen_ty_1 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "bpf_xfrm_state__bindgen_ty_1 {{ union }}")
+    }
+}
+#[test]
+fn bindgen_test_layout_bpf_xfrm_state() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_xfrm_state>(),
+        28usize,
+        concat!("Size of: ", stringify!(bpf_xfrm_state))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_xfrm_state>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_xfrm_state))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_xfrm_state>())).reqid as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_xfrm_state),
+            "::",
+            stringify!(reqid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_xfrm_state>())).spi as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_xfrm_state),
+            "::",
+            stringify!(spi)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_xfrm_state>())).family as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_xfrm_state),
+            "::",
+            stringify!(family)
+        )
+    );
+}
+impl Default for bpf_xfrm_state {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_xfrm_state {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(
+            f,
+            "bpf_xfrm_state {{ reqid: {:?}, spi: {:?}, family: {:?}, __bindgen_anon_1: {:?} }}",
+            self.reqid, self.spi, self.family, self.__bindgen_anon_1
+        )
+    }
+}
 pub const bpf_ret_code_BPF_OK: bpf_ret_code = 0;
 pub const bpf_ret_code_BPF_DROP: bpf_ret_code = 2;
 pub const bpf_ret_code_BPF_REDIRECT: bpf_ret_code = 7;
@@ -2113,12 +2734,15 @@ pub struct bpf_sock {
     pub protocol: __u32,
     pub mark: __u32,
     pub priority: __u32,
+    pub src_ip4: __u32,
+    pub src_ip6: [__u32; 4usize],
+    pub src_port: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_sock() {
     assert_eq!(
         ::std::mem::size_of::<bpf_sock>(),
-        24usize,
+        48usize,
         concat!("Size of: ", stringify!(bpf_sock))
     );
     assert_eq!(
@@ -2184,6 +2808,36 @@ fn bindgen_test_layout_bpf_sock() {
             stringify!(bpf_sock),
             "::",
             stringify!(priority)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock>())).src_ip4 as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(src_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock>())).src_ip6 as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(src_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock>())).src_port as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock),
+            "::",
+            stringify!(src_port)
         )
     );
 }
@@ -2284,14 +2938,19 @@ pub struct bpf_prog_info {
     pub map_ids: __u64,
     pub name: [::std::os::raw::c_char; 16usize],
     pub ifindex: __u32,
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 1usize], u8>,
     pub netns_dev: __u64,
     pub netns_ino: __u64,
+    pub nr_jited_ksyms: __u32,
+    pub nr_jited_func_lens: __u32,
+    pub jited_ksyms: __u64,
+    pub jited_func_lens: __u64,
 }
 #[test]
 fn bindgen_test_layout_bpf_prog_info() {
     assert_eq!(
         ::std::mem::size_of::<bpf_prog_info>(),
-        104usize,
+        128usize,
         concat!("Size of: ", stringify!(bpf_prog_info))
     );
     assert_eq!(
@@ -2449,6 +3108,71 @@ fn bindgen_test_layout_bpf_prog_info() {
             stringify!(netns_ino)
         )
     );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_prog_info>())).nr_jited_ksyms as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(nr_jited_ksyms)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_prog_info>())).nr_jited_func_lens as *const _ as usize
+        },
+        108usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(nr_jited_func_lens)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_prog_info>())).jited_ksyms as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(jited_ksyms)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_prog_info>())).jited_func_lens as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(jited_func_lens)
+        )
+    );
+}
+impl bpf_prog_info {
+    #[inline]
+    pub fn gpl_compatible(&self) -> __u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_gpl_compatible(&mut self, val: __u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(gpl_compatible: __u32) -> __BindgenBitfieldUnit<[u8; 1usize], u8> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 1usize], u8> =
+            Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let gpl_compatible: u32 = unsafe { ::std::mem::transmute(gpl_compatible) };
+            gpl_compatible as u64
+        });
+        __bindgen_bitfield_unit
+    }
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
@@ -2463,12 +3187,15 @@ pub struct bpf_map_info {
     pub ifindex: __u32,
     pub netns_dev: __u64,
     pub netns_ino: __u64,
+    pub btf_id: __u32,
+    pub btf_key_type_id: __u32,
+    pub btf_value_type_id: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_map_info() {
     assert_eq!(
         ::std::mem::size_of::<bpf_map_info>(),
-        64usize,
+        80usize,
         concat!("Size of: ", stringify!(bpf_map_info))
     );
     assert_eq!(
@@ -2576,6 +3303,202 @@ fn bindgen_test_layout_bpf_map_info() {
             stringify!(netns_ino)
         )
     );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_map_info>())).btf_id as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(btf_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_map_info>())).btf_key_type_id as *const _ as usize },
+        68usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(btf_key_type_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_map_info>())).btf_value_type_id as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(btf_value_type_id)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct bpf_btf_info {
+    pub btf: __u64,
+    pub btf_size: __u32,
+    pub id: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_btf_info() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_btf_info>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_btf_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_btf_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_btf_info))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_btf_info>())).btf as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_btf_info),
+            "::",
+            stringify!(btf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_btf_info>())).btf_size as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_btf_info),
+            "::",
+            stringify!(btf_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_btf_info>())).id as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_btf_info),
+            "::",
+            stringify!(id)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct bpf_sock_addr {
+    pub user_family: __u32,
+    pub user_ip4: __u32,
+    pub user_ip6: [__u32; 4usize],
+    pub user_port: __u32,
+    pub family: __u32,
+    pub type_: __u32,
+    pub protocol: __u32,
+    pub msg_src_ip4: __u32,
+    pub msg_src_ip6: [__u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_sock_addr() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_sock_addr>(),
+        60usize,
+        concat!("Size of: ", stringify!(bpf_sock_addr))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_sock_addr>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_sock_addr))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).user_family as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(user_family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).user_ip4 as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(user_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).user_ip6 as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(user_ip6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).user_port as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(user_port)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).family as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).type_ as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).protocol as *const _ as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(protocol)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).msg_src_ip4 as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(msg_src_ip4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_addr>())).msg_src_ip6 as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_addr),
+            "::",
+            stringify!(msg_src_ip6)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -2592,10 +3515,34 @@ pub struct bpf_sock_ops {
     pub is_fullsock: __u32,
     pub snd_cwnd: __u32,
     pub srtt_us: __u32,
+    pub bpf_sock_ops_cb_flags: __u32,
+    pub state: __u32,
+    pub rtt_min: __u32,
+    pub snd_ssthresh: __u32,
+    pub rcv_nxt: __u32,
+    pub snd_nxt: __u32,
+    pub snd_una: __u32,
+    pub mss_cache: __u32,
+    pub ecn_flags: __u32,
+    pub rate_delivered: __u32,
+    pub rate_interval_us: __u32,
+    pub packets_out: __u32,
+    pub retrans_out: __u32,
+    pub total_retrans: __u32,
+    pub segs_in: __u32,
+    pub data_segs_in: __u32,
+    pub segs_out: __u32,
+    pub data_segs_out: __u32,
+    pub lost_out: __u32,
+    pub sacked_out: __u32,
+    pub sk_txhash: __u32,
+    pub bytes_received: __u64,
+    pub bytes_acked: __u64,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union bpf_sock_ops__bindgen_ty_1 {
+    pub args: [__u32; 4usize],
     pub reply: __u32,
     pub replylong: [__u32; 4usize],
     _bindgen_union_align: [u32; 4usize],
@@ -2611,6 +3558,16 @@ fn bindgen_test_layout_bpf_sock_ops__bindgen_ty_1() {
         ::std::mem::align_of::<bpf_sock_ops__bindgen_ty_1>(),
         4usize,
         concat!("Alignment of ", stringify!(bpf_sock_ops__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops__bindgen_ty_1>())).args as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops__bindgen_ty_1),
+            "::",
+            stringify!(args)
+        )
     );
     assert_eq!(
         unsafe {
@@ -2651,12 +3608,12 @@ impl ::std::fmt::Debug for bpf_sock_ops__bindgen_ty_1 {
 fn bindgen_test_layout_bpf_sock_ops() {
     assert_eq!(
         ::std::mem::size_of::<bpf_sock_ops>(),
-        84usize,
+        184usize,
         concat!("Size of: ", stringify!(bpf_sock_ops))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_sock_ops>(),
-        4usize,
+        8usize,
         concat!("Alignment of ", stringify!(bpf_sock_ops))
     );
     assert_eq!(
@@ -2769,6 +3726,238 @@ fn bindgen_test_layout_bpf_sock_ops() {
             stringify!(srtt_us)
         )
     );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_sock_ops>())).bpf_sock_ops_cb_flags as *const _ as usize
+        },
+        84usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(bpf_sock_ops_cb_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).state as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(state)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).rtt_min as *const _ as usize },
+        92usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(rtt_min)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).snd_ssthresh as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(snd_ssthresh)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).rcv_nxt as *const _ as usize },
+        100usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(rcv_nxt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).snd_nxt as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(snd_nxt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).snd_una as *const _ as usize },
+        108usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(snd_una)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).mss_cache as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(mss_cache)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).ecn_flags as *const _ as usize },
+        116usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(ecn_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).rate_delivered as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(rate_delivered)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).rate_interval_us as *const _ as usize },
+        124usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(rate_interval_us)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).packets_out as *const _ as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(packets_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).retrans_out as *const _ as usize },
+        132usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(retrans_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).total_retrans as *const _ as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(total_retrans)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).segs_in as *const _ as usize },
+        140usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(segs_in)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).data_segs_in as *const _ as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(data_segs_in)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).segs_out as *const _ as usize },
+        148usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(segs_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).data_segs_out as *const _ as usize },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(data_segs_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).lost_out as *const _ as usize },
+        156usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(lost_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).sacked_out as *const _ as usize },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(sacked_out)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).sk_txhash as *const _ as usize },
+        164usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(sk_txhash)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).bytes_received as *const _ as usize },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(bytes_received)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_sock_ops>())).bytes_acked as *const _ as usize },
+        176usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(bytes_acked)
+        )
+    );
 }
 impl Default for bpf_sock_ops {
     fn default() -> Self {
@@ -2777,7 +3966,7 @@ impl Default for bpf_sock_ops {
 }
 impl ::std::fmt::Debug for bpf_sock_ops {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write ! ( f , "bpf_sock_ops {{ op: {:?}, __bindgen_anon_1: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, is_fullsock: {:?}, snd_cwnd: {:?}, srtt_us: {:?} }}" , self . op , self . __bindgen_anon_1 , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . is_fullsock , self . snd_cwnd , self . srtt_us )
+        write ! ( f , "bpf_sock_ops {{ op: {:?}, __bindgen_anon_1: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, is_fullsock: {:?}, snd_cwnd: {:?}, srtt_us: {:?}, bpf_sock_ops_cb_flags: {:?}, state: {:?}, rtt_min: {:?}, snd_ssthresh: {:?}, rcv_nxt: {:?}, snd_nxt: {:?}, snd_una: {:?}, mss_cache: {:?}, ecn_flags: {:?}, rate_delivered: {:?}, rate_interval_us: {:?}, packets_out: {:?}, retrans_out: {:?}, total_retrans: {:?}, segs_in: {:?}, data_segs_in: {:?}, segs_out: {:?}, data_segs_out: {:?}, lost_out: {:?}, sacked_out: {:?}, sk_txhash: {:?}, bytes_received: {:?}, bytes_acked: {:?} }}" , self . op , self . __bindgen_anon_1 , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . is_fullsock , self . snd_cwnd , self . srtt_us , self . bpf_sock_ops_cb_flags , self . state , self . rtt_min , self . snd_ssthresh , self . rcv_nxt , self . snd_nxt , self . snd_una , self . mss_cache , self . ecn_flags , self . rate_delivered , self . rate_interval_us , self . packets_out , self . retrans_out , self . total_retrans , self . segs_in , self . data_segs_in , self . segs_out , self . data_segs_out , self . lost_out , self . sacked_out , self . sk_txhash , self . bytes_received , self . bytes_acked )
     }
 }
 pub const BPF_SOCK_OPS_VOID: _bindgen_ty_2 = 0;
@@ -2788,7 +3977,24 @@ pub const BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB: _bindgen_ty_2 = 4;
 pub const BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB: _bindgen_ty_2 = 5;
 pub const BPF_SOCK_OPS_NEEDS_ECN: _bindgen_ty_2 = 6;
 pub const BPF_SOCK_OPS_BASE_RTT: _bindgen_ty_2 = 7;
+pub const BPF_SOCK_OPS_RTO_CB: _bindgen_ty_2 = 8;
+pub const BPF_SOCK_OPS_RETRANS_CB: _bindgen_ty_2 = 9;
+pub const BPF_SOCK_OPS_STATE_CB: _bindgen_ty_2 = 10;
 pub type _bindgen_ty_2 = u32;
+pub const BPF_TCP_ESTABLISHED: _bindgen_ty_3 = 1;
+pub const BPF_TCP_SYN_SENT: _bindgen_ty_3 = 2;
+pub const BPF_TCP_SYN_RECV: _bindgen_ty_3 = 3;
+pub const BPF_TCP_FIN_WAIT1: _bindgen_ty_3 = 4;
+pub const BPF_TCP_FIN_WAIT2: _bindgen_ty_3 = 5;
+pub const BPF_TCP_TIME_WAIT: _bindgen_ty_3 = 6;
+pub const BPF_TCP_CLOSE: _bindgen_ty_3 = 7;
+pub const BPF_TCP_CLOSE_WAIT: _bindgen_ty_3 = 8;
+pub const BPF_TCP_LAST_ACK: _bindgen_ty_3 = 9;
+pub const BPF_TCP_LISTEN: _bindgen_ty_3 = 10;
+pub const BPF_TCP_CLOSING: _bindgen_ty_3 = 11;
+pub const BPF_TCP_NEW_SYN_RECV: _bindgen_ty_3 = 12;
+pub const BPF_TCP_MAX_STATES: _bindgen_ty_3 = 13;
+pub type _bindgen_ty_3 = u32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct bpf_perf_event_value {
@@ -2889,6 +4095,328 @@ fn bindgen_test_layout_bpf_cgroup_dev_ctx() {
         )
     );
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_fib_lookup {
+    pub family: __u8,
+    pub l4_protocol: __u8,
+    pub sport: __be16,
+    pub dport: __be16,
+    pub tot_len: __u16,
+    pub ifindex: __u32,
+    pub __bindgen_anon_1: bpf_fib_lookup__bindgen_ty_1,
+    pub __bindgen_anon_2: bpf_fib_lookup__bindgen_ty_2,
+    pub __bindgen_anon_3: bpf_fib_lookup__bindgen_ty_3,
+    pub h_vlan_proto: __be16,
+    pub h_vlan_TCI: __be16,
+    pub smac: [__u8; 6usize],
+    pub dmac: [__u8; 6usize],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_fib_lookup__bindgen_ty_1 {
+    pub tos: __u8,
+    pub flowlabel: __be32,
+    pub rt_metric: __u32,
+    _bindgen_union_align: u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup__bindgen_ty_1>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_fib_lookup__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup__bindgen_ty_1>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_fib_lookup__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_1>())).tos as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_1),
+            "::",
+            stringify!(tos)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_1>())).flowlabel as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_1),
+            "::",
+            stringify!(flowlabel)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_1>())).rt_metric as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_1),
+            "::",
+            stringify!(rt_metric)
+        )
+    );
+}
+impl Default for bpf_fib_lookup__bindgen_ty_1 {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_fib_lookup__bindgen_ty_1 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "bpf_fib_lookup__bindgen_ty_1 {{ union }}")
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_fib_lookup__bindgen_ty_2 {
+    pub ipv4_src: __be32,
+    pub ipv6_src: [__u32; 4usize],
+    _bindgen_union_align: [u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup__bindgen_ty_2>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_fib_lookup__bindgen_ty_2))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup__bindgen_ty_2>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_fib_lookup__bindgen_ty_2))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_2>())).ipv4_src as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_2),
+            "::",
+            stringify!(ipv4_src)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_2>())).ipv6_src as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_2),
+            "::",
+            stringify!(ipv6_src)
+        )
+    );
+}
+impl Default for bpf_fib_lookup__bindgen_ty_2 {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_fib_lookup__bindgen_ty_2 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "bpf_fib_lookup__bindgen_ty_2 {{ union }}")
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_fib_lookup__bindgen_ty_3 {
+    pub ipv4_dst: __be32,
+    pub ipv6_dst: [__u32; 4usize],
+    _bindgen_union_align: [u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_3() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup__bindgen_ty_3>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_fib_lookup__bindgen_ty_3))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup__bindgen_ty_3>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_fib_lookup__bindgen_ty_3))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_3>())).ipv4_dst as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_3),
+            "::",
+            stringify!(ipv4_dst)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<bpf_fib_lookup__bindgen_ty_3>())).ipv6_dst as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_3),
+            "::",
+            stringify!(ipv6_dst)
+        )
+    );
+}
+impl Default for bpf_fib_lookup__bindgen_ty_3 {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_fib_lookup__bindgen_ty_3 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "bpf_fib_lookup__bindgen_ty_3 {{ union }}")
+    }
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup() {
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup>(),
+        64usize,
+        concat!("Size of: ", stringify!(bpf_fib_lookup))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_fib_lookup))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).family as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(family)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).l4_protocol as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(l4_protocol)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).sport as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(sport)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).dport as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(dport)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).tot_len as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(tot_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).ifindex as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).h_vlan_proto as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(h_vlan_proto)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).h_vlan_TCI as *const _ as usize },
+        50usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(h_vlan_TCI)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).smac as *const _ as usize },
+        52usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(smac)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<bpf_fib_lookup>())).dmac as *const _ as usize },
+        58usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup),
+            "::",
+            stringify!(dmac)
+        )
+    );
+}
+impl Default for bpf_fib_lookup {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+impl ::std::fmt::Debug for bpf_fib_lookup {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write ! ( f , "bpf_fib_lookup {{ family: {:?}, l4_protocol: {:?}, sport: {:?}, dport: {:?}, tot_len: {:?}, ifindex: {:?}, __bindgen_anon_1: {:?}, __bindgen_anon_2: {:?}, __bindgen_anon_3: {:?}, h_vlan_proto: {:?}, h_vlan_TCI: {:?}, smac: {:?}, dmac: {:?} }}" , self . family , self . l4_protocol , self . sport , self . dport , self . tot_len , self . ifindex , self . __bindgen_anon_1 , self . __bindgen_anon_2 , self . __bindgen_anon_3 , self . h_vlan_proto , self . h_vlan_TCI , self . smac , self . dmac )
+    }
+}
+pub const bpf_task_fd_type_BPF_FD_TYPE_RAW_TRACEPOINT: bpf_task_fd_type = 0;
+pub const bpf_task_fd_type_BPF_FD_TYPE_TRACEPOINT: bpf_task_fd_type = 1;
+pub const bpf_task_fd_type_BPF_FD_TYPE_KPROBE: bpf_task_fd_type = 2;
+pub const bpf_task_fd_type_BPF_FD_TYPE_KRETPROBE: bpf_task_fd_type = 3;
+pub const bpf_task_fd_type_BPF_FD_TYPE_UPROBE: bpf_task_fd_type = 4;
+pub const bpf_task_fd_type_BPF_FD_TYPE_URETPROBE: bpf_task_fd_type = 5;
+pub type bpf_task_fd_type = u32;
 pub const bpf_probe_attach_type_BPF_PROBE_ENTRY: bpf_probe_attach_type = 0;
 pub const bpf_probe_attach_type_BPF_PROBE_RETURN: bpf_probe_attach_type = 1;
 pub type bpf_probe_attach_type = u32;
@@ -2959,14 +4487,6 @@ extern "C" {
 extern "C" {
     pub fn bpf_open_raw_sock(name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
-pub type perf_reader_cb = ::std::option::Option<
-    unsafe extern "C" fn(
-        cb_cookie: *mut ::std::os::raw::c_void,
-        pid: ::std::os::raw::c_int,
-        callchain_num: u64,
-        callchain: *mut ::std::os::raw::c_void,
-    ),
->;
 pub type perf_reader_raw_cb = ::std::option::Option<
     unsafe extern "C" fn(
         cb_cookie: *mut ::std::os::raw::c_void,
@@ -2982,9 +4502,8 @@ extern "C" {
         attach_type: bpf_probe_attach_type,
         ev_name: *const ::std::os::raw::c_char,
         fn_name: *const ::std::os::raw::c_char,
-        cb: perf_reader_cb,
-        cb_cookie: *mut ::std::os::raw::c_void,
-    ) -> *mut ::std::os::raw::c_void;
+        fn_offset: u64,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_detach_kprobe(ev_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
@@ -2997,9 +4516,7 @@ extern "C" {
         binary_path: *const ::std::os::raw::c_char,
         offset: u64,
         pid: pid_t,
-        cb: perf_reader_cb,
-        cb_cookie: *mut ::std::os::raw::c_void,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_detach_uprobe(ev_name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
@@ -3009,14 +4526,18 @@ extern "C" {
         progfd: ::std::os::raw::c_int,
         tp_category: *const ::std::os::raw::c_char,
         tp_name: *const ::std::os::raw::c_char,
-        cb: perf_reader_cb,
-        cb_cookie: *mut ::std::os::raw::c_void,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_detach_tracepoint(
         tp_category: *const ::std::os::raw::c_char,
         tp_name: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_attach_raw_tracepoint(
+        progfd: ::std::os::raw::c_int,
+        tp_name: *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -3034,6 +4555,16 @@ extern "C" {
         dev_name: *const ::std::os::raw::c_char,
         progfd: ::std::os::raw::c_int,
         flags: u32,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_attach_perf_event_raw(
+        progfd: ::std::os::raw::c_int,
+        perf_event_attr: *mut ::std::os::raw::c_void,
+        pid: pid_t,
+        cpu: ::std::os::raw::c_int,
+        group_fd: ::std::os::raw::c_int,
+        extra_flags: ::std::os::raw::c_ulong,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -3291,7 +4822,6 @@ pub struct perf_reader {
 }
 extern "C" {
     pub fn perf_reader_new(
-        cb: perf_reader_cb,
         raw_cb: perf_reader_raw_cb,
         lost_cb: perf_reader_lost_cb,
         cb_cookie: *mut ::std::os::raw::c_void,
@@ -3302,11 +4832,7 @@ extern "C" {
     pub fn perf_reader_free(ptr: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn perf_reader_mmap(
-        reader: *mut perf_reader,
-        type_: ::std::os::raw::c_uint,
-        sample_type: ::std::os::raw::c_ulong,
-    ) -> ::std::os::raw::c_int;
+    pub fn perf_reader_mmap(reader: *mut perf_reader) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn perf_reader_event_read(reader: *mut perf_reader);
