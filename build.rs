@@ -33,6 +33,11 @@ const WHITELIST_VARS: &'static [&'static str] = &[
     "STT_GNU_IFUNC",
 ];
 
+const BLACKLIST_TYPES: &'static [&'static str] = &[
+    // bindgen generates a misaligned type for this struct
+    "bpf_raw_tracepoint_args",
+];
+
 fn build_bcc_bindings() {
     let mut bindings = bindgen::Builder::default()
         .header("wrapper.h")
@@ -51,8 +56,10 @@ fn build_bcc_bindings() {
         bindings = bindings.whitelist_var(var);
     }
 
-    // TODO: there's problem on formatting the generated patch by
-    // passing the configure file. Passing rustfmt.toml doesn't work.
+    for ty in BLACKLIST_TYPES {
+        bindings = bindings.blacklist_type(ty);
+    }
+
     bindings = bindings
         .derive_debug(true)
         .impl_debug(true)
