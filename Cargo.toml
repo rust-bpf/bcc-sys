@@ -13,7 +13,7 @@ documentation = "https://docs.rs/bcc-sys/0.6.0/bcc_sys/"
 homepage = "https://github.com/photoszzt/bcc-sys"
 
 [build-dependencies]
-bindgen = "0.36"
+bindgen = "0.37"
 
 [lib]
 name = "bcc_sys"
