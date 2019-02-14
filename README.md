@@ -1,8 +1,10 @@
+[![Build Status](https://travis-ci.org/rust-bpf/bcc-sys.svg?branch=master)](https://travis-ci.org/rust-bpf/bcc-sys)
+
 Rust binding for [bcc](https://github.com/iovisor/bcc).
 
-You need to install bcc first before using this binding.
+You need to install bcc before using this binding.
 
-To format the generated bindings, you need to have rustfmt installed.
+To format the generated bindings, you need to install rustfmt.
 
 Install `rustfmt` with:
 ```
