@@ -1,16 +1,17 @@
 [package]
 name = "bcc-sys"
-version = "0.7.0"
-authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>"]
+version = "0.7.1"
+authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>", "Brian Martin <brayniac@gmail.com>"]
 description = "Rust binding to BPF Compiler Collection (BCC)"
 keywords = ["bpf", "bindings"]
 license = "Apache-2.0"
-repository = "https://github.com/photoszzt/bcc-sys"
+repository = "https://github.com/rust-bpf/bcc-sys"
 build = "build.rs"
 readme = "README.md"
 links = "bcc"
-documentation = "https://docs.rs/bcc-sys/0.6.0/bcc_sys/"
-homepage = "https://github.com/photoszzt/bcc-sys"
+documentation = "https://docs.rs/bcc-sys"
+homepage = "https://github.com/rust-bpf/bcc-sys"
+edition = '2018'
 
 [build-dependencies]
 bindgen = "0.37"
