@@ -20,6 +20,7 @@ bindgen = "0.47.3"
 name = "bcc_sys"
 
 [features]
+static = []
 v0_4_0 = []
 v0_5_0 = []
 v0_6_0 = []
