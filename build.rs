@@ -138,6 +138,7 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMBPFCodeGen");
     println!("cargo:rustc-link-lib=static=LLVMBPFDesc");
     println!("cargo:rustc-link-lib=static=LLVMBPFInfo");
+    println!("cargo:rustc-link-lib=static=LLVMBPFAsmParser");
     println!("cargo:rustc-link-lib=static=LLVMBPFAsmPrinter");
     println!("cargo:rustc-link-lib=static=LLVMObjectYAML");
     println!("cargo:rustc-link-lib=static=LLVMLibDriver");
@@ -183,6 +184,7 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMBinaryFormat");
     println!("cargo:rustc-link-lib=static=LLVMSupport");
     println!("cargo:rustc-link-lib=static=LLVMDemangle");
+    println!("cargo:rustc-link-lib=static=LLVMAggressiveInstCombine");
 
     println!("cargo:rustc-link-lib=static=clangAnalysis");
     println!("cargo:rustc-link-lib=static=clangARCMigrate");
