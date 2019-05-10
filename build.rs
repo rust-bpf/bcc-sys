@@ -6,7 +6,7 @@ fn main() {
     linking_info();
 
     // Uncomment below to update binding
-    //build_bcc_bindings();
+    // build_bcc_bindings();
 }
 
 const WHITELIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
