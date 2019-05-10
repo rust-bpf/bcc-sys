@@ -245,6 +245,7 @@ extern "C" {
         flags: ::std::os::raw::c_uint,
         cflags: *mut *const ::std::os::raw::c_char,
         ncflags: ::std::os::raw::c_int,
+        allow_rlimit: bool,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -253,6 +254,7 @@ extern "C" {
         flags: ::std::os::raw::c_uint,
         cflags: *mut *const ::std::os::raw::c_char,
         ncflags: ::std::os::raw::c_int,
+        allow_rlimit: bool,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -428,6 +430,33 @@ extern "C" {
         id: usize,
         buf: *const ::std::os::raw::c_char,
         leaf: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn bpf_perf_event_fields(
+        program: *mut ::std::os::raw::c_void,
+        event: *const ::std::os::raw::c_char,
+    ) -> usize;
+}
+extern "C" {
+    pub fn bpf_perf_event_field(
+        program: *mut ::std::os::raw::c_void,
+        event: *const ::std::os::raw::c_char,
+        i: usize,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn bcc_func_load(
+        program: *mut ::std::os::raw::c_void,
+        prog_type: ::std::os::raw::c_int,
+        name: *const ::std::os::raw::c_char,
+        insns: *const bpf_insn,
+        prog_len: ::std::os::raw::c_int,
+        license: *const ::std::os::raw::c_char,
+        kern_version: ::std::os::raw::c_uint,
+        log_level: ::std::os::raw::c_int,
+        log_buf: *mut ::std::os::raw::c_char,
+        log_buf_size: ::std::os::raw::c_uint,
     ) -> ::std::os::raw::c_int;
 }
 pub type __u8 = ::std::os::raw::c_uchar;

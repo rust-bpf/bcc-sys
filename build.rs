@@ -45,6 +45,24 @@ fn build_bcc_bindings() {
         .clang_arg("-I")
         .clang_arg(concat!(env!("CARGO_MANIFEST_DIR"), "/include"));
 
+    #[cfg(feature = "v0_9_0")]
+    {
+        bindings = bindings.clang_arg("-D__BCC_0_9_0__");
+    }
+
+    #[cfg(not(any(
+        feature = "v0_4_0",
+        feature = "v0_5_0",
+        feature = "v0_6_0",
+        feature = "v0_6_1",
+        feature = "v0_7_0",
+        feature = "v0_8_0",
+        feature = "v0_9_0",
+    )))]
+    {
+        bindings = bindings.clang_arg("-D__BCC_0_9_0__");
+    }
+
     for func in WHITELIST_FUNCTION {
         bindings = bindings.whitelist_function(func);
     }
@@ -78,7 +96,7 @@ fn build_bcc_bindings() {
         .expect("Should generate BCC API bindings OK");
 
     builder
-        .write_to_file("src/bccapi.rs")
+        .write_to_file("src/generated.rs")
         .expect("Couldn't write bcc bindings!");
     let have_working_rustfmt = process::Command::new("rustup")
         .args(&["run", "nightly", "rustfmt", "--version"])
