@@ -1,6 +1,8 @@
-#ifdef __BCC_0_9_0__
+#ifdef __BCC_COMMON__
 #include <bcc/bcc_common.h>
-#else
+#endif
+
+#ifdef __BPF_COMMON__
 #include <bcc/bpf_common.h>
 #endif
 

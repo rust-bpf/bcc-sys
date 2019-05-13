@@ -1,16 +1,7 @@
-use bindgen;
-
-use std::process;
-
-fn main() {
-    linking_info();
-
-    // Uncomment below to update binding
-    // build_bcc_bindings();
-}
-
+#[allow(unused)]
 const WHITELIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
 
+#[allow(unused)]
 const WHITELIST_TYPES: &'static [&'static str] = &[
     "bcc_symbol",
     "perf_reader",
@@ -21,6 +12,7 @@ const WHITELIST_TYPES: &'static [&'static str] = &[
     "bpf_.*",
 ];
 
+#[allow(unused)]
 const WHITELIST_VARS: &'static [&'static str] = &[
     "LOG_BUF_SIZE",
     "BPF_.*",
@@ -34,33 +26,41 @@ const WHITELIST_VARS: &'static [&'static str] = &[
     "STT_GNU_IFUNC",
 ];
 
+#[allow(unused)]
 const BLACKLIST_TYPES: &'static [&'static str] = &[
     // bindgen generates a misaligned type for this struct
     "bpf_raw_tracepoint_args",
 ];
 
+fn main() {
+    linking_info();
+
+    #[cfg(feature = "generate")]
+    {
+        build_bcc_bindings();
+    }
+}
+
+// define the function for when we will generate bindings
+#[cfg(feature = "generate")]
 fn build_bcc_bindings() {
     let mut bindings = bindgen::Builder::default()
         .header("wrapper.h")
         .clang_arg("-I")
         .clang_arg(concat!(env!("CARGO_MANIFEST_DIR"), "/include"));
 
-    #[cfg(feature = "v0_9_0")]
-    {
-        bindings = bindings.clang_arg("-D__BCC_0_9_0__");
-    }
-
-    #[cfg(not(any(
+    if cfg!(any(
         feature = "v0_4_0",
         feature = "v0_5_0",
         feature = "v0_6_0",
         feature = "v0_6_1",
         feature = "v0_7_0",
         feature = "v0_8_0",
-        feature = "v0_9_0",
-    )))]
+    ))]
     {
-        bindings = bindings.clang_arg("-D__BCC_0_9_0__");
+        bindings = bindings.clang_arg("-D__BPF_COMMON__");
+    } else {
+        bindings = bindings.clang_arg("-D__BCC_COMMON__");
     }
 
     for func in WHITELIST_FUNCTION {
@@ -99,7 +99,7 @@ fn build_bcc_bindings() {
         .write_to_file("src/generated.rs")
         .expect("Couldn't write bcc bindings!");
     let have_working_rustfmt = process::Command::new("rustup")
-        .args(&["run", "nightly", "rustfmt", "--version"])
+        .args(&["run", "rustfmt", "--version"])
         .stdout(process::Stdio::null())
         .stderr(process::Stdio::null())
         .status()
@@ -111,7 +111,7 @@ fn build_bcc_bindings() {
             "
         The latest `rustfmt` is required to format the generated bindings. Install
             `rustfmt` with:
-            $ rustup component add rustfmt-preview
+            $ rustup component add rustfmt
             $ rustup update
             "
         );
