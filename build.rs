@@ -56,7 +56,7 @@ fn build_bcc_bindings() {
         feature = "v0_6_1",
         feature = "v0_7_0",
         feature = "v0_8_0",
-    ))]
+    ))
     {
         bindings = bindings.clang_arg("-D__BPF_COMMON__");
     } else {
