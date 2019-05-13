@@ -13,13 +13,15 @@ documentation = "https://docs.rs/bcc-sys"
 homepage = "https://github.com/rust-bpf/bcc-sys"
 edition = '2018'
 
-[build-dependencies]
-bindgen = "0.47.3"
+[build-dependencies.bindgen]
+version = "0.47.3"
+optional = true
 
 [lib]
 name = "bcc_sys"
 
 [features]
+generate = ["bindgen"]
 static = []
 v0_4_0 = []
 v0_5_0 = []
@@ -27,3 +29,4 @@ v0_6_0 = []
 v0_6_1 = []
 v0_7_0 = []
 v0_8_0 = []
+v0_9_0 = []
