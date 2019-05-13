@@ -15,3 +15,9 @@ $ rustup update
 * Version 0.7.0 reflects the 0.6.1 version of bcc.
 * Version 0.7.1 reflects the 0.6.1 version of bcc.
 * Version 0.8.0 reflects bcc v0.4.0-v0.8.0 using feature flags.
+* Version 0.9.0 reflects bcc v0.4.0-v0.9.0 using feature flags.
+
+**Note:** If you do not specify a version of bcc using feature flags, the
+library will expect the latest version of bcc supported by the release of this
+library. You may override this by using the corresponding feature flag to match
+the bcc version you are using.
