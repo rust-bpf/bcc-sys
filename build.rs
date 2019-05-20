@@ -98,10 +98,10 @@ fn build_bcc_bindings() {
     builder
         .write_to_file("src/generated.rs")
         .expect("Couldn't write bcc bindings!");
-    let have_working_rustfmt = process::Command::new("rustup")
+    let have_working_rustfmt = std::process::Command::new("rustup")
         .args(&["run", "rustfmt", "--version"])
-        .stdout(process::Stdio::null())
-        .stderr(process::Stdio::null())
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
         .status()
         .ok()
         .map_or(false, |status| status.success());
