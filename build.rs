@@ -179,6 +179,6 @@ fn llvm_static_linking() {
     let libs: Vec<&str> = llvm_libs.split_whitespace().collect();
     for lib in libs {
         let (_, name) = lib.split_at(2);
-        println!("cargo:rustc-link-lib-static={}", name);
+        println!("cargo:rustc-link-lib=static={}", name);
     }
 }
