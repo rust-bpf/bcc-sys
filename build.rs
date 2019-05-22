@@ -169,6 +169,7 @@ fn linking_info() {
 }
 
 // this function generates the linking info for llvm
+#[allow(dead_code)]
 fn llvm_static_linking() {
     let llvm_config = std::process::Command::new("llvm-config")
         .arg("--libs")
@@ -179,6 +180,6 @@ fn llvm_static_linking() {
     let libs: Vec<&str> = llvm_libs.split_whitespace().collect();
     for lib in libs {
         let (_, name) = lib.split_at(2);
-        println!("cargo:rustc-link-lib-static={}", name);
+        println!("cargo:rustc-link-lib=static={}", name);
     }
 }
