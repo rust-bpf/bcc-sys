@@ -169,6 +169,7 @@ fn linking_info() {
 }
 
 // this function generates the linking info for llvm
+#[allow(dead_code)]
 fn llvm_static_linking() {
     let llvm_config = std::process::Command::new("llvm-config")
         .arg("--libs")
