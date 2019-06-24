@@ -19,6 +19,9 @@ mod v0_8_0;
 #[cfg(feature = "v0_9_0")]
 mod v0_9_0;
 
+#[cfg(feature = "v0_10_0")]
+mod v0_10_0;
+
 // without a specified version, use latest version supported
 #[cfg(not(any(
     feature = "v0_4_0",
@@ -28,8 +31,9 @@ mod v0_9_0;
     feature = "v0_7_0",
     feature = "v0_8_0",
     feature = "v0_9_0",
+    feature = "v0_10_0",
 )))]
-mod v0_9_0;
+mod v0_10_0;
 
 #[cfg(feature = "v0_4_0")]
 pub use v0_4_0::*;
@@ -52,6 +56,9 @@ pub use v0_8_0::*;
 #[cfg(feature = "v0_9_0")]
 pub use v0_9_0::*;
 
+#[cfg(feature = "v0_10_0")]
+pub use v0_10_0::*;
+
 // without a specified version, use latest version supported
 #[cfg(not(any(
     feature = "v0_4_0",
@@ -61,5 +68,6 @@ pub use v0_9_0::*;
     feature = "v0_7_0",
     feature = "v0_8_0",
     feature = "v0_9_0",
+    feature = "v0_10_0",
 )))]
-pub use v0_9_0::*;
+pub use v0_10_0::*;
