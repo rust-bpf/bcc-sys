@@ -134,7 +134,13 @@ fn linking_info() {
 
     println!("cargo:rustc-link-lib=static=bcc");
     println!("cargo:rustc-link-lib=static=bcc-loader-static");
-    println!("cargo:rustc-link-lib=static=bpf");
+    if cfg!(any(
+        feature = "v0_10_0",
+    )) {
+        println!("cargo:rustc-link-lib=static=bcc_bpf");
+    } else {
+        println!("cargo:rustc-link-lib=static=bpf");
+    }
     println!("cargo:rustc-link-lib=static=b_frontend");
     println!("cargo:rustc-link-lib=static=clang_frontend");
     println!("cargo:rustc-link-lib=static=usdt-static");
