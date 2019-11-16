@@ -1,36 +1,9 @@
 language: rust
-dist: trusty
-rust:
-  - stable
-  - beta
-  - nightly
-script:
-  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-  - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
-  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
-  - sudo apt-get update
-  - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-  - git clone https://github.com/iovisor/bcc || true
-  - cd bcc
-  - git checkout master
-  - git pull
-  - git checkout remotes/origin/tag_v0.10.0
-  - mkdir -p _build
-  - cd _build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-  - make
-  - sudo make install
-  - cd ../..
-  - cargo build
-  - cargo test
-  - cargo build --release
-  - cargo test --release
 matrix:
-  allow_failures:
-    - rust: nightly
   fast_finish: true
   include:
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.4.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_4_0 RUST_BACKTRACE=1
@@ -39,11 +12,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.4.0
         - mkdir -p _build
         - cd _build
@@ -55,7 +27,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.5.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_5_0 RUST_BACKTRACE=1
@@ -64,11 +37,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.5.0
         - mkdir -p _build
         - cd _build
@@ -80,7 +52,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.6.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_6_0 RUST_BACKTRACE=1
@@ -89,11 +62,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.6.0
         - mkdir -p _build
         - cd _build
@@ -105,7 +77,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.6.1"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_6_1 RUST_BACKTRACE=1
@@ -114,8 +87,9 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
         - git checkout master
         - git pull
@@ -130,7 +104,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.7.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_7_0 RUST_BACKTRACE=1
@@ -139,11 +114,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.7.0
         - mkdir -p _build
         - cd _build
@@ -155,7 +129,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.8.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_8_0 RUST_BACKTRACE=1
@@ -164,11 +139,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.8.0
         - mkdir -p _build
         - cd _build
@@ -180,7 +154,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.9.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_9_0 RUST_BACKTRACE=1
@@ -189,11 +164,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.9.0
         - mkdir -p _build
         - cd _build
@@ -205,7 +179,8 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - os: linux
+    - name: "trusty / llvm 5 / bcc 0.10.0"
+      os: linux
       dist: trusty
       rust: stable
       env: BCC=v0_10_0 RUST_BACKTRACE=1
@@ -214,11 +189,10 @@ matrix:
         - echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
         - sudo apt-get --yes install bison build-essential cmake3 flex git libclang-common-5.0-dev libelf-dev libllvm5.0 libz-dev lldb-5.0 llvm-5.0 llvm-5.0-dev llvm-5.0-runtime
-        - git clone https://github.com/iovisor/bcc || true
+        - git clone https://github.com/iovisor/bcc
         - cd bcc
-        - git checkout master
-        - git pull
         - git checkout remotes/origin/tag_v0.10.0
         - mkdir -p _build
         - cd _build
@@ -230,8 +204,453 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-cache:
-  directories:
-    - $HOME/.cargo
-    - $TRAVIS_BUILD_DIR/target
-
+    - name: "xenial / llvm 8 / bcc 0.9.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 8 / bcc 0.10.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 8 / bcc 0.11.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 9 / bcc 0.9.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 9 / bcc 0.10.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 9 / bcc 0.11.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 10 / bcc 0.9.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 10 / bcc 0.10.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "xenial / llvm 10 / bcc 0.11.0"
+      os: linux
+      dist: xenial
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 8 / bcc 0.9.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 8 / bcc 0.10.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 8 / bcc 0.11.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-8-dev libelf-dev libllvm8 libz-dev lldb-8 llvm-8 llvm-8-dev llvm-8-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 9 / bcc 0.9.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 9 / bcc 0.10.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 9 / bcc 0.11.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-9-dev libelf-dev libllvm9 libz-dev lldb-9 llvm-9 llvm-9-dev llvm-9-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 10 / bcc 0.9.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.9.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 10 / bcc 0.10.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout remotes/origin/tag_v0.10.0
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
+    - name: "bionic / llvm 10 / bcc 0.11.0"
+      os: linux
+      dist: bionic
+      rust: stable
+      env: RUST_BACKTRACE=1
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
+        - sudo apt-get update
+        - sudo apt-get install linux-headers-`uname -r`
+        - sudo apt-get --yes install bison build-essential cmake flex libfl-dev git libclang-common-10-dev libelf-dev libllvm10 libz-dev lldb-10 llvm-10 llvm-10-dev llvm-10-runtime
+        - git clone https://github.com/iovisor/bcc
+        - cd bcc
+        - git checkout 0fa419a64e71984d42f107c210d3d3f0cc82d59a
+        - mkdir -p _build
+        - cd _build
+        - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        - make
+        - sudo make install
+        - cd ../..
+        - cargo build
+        - cargo test
+        - cargo build --release
+        - cargo test --release
