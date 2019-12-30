@@ -1,6 +1,6 @@
 [package]
 name = "bcc-sys"
-version = "0.12.0"
+version = "0.12.1-alpha.0"
 authors = ["Zhiting Zhu <zhitingz@cs.utexas.edu>", "Brian Martin <brayniac@gmail.com>"]
 description = "Rust binding to BPF Compiler Collection (BCC)"
 keywords = ["bpf", "bindings"]
