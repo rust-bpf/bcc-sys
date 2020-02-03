@@ -283,7 +283,7 @@ matrix:
       os: linux
       dist: xenial
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main" | sudo tee -a /etc/apt/sources.list
@@ -408,7 +408,7 @@ matrix:
       os: linux
       dist: xenial
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main" | sudo tee -a /etc/apt/sources.list
@@ -533,7 +533,7 @@ matrix:
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" | sudo tee -a /etc/apt/sources.list
@@ -658,7 +658,7 @@ matrix:
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
@@ -779,11 +779,11 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - name: "bionic / llvm 10 / bcc 0.11.0"
+    - name: "bionic / llvm 10 / bcc 0.12.0"
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
