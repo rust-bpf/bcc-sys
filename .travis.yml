@@ -283,7 +283,7 @@ matrix:
       os: linux
       dist: xenial
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main" | sudo tee -a /etc/apt/sources.list
@@ -408,7 +408,7 @@ matrix:
       os: linux
       dist: xenial
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main" | sudo tee -a /etc/apt/sources.list
@@ -533,7 +533,7 @@ matrix:
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" | sudo tee -a /etc/apt/sources.list
@@ -658,7 +658,7 @@ matrix:
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main" | sudo tee -a /etc/apt/sources.list
@@ -711,7 +711,7 @@ matrix:
       env: BCC=v0_9_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
         - sudo apt-get install linux-headers-`uname -r`
@@ -736,7 +736,7 @@ matrix:
       env: BCC=v0_10_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
         - sudo apt-get install linux-headers-`uname -r`
@@ -761,7 +761,7 @@ matrix:
       env: BCC=v0_11_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
         - sudo apt-get install linux-headers-`uname -r`
@@ -779,14 +779,14 @@ matrix:
         - cargo test --features $BCC
         - cargo build --release --features $BCC
         - cargo test --release --features $BCC
-    - name: "bionic / llvm 10 / bcc 0.11.0"
+    - name: "bionic / llvm 10 / bcc 0.12.0"
       os: linux
       dist: bionic
       rust: stable
-      env: BCC=v0_11_0 RUST_BACKTRACE=1
+      env: BCC=v0_12_0 RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
         - sudo apt-get install linux-headers-`uname -r`
@@ -811,7 +811,7 @@ matrix:
       env: RUST_BACKTRACE=1
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" | sudo tee -a /etc/apt/sources.list
+        - echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | sudo tee -a /etc/apt/sources.list
         - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/ppa
         - sudo apt-get update
         - sudo apt-get install linux-headers-`uname -r`
