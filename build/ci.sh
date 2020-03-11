@@ -77,7 +77,7 @@ if [ -n "${FEATURES}" ]; then
     FEATURES="--features ${FEATURES}"
 fi
 
-cargo build ${FEATURES}
-cargo test ${FEATURES}
-cargo build --release ${FEATURES}
-cargo test --release ${FEATURES}
+cargo build "${FEATURES}"
+cargo test "${FEATURES}"
+cargo build --release "${FEATURES}"
+cargo test --release "${FEATURES}"
