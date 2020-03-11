@@ -2,60 +2,60 @@ language: rust
 matrix:
   fast_finish: true
   include:
-    - name: "trusty / llvm 5 / bcc 0.4.0"
+    - name: "trusty / llvm 5.0 / bcc 0.4.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.4.0" FEATURES="v0_4_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.4.0" FEATURES="v0_4_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.5.0"
+    - name: "trusty / llvm 5.0 / bcc 0.5.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.5.0" FEATURES="v0_5_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.5.0" FEATURES="v0_5_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.6.0"
+    - name: "trusty / llvm 5.0 / bcc 0.6.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.6.0" FEATURES="v0_6_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.6.0" FEATURES="v0_6_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.6.1"
+    - name: "trusty / llvm 5.0 / bcc 0.6.1"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.6.1" FEATURES="v0_6_1"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.6.1" FEATURES="v0_6_1"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.7.0"
+    - name: "trusty / llvm 5.0 / bcc 0.7.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.7.0" FEATURES="v0_7_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.7.0" FEATURES="v0_7_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.8.0"
+    - name: "trusty / llvm 5.0 / bcc 0.8.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.8.0" FEATURES="v0_8_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.8.0" FEATURES="v0_8_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.9.0"
+    - name: "trusty / llvm 5.0 / bcc 0.9.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.9.0" FEATURES="v0_9_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.9.0" FEATURES="v0_9_0"
       script:
         - bash build/ci.sh
-    - name: "trusty / llvm 5 / bcc 0.10.0"
+    - name: "trusty / llvm 5.0 / bcc 0.10.0"
       os: linux
       dist: trusty
       rust: stable
-      env: RUST_BACKTRACE=1 LLVM_VERSION="5" BCC_VERSION="0.10.0" FEATURES="v0_10_0"
+      env: RUST_BACKTRACE=1 LLVM_VERSION="5.0" BCC_VERSION="0.10.0" FEATURES="v0_10_0"
       script:
         - bash build/ci.sh
     - name: "xenial / llvm 8 / bcc 0.9.0"
