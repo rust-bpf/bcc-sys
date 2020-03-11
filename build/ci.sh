@@ -73,11 +73,11 @@ if [ -n "${BCC_VERSION}" ]; then
 fi
 
 ## Build and test
-if [ -z "${FEATURES}" ]; then
-    FEATURES="default"
+if [ -n "${FEATURES}" ]; then
+    FEATURES="--features ${FEATURES}"
 fi
 
-cargo build --features ${FEATURES}
-cargo test --features ${FEATURES}
-cargo build --release --features ${FEATURES}
-cargo test --release --features ${FEATURES}
+cargo build ${FEATURES}
+cargo test ${FEATURES}
+cargo build --release ${FEATURES}
+cargo test --release ${FEATURES}
