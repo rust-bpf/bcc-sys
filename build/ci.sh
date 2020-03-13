@@ -74,10 +74,13 @@ fi
 
 ## Build and test
 if [ -n "${FEATURES}" ]; then
-    FEATURES="--features ${FEATURES}"
+    cargo build --features "${FEATURES}"
+    cargo test --features "${FEATURES}"
+    cargo build --release --features "${FEATURES}"
+    cargo test --release --features "${FEATURES}"
+else
+    cargo build
+    cargo test
+    cargo build --release
+    cargo test --release
 fi
-
-cargo build "${FEATURES}"
-cargo test "${FEATURES}"
-cargo build --release "${FEATURES}"
-cargo test --release "${FEATURES}"
