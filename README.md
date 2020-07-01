@@ -7,7 +7,7 @@ Rust binding for [bcc](https://github.com/iovisor/bcc).
 
 # Supported bcc versions
 
-bcc 0.4.0 - 0.14.0 are supported via feature flags.
+bcc 0.4.0 - 0.15.0 are supported via feature flags.
 
 **Note:** If you do not specify a version of bcc using feature flags, the
 library will expect the latest version of bcc supported by the release of this
