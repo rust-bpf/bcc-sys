@@ -130,10 +130,8 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=lzma");
     println!("cargo:rustc-link-lib=static=tinfo");
 
-    println!("cargo:rustc-link-lib=stdc++");
-
     println!("cargo:rustc-link-lib=static=bcc");
-    println!("cargo:rustc-link-lib=static=bcc-loader-static");
+    // println!("cargo:rustc-link-lib=static=bcc-loader-static");
     if cfg!(any(
         feature = "v0_4_0",
         feature = "v0_5_0",
@@ -148,8 +146,8 @@ fn linking_info() {
         println!("cargo:rustc-link-lib=static=bcc_bpf");
     }
     println!("cargo:rustc-link-lib=static=b_frontend");
-    println!("cargo:rustc-link-lib=static=clang_frontend");
-    println!("cargo:rustc-link-lib=static=usdt-static");
+    // println!("cargo:rustc-link-lib=static=clang_frontend");
+    // println!("cargo:rustc-link-lib=static=usdt-static");
 
     println!("cargo:rustc-link-lib=static=LLVMLTO");
     println!("cargo:rustc-link-lib=static=LLVMPasses");
@@ -212,12 +210,16 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMDebugInfoCodeView");
     println!("cargo:rustc-link-lib=static=LLVMDebugInfoMSF");
     println!("cargo:rustc-link-lib=static=LLVMBitReader");
-    println!("cargo:rustc-link-lib=static=LLVMBitstreamReader");
+    if cfg!(any(feature = "llvm_9", not(feature = "llvm_specific"),)) {
+        println!("cargo:rustc-link-lib=static=LLVMBitstreamReader");
+    }
     println!("cargo:rustc-link-lib=static=LLVMCore");
     println!("cargo:rustc-link-lib=static=LLVMBinaryFormat");
     println!("cargo:rustc-link-lib=static=LLVMSupport");
     println!("cargo:rustc-link-lib=static=LLVMDemangle");
-    println!("cargo:rustc-link-lib=static=LLVMRemarks");
+    if cfg!(any(feature = "llvm_9", not(feature = "llvm_specific"),)) {
+        println!("cargo:rustc-link-lib=static=LLVMRemarks");
+    }
 
     println!("cargo:rustc-link-lib=static=clangAnalysis");
     println!("cargo:rustc-link-lib=static=clangARCMigrate");
@@ -243,4 +245,6 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=clangStaticAnalyzerFrontend");
     println!("cargo:rustc-link-lib=static=clangTooling");
     println!("cargo:rustc-link-lib=static=clangToolingCore");
+
+    println!("cargo:rustc-link-lib=stdc++");
 }
