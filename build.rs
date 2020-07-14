@@ -151,7 +151,73 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=clang_frontend");
     println!("cargo:rustc-link-lib=static=usdt-static");
 
-    llvm_static_linking();
+    println!("cargo:rustc-link-lib=static=LLVMLTO");
+    println!("cargo:rustc-link-lib=static=LLVMPasses");
+    println!("cargo:rustc-link-lib=static=LLVMObjCARCOpts");
+    println!("cargo:rustc-link-lib=static=LLVMSymbolize");
+    println!("cargo:rustc-link-lib=static=LLVMDebugInfoPDB");
+    println!("cargo:rustc-link-lib=static=LLVMDebugInfoDWARF");
+    println!("cargo:rustc-link-lib=static=LLVMFuzzMutate");
+    println!("cargo:rustc-link-lib=static=LLVMMCA");
+    println!("cargo:rustc-link-lib=static=LLVMTableGen");
+    println!("cargo:rustc-link-lib=static=LLVMDlltoolDriver");
+    println!("cargo:rustc-link-lib=static=LLVMLineEditor");
+    println!("cargo:rustc-link-lib=static=LLVMXRay");
+    println!("cargo:rustc-link-lib=static=LLVMOrcJIT");
+    println!("cargo:rustc-link-lib=static=LLVMCoverage");
+    println!("cargo:rustc-link-lib=static=LLVMMIRParser");
+    println!("cargo:rustc-link-lib=static=LLVMBPFDisassembler");
+    println!("cargo:rustc-link-lib=static=LLVMBPFCodeGen");
+    println!("cargo:rustc-link-lib=static=LLVMBPFAsmParser");
+    println!("cargo:rustc-link-lib=static=LLVMBPFDesc");
+    println!("cargo:rustc-link-lib=static=LLVMBPFInfo");
+    println!("cargo:rustc-link-lib=static=LLVMObjectYAML");
+    println!("cargo:rustc-link-lib=static=LLVMLibDriver");
+    println!("cargo:rustc-link-lib=static=LLVMOption");
+    println!("cargo:rustc-link-lib=static=LLVMWindowsManifest");
+    println!("cargo:rustc-link-lib=static=LLVMTextAPI");
+    println!("cargo:rustc-link-lib=static=LLVMX86Disassembler");
+    println!("cargo:rustc-link-lib=static=LLVMX86AsmParser");
+    println!("cargo:rustc-link-lib=static=LLVMX86CodeGen");
+    println!("cargo:rustc-link-lib=static=LLVMGlobalISel");
+    println!("cargo:rustc-link-lib=static=LLVMSelectionDAG");
+    println!("cargo:rustc-link-lib=static=LLVMAsmPrinter");
+    println!("cargo:rustc-link-lib=static=LLVMX86Desc");
+    println!("cargo:rustc-link-lib=static=LLVMMCDisassembler");
+    println!("cargo:rustc-link-lib=static=LLVMX86Info");
+    println!("cargo:rustc-link-lib=static=LLVMX86Utils");
+    println!("cargo:rustc-link-lib=static=LLVMMCJIT");
+    println!("cargo:rustc-link-lib=static=LLVMInterpreter");
+    println!("cargo:rustc-link-lib=static=LLVMExecutionEngine");
+    println!("cargo:rustc-link-lib=static=LLVMRuntimeDyld");
+    println!("cargo:rustc-link-lib=static=LLVMCodeGen");
+    println!("cargo:rustc-link-lib=static=LLVMTarget");
+    println!("cargo:rustc-link-lib=static=LLVMCoroutines");
+    println!("cargo:rustc-link-lib=static=LLVMipo");
+    println!("cargo:rustc-link-lib=static=LLVMInstrumentation");
+    println!("cargo:rustc-link-lib=static=LLVMVectorize");
+    println!("cargo:rustc-link-lib=static=LLVMScalarOpts");
+    println!("cargo:rustc-link-lib=static=LLVMLinker");
+    println!("cargo:rustc-link-lib=static=LLVMIRReader");
+    println!("cargo:rustc-link-lib=static=LLVMAsmParser");
+    println!("cargo:rustc-link-lib=static=LLVMInstCombine");
+    println!("cargo:rustc-link-lib=static=LLVMBitWriter");
+    println!("cargo:rustc-link-lib=static=LLVMAggressiveInstCombine");
+    println!("cargo:rustc-link-lib=static=LLVMTransformUtils");
+    println!("cargo:rustc-link-lib=static=LLVMAnalysis");
+    println!("cargo:rustc-link-lib=static=LLVMProfileData");
+    println!("cargo:rustc-link-lib=static=LLVMObject");
+    println!("cargo:rustc-link-lib=static=LLVMMCParser");
+    println!("cargo:rustc-link-lib=static=LLVMMC");
+    println!("cargo:rustc-link-lib=static=LLVMDebugInfoCodeView");
+    println!("cargo:rustc-link-lib=static=LLVMDebugInfoMSF");
+    println!("cargo:rustc-link-lib=static=LLVMBitReader");
+    println!("cargo:rustc-link-lib=static=LLVMBitstreamReader");
+    println!("cargo:rustc-link-lib=static=LLVMCore");
+    println!("cargo:rustc-link-lib=static=LLVMBinaryFormat");
+    println!("cargo:rustc-link-lib=static=LLVMSupport");
+    println!("cargo:rustc-link-lib=static=LLVMDemangle");
+    println!("cargo:rustc-link-lib=static=LLVMRemarks");
 
     println!("cargo:rustc-link-lib=static=clangAnalysis");
     println!("cargo:rustc-link-lib=static=clangARCMigrate");
@@ -177,21 +243,4 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=clangStaticAnalyzerFrontend");
     println!("cargo:rustc-link-lib=static=clangTooling");
     println!("cargo:rustc-link-lib=static=clangToolingCore");
-    println!("cargo:rustc-link-lib=static=clangToolingRefactor");
-}
-
-// this function generates the linking info for llvm
-#[allow(dead_code)]
-fn llvm_static_linking() {
-    let llvm_config = std::process::Command::new("llvm-config")
-        .arg("--libs")
-        .output()
-        .expect("failed to run llvm-config");
-    let llvm_libs = String::from_utf8(llvm_config.stdout)
-        .expect("llvm-config output contains non-utf8 characters");
-    let libs: Vec<&str> = llvm_libs.split_whitespace().collect();
-    for lib in libs {
-        let (_, name) = lib.split_at(2);
-        println!("cargo:rustc-link-lib=static={}", name);
-    }
 }
