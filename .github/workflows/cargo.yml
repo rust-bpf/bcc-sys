@@ -80,7 +80,7 @@ jobs:
     - name: fetch binutils
       run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
     - name: build binutils
-      run: tar xzf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
+      run: tar xf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
@@ -249,7 +249,7 @@ jobs:
     - name: fetch binutils
       run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
     - name: build binutils
-      run: tar xzf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
+      run: tar xf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
