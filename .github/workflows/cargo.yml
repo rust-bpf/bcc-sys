@@ -77,6 +77,10 @@ jobs:
       run: sudo apt-get remove *llvm* *clang*
     - name: install build deps
       run: sudo apt-get install clang-8 libclang-8-dev libfl-dev llvm-8-dev llvm-8
+    - name: fetch binutils
+      run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
+    - name: build binutils
+      run: tar xzf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
@@ -242,6 +246,10 @@ jobs:
       run: sudo apt-get remove *llvm* *clang*
     - name: install build deps
       run: sudo apt-get install clang-9 libclang-9-dev libfl-dev llvm-9 llvm-9-dev
+    - name: fetch binutils
+      run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
+    - name: build binutils
+      run: tar xzf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
