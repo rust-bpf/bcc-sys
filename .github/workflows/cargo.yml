@@ -84,7 +84,7 @@ jobs:
     - name: fetch ffi
       run: curl -L -o libffi-3.3.tar.gz https://github.com/libffi/libffi/archive/v3.3.tar.gz
     - name: build ffi
-      run: tar xzf libffi-3.3.tar.gz && cd libffi-3.3 && ./configure --prefix=/usr && make -j2 && sudo make install
+      run: tar xzf libffi-3.3.tar.gz && cd libffi-3.3 && autoreconf -fvi && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
@@ -257,7 +257,7 @@ jobs:
     - name: fetch ffi
       run: curl -L -o libffi-3.3.tar.gz https://github.com/libffi/libffi/archive/v3.3.tar.gz
     - name: build ffi
-      run: tar xzf libffi-3.3.tar.gz && cd libffi-3.3 && ./configure --prefix=/usr && make -j2 && sudo make install
+      run: tar xzf libffi-3.3.tar.gz && cd libffi-3.3 && autoreconf -fvi && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
