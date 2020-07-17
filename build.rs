@@ -146,7 +146,7 @@ fn linking_info() {
         println!("cargo:rustc-link-lib=static=bcc_bpf");
     }
     println!("cargo:rustc-link-lib=static=b_frontend");
-    // println!("cargo:rustc-link-lib=static=clang_frontend");
+    println!("cargo:rustc-link-lib=static=clang_frontend");
     // println!("cargo:rustc-link-lib=static=usdt-static");
 
     println!("cargo:rustc-link-lib=static=LLVMLTO");
