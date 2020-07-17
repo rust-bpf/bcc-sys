@@ -76,7 +76,7 @@ jobs:
     - name: remove unused packages
       run: sudo apt-get remove *llvm* *clang*
     - name: install build deps
-      run: sudo apt-get install clang-8 libclang-8-dev libfl-dev llvm-8-dev llvm-8
+      run: sudo apt-get install clang-8 libclang-8-dev libffi-dev libfl-dev llvm-8-dev llvm-8
     - name: fetch binutils
       run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
     - name: build binutils
@@ -245,7 +245,7 @@ jobs:
     - name: remove unused packages
       run: sudo apt-get remove *llvm* *clang*
     - name: install build deps
-      run: sudo apt-get install clang-9 libclang-9-dev libfl-dev llvm-9 llvm-9-dev
+      run: sudo apt-get install clang-9 libclang-9-dev libffi-dev libfl-dev llvm-9 llvm-9-dev
     - name: fetch binutils
       run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
     - name: build binutils
