@@ -174,6 +174,7 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMOption");
     println!("cargo:rustc-link-lib=static=LLVMWindowsManifest");
     println!("cargo:rustc-link-lib=static=LLVMTextAPI");
+    println!("cargo:rustc-link-lib=static=LLVMX86Desc");
     println!("cargo:rustc-link-lib=static=LLVMX86Disassembler");
     println!("cargo:rustc-link-lib=static=LLVMX86AsmParser");
     println!("cargo:rustc-link-lib=static=LLVMX86CodeGen");
@@ -220,7 +221,7 @@ fn linking_info() {
     if cfg!(any(feature = "llvm_9", not(feature = "llvm_specific"),)) {
         println!("cargo:rustc-link-lib=static=LLVMRemarks");
     }
-    println!("cargo:rustc-link-lib=static=LLVMX86Desc");
+
 
     println!("cargo:rustc-link-lib=static=clangAnalysis");
     println!("cargo:rustc-link-lib=static=clangARCMigrate");
