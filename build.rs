@@ -169,6 +169,9 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMBPFAsmParser");
     println!("cargo:rustc-link-lib=static=LLVMBPFDesc");
     println!("cargo:rustc-link-lib=static=LLVMBPFInfo");
+    if cfg!(any(feature = "llvm_8")) {
+        println!("cargo:rustc-link-lib=static=LLVMBPFAsmPrinter");
+    }
     println!("cargo:rustc-link-lib=static=LLVMObjectYAML");
     println!("cargo:rustc-link-lib=static=LLVMLibDriver");
     println!("cargo:rustc-link-lib=static=LLVMOption");
@@ -178,6 +181,9 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMX86Disassembler");
     println!("cargo:rustc-link-lib=static=LLVMX86AsmParser");
     println!("cargo:rustc-link-lib=static=LLVMX86CodeGen");
+    if cfg!(any(feature = "llvm_8")) {
+        println!("cargo:rustc-link-lib=static=LLVMX86AsmPrinter");
+    }
     println!("cargo:rustc-link-lib=static=LLVMGlobalISel");
     println!("cargo:rustc-link-lib=static=LLVMSelectionDAG");
     println!("cargo:rustc-link-lib=static=LLVMAsmPrinter");
