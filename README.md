@@ -14,6 +14,14 @@ library will expect the latest version of bcc supported by the release of this
 library. You must specify a version using the matching feature flag to override
 this behavior.
 
+# Static linking
+
+This library allows static linking of bcc and other libraries required to write
+BPF utilities in Rust without needing to have bpf/bcc libraries available at
+runtime. This requires matching the llvm feature flag to your installed version
+and having specific prerequisites available. See the [GitHub Workflow config]
+for more details.
+
 # Generating new bindings
 
 Freshly generated bindings will sometimes be required:
@@ -48,3 +56,5 @@ Follow existing naming conventions.
  * Modify `Cargo.toml` to define a feature for the new bcc version.
 
 `rustfmt` is required to generate new bindings.
+
+[GitHub Workflow config]: https://github.com/rust-bpf/bcc-sys/tree/.github/workflows/cargo.yml
