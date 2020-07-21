@@ -171,6 +171,9 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMBPFAsmParser");
     println!("cargo:rustc-link-lib=static=LLVMBPFDesc");
     println!("cargo:rustc-link-lib=static=LLVMBPFInfo");
+    if cfg!(any(feature = "llvm_8")) {
+        println!("cargo:rustc-link-lib=static=LLVMBPFAsmPrinter");
+    }
     println!("cargo:rustc-link-lib=static=LLVMObjectYAML");
     println!("cargo:rustc-link-lib=static=LLVMLibDriver");
     println!("cargo:rustc-link-lib=static=LLVMOption");
@@ -179,6 +182,9 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMX86Disassembler");
     println!("cargo:rustc-link-lib=static=LLVMX86AsmParser");
     println!("cargo:rustc-link-lib=static=LLVMX86CodeGen");
+    if cfg!(any(feature = "llvm_8")) {
+        println!("cargo:rustc-link-lib=static=LLVMX86AsmPrinter");
+    }
     println!("cargo:rustc-link-lib=static=LLVMGlobalISel");
     println!("cargo:rustc-link-lib=static=LLVMSelectionDAG");
     println!("cargo:rustc-link-lib=static=LLVMAsmPrinter");
@@ -212,12 +218,16 @@ fn linking_info() {
     println!("cargo:rustc-link-lib=static=LLVMDebugInfoCodeView");
     println!("cargo:rustc-link-lib=static=LLVMDebugInfoMSF");
     println!("cargo:rustc-link-lib=static=LLVMBitReader");
-    println!("cargo:rustc-link-lib=static=LLVMBitstreamReader");
+    if cfg!(any(feature = "llvm_9", not(feature = "specific_llvm"),)) {
+        println!("cargo:rustc-link-lib=static=LLVMBitstreamReader");
+    }
     println!("cargo:rustc-link-lib=static=LLVMCore");
     println!("cargo:rustc-link-lib=static=LLVMBinaryFormat");
     println!("cargo:rustc-link-lib=static=LLVMSupport");
     println!("cargo:rustc-link-lib=static=LLVMDemangle");
-    println!("cargo:rustc-link-lib=static=LLVMRemarks");
+    if cfg!(any(feature = "llvm_9", not(feature = "specific_llvm"),)) {
+        println!("cargo:rustc-link-lib=static=LLVMRemarks");
+    }
 
     println!("cargo:rustc-link-lib=static=clangAnalysis");
     println!("cargo:rustc-link-lib=static=clangARCMigrate");

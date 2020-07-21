@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-16.04
     env:
       CFLAGS: -fPIC
-      RUSTFLAGS: -L /usr/lib -L /usr/lib64 -L /usr/lib/llvm-9/lib
+      RUSTFLAGS: -L /usr/lib -L /usr/lib64 -L /usr/lib/llvm-8/lib
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -77,6 +77,10 @@ jobs:
       run: sudo apt-get remove *llvm* *clang*
     - name: install build deps
       run: sudo apt-get install clang-8 libclang-8-dev libfl-dev llvm-8-dev llvm-8
+    - name: fetch binutils
+      run: curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-2.34.90.tar.xz
+    - name: build binutils
+      run: tar xf binutils-2.34.90.tar.xz && cd binutils-2.34.90 && ./configure --prefix=/usr && make -j2 && sudo make install
     - name: fetch zlib
       run: curl -L -O https://zlib.net/zlib-1.2.11.tar.gz
     - name: build zlib
@@ -103,10 +107,8 @@ jobs:
       run: cd bcc && git checkout e41f7a3be5c8114ef6a0990e50c2fbabea0e928e
     - name: build and install bcc
       run: mkdir bcc/_build && cd bcc/_build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr && make -j2 && sudo make install && find . -name "*.a" -exec sudo cp -v {} /usr/lib/ \;
-    - name: build
-      run: cargo build --release --features v0_15_0
-    - name: test
-      run: cargo test --release --features v0_15_0
+    - name: smoketest
+      run: cargo run --release --features "v0_15_0 static llvm_8" --example smoketest
   focal-bcc_v0_12_0:
     name: focal / llvm 9 / bcc 0.12.0
     runs-on: ubuntu-20.04
@@ -266,10 +268,8 @@ jobs:
       run: cd bcc && git checkout e41f7a3be5c8114ef6a0990e50c2fbabea0e928e
     - name: build and install bcc
       run: mkdir bcc/_build && cd bcc/_build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr && make -j2 && sudo make install && find . -name "*.a" -exec sudo cp -v {} /usr/lib/ \;
-    - name: build
-      run: cargo build --release --features v0_15_0
-    - name: test
-      run: cargo test --release --features v0_15_0
+    - name: smoketest
+      run: cargo run --release --features "v0_15_0 static" --example smoketest
   rustfmt:
     runs-on: ubuntu-latest
     steps:

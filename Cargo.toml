@@ -22,7 +22,10 @@ name = "bcc_sys"
 
 [features]
 generate = ["bindgen"]
+llvm_8 = ["specific_llvm"]
+llvm_9 = ["specific_llvm"]
 specific = []
+specific_llvm = []
 static = []
 v0_4_0 = ["specific"]
 v0_5_0 = ["specific"]
@@ -37,3 +40,4 @@ v0_12_0 = ["specific"]
 v0_13_0 = ["specific"]
 v0_14_0 = ["specific"]
 v0_15_0 = ["specific"]
+
