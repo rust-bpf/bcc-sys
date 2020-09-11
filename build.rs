@@ -79,6 +79,7 @@ fn build_bcc_bindings() {
     }
 
     bindings = bindings
+        .size_t_is_usize(true)
         .derive_debug(true)
         .impl_debug(true)
         .derive_default(true)
