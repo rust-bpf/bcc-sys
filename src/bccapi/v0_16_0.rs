@@ -248,7 +248,6 @@ pub type __uint8_t = ::std::os::raw::c_uchar;
 pub type __uint32_t = ::std::os::raw::c_uint;
 pub type __uint64_t = ::std::os::raw::c_ulong;
 pub type __pid_t = ::std::os::raw::c_int;
-pub type size_t = ::std::os::raw::c_ulong;
 pub type pid_t = __pid_t;
 extern "C" {
     pub fn bpf_module_create_b(
@@ -288,18 +287,18 @@ extern "C" {
     pub fn bpf_module_kern_version(program: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn bpf_num_functions(program: *mut ::std::os::raw::c_void) -> size_t;
+    pub fn bpf_num_functions(program: *mut ::std::os::raw::c_void) -> usize;
 }
 extern "C" {
     pub fn bpf_function_name(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn bpf_function_start_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -309,22 +308,22 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn bpf_function_size_id(program: *mut ::std::os::raw::c_void, id: size_t) -> size_t;
+    pub fn bpf_function_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
     pub fn bpf_function_size(
         program: *mut ::std::os::raw::c_void,
         name: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
-    pub fn bpf_num_tables(program: *mut ::std::os::raw::c_void) -> size_t;
+    pub fn bpf_num_tables(program: *mut ::std::os::raw::c_void) -> usize;
 }
 extern "C" {
     pub fn bpf_table_id(
         program: *mut ::std::os::raw::c_void,
         table_name: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
     pub fn bpf_table_fd(
@@ -335,7 +334,7 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_fd_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -347,17 +346,17 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_type_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_table_max_entries(
         program: *mut ::std::os::raw::c_void,
         table_name: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_max_entries_id(program: *mut ::std::os::raw::c_void, id: size_t) -> size_t;
+    pub fn bpf_table_max_entries_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
     pub fn bpf_table_flags(
@@ -368,13 +367,13 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_flags_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_table_name(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -386,7 +385,7 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_key_desc_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -398,49 +397,49 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_leaf_desc_id(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn bpf_table_key_size(
         program: *mut ::std::os::raw::c_void,
         table_name: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_key_size_id(program: *mut ::std::os::raw::c_void, id: size_t) -> size_t;
+    pub fn bpf_table_key_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
     pub fn bpf_table_leaf_size(
         program: *mut ::std::os::raw::c_void,
         table_name: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
-    pub fn bpf_table_leaf_size_id(program: *mut ::std::os::raw::c_void, id: size_t) -> size_t;
+    pub fn bpf_table_leaf_size_id(program: *mut ::std::os::raw::c_void, id: usize) -> usize;
 }
 extern "C" {
     pub fn bpf_table_key_snprintf(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
         buf: *mut ::std::os::raw::c_char,
-        buflen: size_t,
+        buflen: usize,
         key: *const ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_table_leaf_snprintf(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
         buf: *mut ::std::os::raw::c_char,
-        buflen: size_t,
+        buflen: usize,
         leaf: *const ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bpf_table_key_sscanf(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
         buf: *const ::std::os::raw::c_char,
         key: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
@@ -448,7 +447,7 @@ extern "C" {
 extern "C" {
     pub fn bpf_table_leaf_sscanf(
         program: *mut ::std::os::raw::c_void,
-        id: size_t,
+        id: usize,
         buf: *const ::std::os::raw::c_char,
         leaf: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
@@ -457,13 +456,13 @@ extern "C" {
     pub fn bpf_perf_event_fields(
         program: *mut ::std::os::raw::c_void,
         event: *const ::std::os::raw::c_char,
-    ) -> size_t;
+    ) -> usize;
 }
 extern "C" {
     pub fn bpf_perf_event_field(
         program: *mut ::std::os::raw::c_void,
         event: *const ::std::os::raw::c_char,
-        i: size_t,
+        i: usize,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -1195,7 +1194,7 @@ impl Default for bpf_attr__bindgen_ty_2 {
 }
 impl ::std::fmt::Debug for bpf_attr__bindgen_ty_2 {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_attr__bindgen_ty_2 {{ map_fd: {:?}, key: {:?}, __bindgen_anon_1: {:?}, flags: {:?} }}" , self . map_fd , self . key , self . __bindgen_anon_1 , self . flags)
+        write ! ( f , "bpf_attr__bindgen_ty_2 {{ map_fd: {:?}, key: {:?}, __bindgen_anon_1: {:?}, flags: {:?} }}" , self . map_fd , self . key , self . __bindgen_anon_1 , self . flags )
     }
 }
 #[repr(C)]
@@ -2898,7 +2897,7 @@ impl Default for __sk_buff {
 }
 impl ::std::fmt::Debug for __sk_buff {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "__sk_buff {{ len: {:?}, pkt_type: {:?}, mark: {:?}, queue_mapping: {:?}, protocol: {:?}, vlan_present: {:?}, vlan_tci: {:?}, vlan_proto: {:?}, priority: {:?}, ingress_ifindex: {:?}, ifindex: {:?}, tc_index: {:?}, cb: {:?}, hash: {:?}, tc_classid: {:?}, data: {:?}, data_end: {:?}, napi_id: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, data_meta: {:?}, __bindgen_anon_1: {:?}, tstamp: {:?}, wire_len: {:?}, gso_segs: {:?}, __bindgen_anon_2: {:?} }}" , self . len , self . pkt_type , self . mark , self . queue_mapping , self . protocol , self . vlan_present , self . vlan_tci , self . vlan_proto , self . priority , self . ingress_ifindex , self . ifindex , self . tc_index , self . cb , self . hash , self . tc_classid , self . data , self . data_end , self . napi_id , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . data_meta , self . __bindgen_anon_1 , self . tstamp , self . wire_len , self . gso_segs , self . __bindgen_anon_2)
+        write ! ( f , "__sk_buff {{ len: {:?}, pkt_type: {:?}, mark: {:?}, queue_mapping: {:?}, protocol: {:?}, vlan_present: {:?}, vlan_tci: {:?}, vlan_proto: {:?}, priority: {:?}, ingress_ifindex: {:?}, ifindex: {:?}, tc_index: {:?}, cb: {:?}, hash: {:?}, tc_classid: {:?}, data: {:?}, data_end: {:?}, napi_id: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, data_meta: {:?}, __bindgen_anon_1: {:?}, tstamp: {:?}, wire_len: {:?}, gso_segs: {:?}, __bindgen_anon_2: {:?} }}" , self . len , self . pkt_type , self . mark , self . queue_mapping , self . protocol , self . vlan_present , self . vlan_tci , self . vlan_proto , self . priority , self . ingress_ifindex , self . ifindex , self . tc_index , self . cb , self . hash , self . tc_classid , self . data , self . data_end , self . napi_id , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . data_meta , self . __bindgen_anon_1 , self . tstamp , self . wire_len , self . gso_segs , self . __bindgen_anon_2 )
     }
 }
 #[repr(C)]
@@ -3037,7 +3036,7 @@ impl Default for bpf_tunnel_key {
 }
 impl ::std::fmt::Debug for bpf_tunnel_key {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_tunnel_key {{ tunnel_id: {:?}, __bindgen_anon_1: {:?}, tunnel_tos: {:?}, tunnel_ttl: {:?}, tunnel_ext: {:?}, tunnel_label: {:?} }}" , self . tunnel_id , self . __bindgen_anon_1 , self . tunnel_tos , self . tunnel_ttl , self . tunnel_ext , self . tunnel_label)
+        write ! ( f , "bpf_tunnel_key {{ tunnel_id: {:?}, __bindgen_anon_1: {:?}, tunnel_tos: {:?}, tunnel_ttl: {:?}, tunnel_ext: {:?}, tunnel_label: {:?} }}" , self . tunnel_id , self . __bindgen_anon_1 , self . tunnel_tos , self . tunnel_ttl , self . tunnel_ext , self . tunnel_label )
     }
 }
 #[repr(C)]
@@ -3165,7 +3164,7 @@ impl Default for bpf_xfrm_state {
 }
 impl ::std::fmt::Debug for bpf_xfrm_state {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_xfrm_state {{ reqid: {:?}, spi: {:?}, family: {:?}, ext: {:?}, __bindgen_anon_1: {:?} }}" , self . reqid , self . spi , self . family , self . ext , self . __bindgen_anon_1)
+        write ! ( f , "bpf_xfrm_state {{ reqid: {:?}, spi: {:?}, family: {:?}, ext: {:?}, __bindgen_anon_1: {:?} }}" , self . reqid , self . spi , self . family , self . ext , self . __bindgen_anon_1 )
     }
 }
 pub const bpf_ret_code_BPF_OK: bpf_ret_code = 0;
@@ -4794,7 +4793,7 @@ impl Default for bpf_sock_addr {
 }
 impl ::std::fmt::Debug for bpf_sock_addr {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_sock_addr {{ user_family: {:?}, user_ip4: {:?}, user_ip6: {:?}, user_port: {:?}, family: {:?}, type: {:?}, protocol: {:?}, msg_src_ip4: {:?}, msg_src_ip6: {:?}, __bindgen_anon_1: {:?} }}" , self . user_family , self . user_ip4 , self . user_ip6 , self . user_port , self . family , self . type_ , self . protocol , self . msg_src_ip4 , self . msg_src_ip6 , self . __bindgen_anon_1)
+        write ! ( f , "bpf_sock_addr {{ user_family: {:?}, user_ip4: {:?}, user_ip6: {:?}, user_port: {:?}, family: {:?}, type: {:?}, protocol: {:?}, msg_src_ip4: {:?}, msg_src_ip6: {:?}, __bindgen_anon_1: {:?} }}" , self . user_family , self . user_ip4 , self . user_ip6 , self . user_port , self . family , self . type_ , self . protocol , self . msg_src_ip4 , self . msg_src_ip6 , self . __bindgen_anon_1 )
     }
 }
 #[repr(C)]
@@ -5312,7 +5311,7 @@ impl Default for bpf_sock_ops {
 }
 impl ::std::fmt::Debug for bpf_sock_ops {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_sock_ops {{ op: {:?}, __bindgen_anon_1: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, is_fullsock: {:?}, snd_cwnd: {:?}, srtt_us: {:?}, bpf_sock_ops_cb_flags: {:?}, state: {:?}, rtt_min: {:?}, snd_ssthresh: {:?}, rcv_nxt: {:?}, snd_nxt: {:?}, snd_una: {:?}, mss_cache: {:?}, ecn_flags: {:?}, rate_delivered: {:?}, rate_interval_us: {:?}, packets_out: {:?}, retrans_out: {:?}, total_retrans: {:?}, segs_in: {:?}, data_segs_in: {:?}, segs_out: {:?}, data_segs_out: {:?}, lost_out: {:?}, sacked_out: {:?}, sk_txhash: {:?}, bytes_received: {:?}, bytes_acked: {:?}, __bindgen_anon_2: {:?} }}" , self . op , self . __bindgen_anon_1 , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . is_fullsock , self . snd_cwnd , self . srtt_us , self . bpf_sock_ops_cb_flags , self . state , self . rtt_min , self . snd_ssthresh , self . rcv_nxt , self . snd_nxt , self . snd_una , self . mss_cache , self . ecn_flags , self . rate_delivered , self . rate_interval_us , self . packets_out , self . retrans_out , self . total_retrans , self . segs_in , self . data_segs_in , self . segs_out , self . data_segs_out , self . lost_out , self . sacked_out , self . sk_txhash , self . bytes_received , self . bytes_acked , self . __bindgen_anon_2)
+        write ! ( f , "bpf_sock_ops {{ op: {:?}, __bindgen_anon_1: {:?}, family: {:?}, remote_ip4: {:?}, local_ip4: {:?}, remote_ip6: {:?}, local_ip6: {:?}, remote_port: {:?}, local_port: {:?}, is_fullsock: {:?}, snd_cwnd: {:?}, srtt_us: {:?}, bpf_sock_ops_cb_flags: {:?}, state: {:?}, rtt_min: {:?}, snd_ssthresh: {:?}, rcv_nxt: {:?}, snd_nxt: {:?}, snd_una: {:?}, mss_cache: {:?}, ecn_flags: {:?}, rate_delivered: {:?}, rate_interval_us: {:?}, packets_out: {:?}, retrans_out: {:?}, total_retrans: {:?}, segs_in: {:?}, data_segs_in: {:?}, segs_out: {:?}, data_segs_out: {:?}, lost_out: {:?}, sacked_out: {:?}, sk_txhash: {:?}, bytes_received: {:?}, bytes_acked: {:?}, __bindgen_anon_2: {:?} }}" , self . op , self . __bindgen_anon_1 , self . family , self . remote_ip4 , self . local_ip4 , self . remote_ip6 , self . local_ip6 , self . remote_port , self . local_port , self . is_fullsock , self . snd_cwnd , self . srtt_us , self . bpf_sock_ops_cb_flags , self . state , self . rtt_min , self . snd_ssthresh , self . rcv_nxt , self . snd_nxt , self . snd_una , self . mss_cache , self . ecn_flags , self . rate_delivered , self . rate_interval_us , self . packets_out , self . retrans_out , self . total_retrans , self . segs_in , self . data_segs_in , self . segs_out , self . data_segs_out , self . lost_out , self . sacked_out , self . sk_txhash , self . bytes_received , self . bytes_acked , self . __bindgen_anon_2 )
     }
 }
 pub const BPF_SOCK_OPS_VOID: ::std::os::raw::c_uint = 0;
@@ -5765,7 +5764,7 @@ impl Default for bpf_fib_lookup {
 }
 impl ::std::fmt::Debug for bpf_fib_lookup {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_fib_lookup {{ family: {:?}, l4_protocol: {:?}, sport: {:?}, dport: {:?}, tot_len: {:?}, ifindex: {:?}, __bindgen_anon_1: {:?}, __bindgen_anon_2: {:?}, __bindgen_anon_3: {:?}, h_vlan_proto: {:?}, h_vlan_TCI: {:?}, smac: {:?}, dmac: {:?} }}" , self . family , self . l4_protocol , self . sport , self . dport , self . tot_len , self . ifindex , self . __bindgen_anon_1 , self . __bindgen_anon_2 , self . __bindgen_anon_3 , self . h_vlan_proto , self . h_vlan_TCI , self . smac , self . dmac)
+        write ! ( f , "bpf_fib_lookup {{ family: {:?}, l4_protocol: {:?}, sport: {:?}, dport: {:?}, tot_len: {:?}, ifindex: {:?}, __bindgen_anon_1: {:?}, __bindgen_anon_2: {:?}, __bindgen_anon_3: {:?}, h_vlan_proto: {:?}, h_vlan_TCI: {:?}, smac: {:?}, dmac: {:?} }}" , self . family , self . l4_protocol , self . sport , self . dport , self . tot_len , self . ifindex , self . __bindgen_anon_1 , self . __bindgen_anon_2 , self . __bindgen_anon_3 , self . h_vlan_proto , self . h_vlan_TCI , self . smac , self . dmac )
     }
 }
 pub const bpf_task_fd_type_BPF_FD_TYPE_RAW_TRACEPOINT: bpf_task_fd_type = 0;
@@ -6064,7 +6063,7 @@ impl Default for bpf_flow_keys {
 }
 impl ::std::fmt::Debug for bpf_flow_keys {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_flow_keys {{ nhoff: {:?}, thoff: {:?}, addr_proto: {:?}, is_frag: {:?}, is_first_frag: {:?}, is_encap: {:?}, ip_proto: {:?}, n_proto: {:?}, sport: {:?}, dport: {:?}, __bindgen_anon_1: {:?}, flags: {:?}, flow_label: {:?} }}" , self . nhoff , self . thoff , self . addr_proto , self . is_frag , self . is_first_frag , self . is_encap , self . ip_proto , self . n_proto , self . sport , self . dport , self . __bindgen_anon_1 , self . flags , self . flow_label)
+        write ! ( f , "bpf_flow_keys {{ nhoff: {:?}, thoff: {:?}, addr_proto: {:?}, is_frag: {:?}, is_first_frag: {:?}, is_encap: {:?}, ip_proto: {:?}, n_proto: {:?}, sport: {:?}, dport: {:?}, __bindgen_anon_1: {:?}, flags: {:?}, flow_label: {:?} }}" , self . nhoff , self . thoff , self . addr_proto , self . is_frag , self . is_first_frag , self . is_encap , self . ip_proto , self . n_proto , self . sport , self . dport , self . __bindgen_anon_1 , self . flags , self . flow_label )
     }
 }
 #[repr(C)]
@@ -6453,7 +6452,7 @@ impl Default for bpf_sockopt {
 }
 impl ::std::fmt::Debug for bpf_sockopt {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "bpf_sockopt {{ __bindgen_anon_1: {:?}, __bindgen_anon_2: {:?}, __bindgen_anon_3: {:?}, level: {:?}, optname: {:?}, optlen: {:?}, retval: {:?} }}" , self . __bindgen_anon_1 , self . __bindgen_anon_2 , self . __bindgen_anon_3 , self . level , self . optname , self . optlen , self . retval)
+        write ! ( f , "bpf_sockopt {{ __bindgen_anon_1: {:?}, __bindgen_anon_2: {:?}, __bindgen_anon_3: {:?}, level: {:?}, optname: {:?}, optlen: {:?}, retval: {:?} }}" , self . __bindgen_anon_1 , self . __bindgen_anon_2 , self . __bindgen_anon_3 , self . level , self . optname , self . optlen , self . retval )
     }
 }
 #[repr(C)]
@@ -6510,7 +6509,7 @@ extern "C" {
     pub fn bpf_get_first_key(
         fd: ::std::os::raw::c_int,
         key: *mut ::std::os::raw::c_void,
-        key_size: size_t,
+        key_size: usize,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
