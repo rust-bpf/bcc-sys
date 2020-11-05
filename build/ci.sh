@@ -7,7 +7,7 @@ sudo apt-get update
 
 ## Install kernel headers for matching version
 sudo apt-get install linux-headers-"$(uname -r)"
-sudo apt-get remove *llvm* *clang*
+sudo apt-get remove *llvm* *clang* *gtk*
 sudo apt-get --yes install clang-"${LLVM}" libclang-"${LLVM}"-dev libelf-dev \
     libfl-dev llvm-"${LLVM}"-dev libz-dev llvm-"${LLVM}"
 
@@ -118,6 +118,9 @@ if [[ "${BCC}" == "0.15.0" ]]; then
 fi
 if [[ "${BCC}" == "0.16.0" ]]; then
     git checkout fecd934a9c0ff581890d218ff6c5101694e9b326
+fi
+if [[ "${BCC}" == "0.17.0" ]]; then
+    git checkout ad5b82a5196b222ed2cdc738d8444e8c9546a77f
 fi
 mkdir -p _build
 cd _build
