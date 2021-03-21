@@ -14,7 +14,7 @@ homepage = "https://github.com/rust-bpf/bcc-sys"
 edition = '2018'
 
 [build-dependencies.bindgen]
-version = "0.55.1"
+version = "0.57.0"
 optional = true
 
 [lib]
@@ -42,3 +42,4 @@ v0_14_0 = ["specific"]
 v0_15_0 = ["specific"]
 v0_16_0 = ["specific"]
 v0_17_0 = ["specific"]
+v0_18_0 = ["specific"]
