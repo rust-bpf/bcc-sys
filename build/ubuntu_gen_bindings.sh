@@ -2,6 +2,12 @@
 
 # Generates BCC bindings when used on Ubuntu.
 #
+# Usage: ubuntu_gen_bindings.sh <version>
+#
+# The `version` should be the Git tag for the given version, as it's also used for the feature flag
+# that gets passed to Cargo, etc.  For example, `v0.6.1` is transformed into `v0_6_1` when required
+# to generate the binding filename, etc.
+#
 # CAVEATS:
 # - must be run from the root of the repository
 # - written against Ubuntu 20.04 LTS
