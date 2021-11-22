@@ -1,8 +1,8 @@
 #[allow(unused)]
-const WHITELIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
+const ALLOWLIST_FUNCTION: &'static [&'static str] = &["bpf_.*", "bcc_.*", "perf_reader_.*"];
 
 #[allow(unused)]
-const WHITELIST_TYPES: &'static [&'static str] = &[
+const ALLOWLIST_TYPES: &'static [&'static str] = &[
     "bcc_symbol",
     "perf_reader",
     "__sk_buff",
@@ -13,7 +13,7 @@ const WHITELIST_TYPES: &'static [&'static str] = &[
 ];
 
 #[allow(unused)]
-const WHITELIST_VARS: &'static [&'static str] = &[
+const ALLOWLIST_VARS: &'static [&'static str] = &[
     "LOG_BUF_SIZE",
     "BPF_.*",
     "MAX_BPF_REG",
@@ -27,7 +27,7 @@ const WHITELIST_VARS: &'static [&'static str] = &[
 ];
 
 #[allow(unused)]
-const BLACKLIST_TYPES: &'static [&'static str] = &[
+const BLOCKLIST_TYPES: &'static [&'static str] = &[
     // bindgen generates a misaligned type for this struct
     "bpf_raw_tracepoint_args",
 ];
@@ -62,20 +62,20 @@ fn build_bcc_bindings() {
         bindings = bindings.clang_arg("-D__BCC_COMMON__");
     }
 
-    for func in WHITELIST_FUNCTION {
-        bindings = bindings.whitelist_function(func);
+    for func in ALLOWLIST_FUNCTION {
+        bindings = bindings.allowlist_function(func);
     }
 
-    for ty in WHITELIST_TYPES {
-        bindings = bindings.whitelist_type(ty);
+    for ty in ALLOWLIST_TYPES {
+        bindings = bindings.allowlist_type(ty);
     }
 
-    for var in WHITELIST_VARS {
-        bindings = bindings.whitelist_var(var);
+    for var in ALLOWLIST_VARS {
+        bindings = bindings.allowlist_var(var);
     }
 
-    for ty in BLACKLIST_TYPES {
-        bindings = bindings.blacklist_type(ty);
+    for ty in BLOCKLIST_TYPES {
+        bindings = bindings.blocklist_type(ty);
     }
 
     bindings = bindings
