@@ -123,7 +123,11 @@ else
 fi
 mkdir -p _build
 cd _build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+if [ -f Makefile ]; then
+    echo "bcc makefile exists, skipping cmake"
+else
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+fi
 make -j2
 sudo make install
 find . -name "*.a" -exec sudo cp -v {} /usr/lib/ \;
