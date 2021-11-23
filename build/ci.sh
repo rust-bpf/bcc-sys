@@ -24,12 +24,12 @@ if [[ $STATIC == true ]]; then
     ELFUTILS_VERSION="0.180"
 
     echo "build binutils"
-    if [! -d binutils-2.34.90 ]; then
+    if [ ! -d binutils-2.34.90 ]; then
         curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.xz
         tar xf binutils-${BINUTILS_VERSION}.tar.xz
     fi
     cd binutils-${BINUTILS_VERSION}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         ./configure --prefix=/usr
     fi
     make -j2
@@ -37,12 +37,12 @@ if [[ $STATIC == true ]]; then
     cd ..
 
     echo "build zlib"
-    if [! -d zlib-${ZLIB_VERSION} ]; then
+    if [ ! -d zlib-${ZLIB_VERSION} ]; then
         curl -L -O https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
         tar xzf zlib-${ZLIB_VERSION}.tar.gz
     fi
     cd zlib-${ZLIB_VERSION}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         ./configure --prefix=/usr
     fi
     make -j2
@@ -50,12 +50,12 @@ if [[ $STATIC == true ]]; then
     cd ..
 
     echo "build xz"
-    if [! -d xz-${XZ_VERSION} ]; then
+    if [ ! -d xz-${XZ_VERSION} ]; then
         curl -L -O https://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz
         tar xzf xz-${XZ_VERSION}.tar.gz
     fi
     cd xz-${XZ_VERSION}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         ./configure --prefix=/usr
     fi
     make -j2
@@ -63,12 +63,12 @@ if [[ $STATIC == true ]]; then
     cd ..
 
     echo "build ncurses"
-    if [! -d ncurses-${NCURSES_VERSION} ]; then
+    if [ ! -d ncurses-${NCURSES_VERSION} ]; then
         curl -L -O ftp://ftp.invisible-island.net/ncurses/ncurses-${NCURSES_VERSION}.tar.gz
         tar xzf ncurses-${NCURSES_VERSION}.tar.gz
     fi
     cd ncurses-${NCURSES_VERSION}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         ./configure --prefix=/usr --with-termlib
     fi
     make -j2
@@ -79,7 +79,7 @@ if [[ $STATIC == true ]]; then
     git clone https://gitlab.gnome.org/GNOME/libxml2
     cd libxml2
     git checkout ${LIBXML2_SHA}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         autoreconf -fvi
         ./configure --prefix=/usr --without-python
     fi
@@ -88,12 +88,12 @@ if [[ $STATIC == true ]]; then
     cd ..
 
     echo "build elfutils"
-    if [! -d elfutils-${ELFUTILS_VERSION} ]; then
+    if [ ! -d elfutils-${ELFUTILS_VERSION} ]; then
         curl -L -O ftp://sourceware.org/pub/elfutils/0.180/elfutils-${ELFUTILS_VERSION}.tar.bz2
         tar xjf elfutils-${ELFUTILS_VERSION}.tar.bz2
     fi
     cd elfutils-${ELFUTILS_VERSION}
-    if [! -f Makefile]; then
+    if [ ! -f Makefile ]; then
         ./configure --prefix=/usr --disable-debuginfod
     fi
     make -j2
@@ -152,9 +152,7 @@ else
 fi
 mkdir -p _build
 cd _build
-if [ -f Makefile ]; then
-    echo "bcc makefile exists, skipping cmake"
-else
+if [ ! -f Makefile ]; then
     cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 fi
 make -j2
