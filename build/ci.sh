@@ -3,13 +3,13 @@
 set -e
 
 ## Update apt
-sudo apt-get update
+sudo apt-get update >/dev/null 2>&1
 
 ## Install kernel headers for matching version
-sudo apt-get install linux-headers-"$(uname -r)"
-sudo apt-get remove *llvm* *clang* *gtk*
+sudo apt-get install linux-headers-"$(uname -r)" >/dev/null 2>&1
+sudo apt-get remove *llvm* *clang* *gtk* >/dev/null 2>&1
 sudo apt-get --yes install clang-"${LLVM}" libclang-"${LLVM}"-dev libelf-dev \
-    libfl-dev llvm-"${LLVM}"-dev libz-dev llvm-"${LLVM}"
+    libfl-dev llvm-"${LLVM}"-dev libz-dev llvm-"${LLVM}" >/dev/null 2>&1
 
 # For static builds, we need to compile the following
 if [[ $STATIC == true ]]; then
