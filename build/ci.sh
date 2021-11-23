@@ -24,84 +24,92 @@ if [[ $STATIC == true ]]; then
     ELFUTILS_VERSION="0.180"
 
     echo "build binutils"
+    date -u
     if [ ! -d binutils-2.34.90 ]; then
         curl -L -O ftp://sourceware.org/pub/binutils/snapshots/binutils-${BINUTILS_VERSION}.tar.xz
         tar xf binutils-${BINUTILS_VERSION}.tar.xz
     fi
     cd binutils-${BINUTILS_VERSION}
     if [ ! -f Makefile ]; then
-        ./configure --prefix=/usr
+        ./configure --prefix=/usr >/dev/null 2>&1
     fi
-    make -j2
-    sudo make install
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 
     echo "build zlib"
+    date -u
     if [ ! -d zlib-${ZLIB_VERSION} ]; then
         curl -L -O https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
         tar xzf zlib-${ZLIB_VERSION}.tar.gz
     fi
     cd zlib-${ZLIB_VERSION}
-    ./configure --prefix=/usr
-    make -j2
-    sudo make install
+    ./configure --prefix=/usr >/dev/null 2>&1
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 
     echo "build xz"
+    date -u
     if [ ! -d xz-${XZ_VERSION} ]; then
         curl -L -O https://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz
         tar xzf xz-${XZ_VERSION}.tar.gz
     fi
     cd xz-${XZ_VERSION}
     if [ ! -f Makefile ]; then
-        ./configure --prefix=/usr
+        ./configure --prefix=/usr >/dev/null 2>&1
     fi
-    make -j2
-    sudo make install
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 
     echo "build ncurses"
+    date -u
     if [ ! -d ncurses-${NCURSES_VERSION} ]; then
         curl -L -O ftp://ftp.invisible-island.net/ncurses/ncurses-${NCURSES_VERSION}.tar.gz
         tar xzf ncurses-${NCURSES_VERSION}.tar.gz
     fi
     cd ncurses-${NCURSES_VERSION}
     if [ ! -f Makefile ]; then
-        ./configure --prefix=/usr --with-termlib
+        ./configure --prefix=/usr --with-termlib >/dev/null 2>&1
     fi
-    make -j2
-    sudo make install
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 
     echo "build libxml2"
+    date -u
     if [ ! -d libxml2 ]; then
         git clone https://gitlab.gnome.org/GNOME/libxml2
     fi
     cd libxml2
     git checkout ${LIBXML2_SHA}
     if [ ! -f Makefile ]; then
-        autoreconf -fvi
-        ./configure --prefix=/usr --without-python
+        autoreconf -fvi >/dev/null 2>&1
+        ./configure --prefix=/usr --without-python >/dev/null 2>&1
     fi
-    make -j2
-    sudo make install
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 
     echo "build elfutils"
+    date -u
     if [ ! -d elfutils-${ELFUTILS_VERSION} ]; then
         curl -L -O ftp://sourceware.org/pub/elfutils/0.180/elfutils-${ELFUTILS_VERSION}.tar.bz2
         tar xjf elfutils-${ELFUTILS_VERSION}.tar.bz2
     fi
     cd elfutils-${ELFUTILS_VERSION}
     if [ ! -f Makefile ]; then
-        ./configure --prefix=/usr --disable-debuginfod
+        ./configure --prefix=/usr --disable-debuginfod >/dev/null 2>&1
     fi
-    make -j2
-    sudo make install
+    make -j2 >/dev/null 2>&1
+    sudo make install >/dev/null 2>&1
     cd ..
 fi
 
 ## build/install BCC
+echo "build bcc"
+date -u
 git clone https://github.com/iovisor/bcc || true
 cd bcc
 git checkout master
@@ -153,12 +161,15 @@ fi
 mkdir -p _build
 cd _build
 if [ ! -f Makefile ]; then
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr >/dev/null 2>&1
 fi
-make -j2
-sudo make install
+make -j2 >/dev/null 2>&1
+sudo make install >/dev/null 2>&1
 find . -name "*.a" -exec sudo cp -v {} /usr/lib/ \;
 cd ../..
+
+echo "prerequisite build complete"
+date -u
 
 ## Build and test
 if [ -n "${FEATURES}" ]; then
