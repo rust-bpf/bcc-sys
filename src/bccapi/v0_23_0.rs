@@ -537,10 +537,10 @@ impl bpf_insn {
     }
     #[inline]
     pub fn set_dst_reg(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(0usize, 4u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn src_reg(&self) -> __u8 {
@@ -548,10 +548,10 @@ impl bpf_insn {
     }
     #[inline]
     pub fn set_src_reg(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(4usize, 4u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn new_bitfield_1(dst_reg: __u8, src_reg: __u8) -> __BindgenBitfieldUnit<[u8; 1usize]> {
@@ -3291,10 +3291,10 @@ impl bpf_prog_info {
     }
     #[inline]
     pub fn set_gpl_compatible(&mut self, val: __u32) {
-        unsafe {
-            let val: u32 = ::std::mem::transmute(val);
+        
+            let val: u32 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(0usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn new_bitfield_1(gpl_compatible: __u32) -> __BindgenBitfieldUnit<[u8; 4usize]> {
